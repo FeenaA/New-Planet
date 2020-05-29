@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // это важно
+using UnityEngine.UI; // это важно 
+// NEW
 
 public class buttons : MonoBehaviour
 {
