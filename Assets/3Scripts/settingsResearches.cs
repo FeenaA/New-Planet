@@ -11,13 +11,20 @@ public class settingsResearches: MonoBehaviour
     public RectTransform prefabPlanet;
     // parent
     public RectTransform content;
+    // left planet
+    public GameObject panelInform;
     // number of choosen palnet
     public static int nChoosenPlanet = 0;
     // prefab - RectangleSelected aroung the chosen planet
-    public GameObject prefabRectangleSelected = null;
+    //public GameObject prefabRectangleSelected = null;
     public static GameObject sRectSelect = null;
     // chosen planet
     public static GameObject ChosenPlanet = null;
+    public static settings.TestItemModel sPlanet = null;
+
+    // gameobject to set its material
+    public GameObject Sphere;
+    private static GameObject sSphere;
 
     void Start()
     {
@@ -25,7 +32,10 @@ public class settingsResearches: MonoBehaviour
         //settings.flagPauseBeforePrefab = DateChangeing.pause;
 
         // a frame for current chosen planet
-        sRectSelect = prefabRectangleSelected;
+        //sRectSelect = prefabRectangleSelected;
+
+        // gameobject to set its material
+        sSphere = Sphere;
 
         // upload settings
         textDays.GetComponent<Text>().text = settings.sStringTextDays;
@@ -56,7 +66,10 @@ public class settingsResearches: MonoBehaviour
             if (nChoosenPlanet == nPlanet)
             {
                 ChosenPlanet = instance;
+                sPlanet = planet;
+                InitializeInformView(panelInform.transform, planet);
                 ItemOnClick.ItemSelect();
+                
             }
             nPlanet++;
         }
@@ -69,17 +82,14 @@ public class settingsResearches: MonoBehaviour
         view.textNumber.text = planet.textNumber;
         view.textName.text = planet.textName;
         view.textTI.text = System.Convert.ToString(planet.textTI);
-        view.numMaterial = planet.numMaterial;
     }
 
-    // UI: data for one planet 
+    // UI: data for one planet (Planets)
     public class TestItemView
     {
         public Text textNumber;
         public Text textName;
         public Text textTI;
-
-        public int numMaterial;
 
         // constructor
         public TestItemView(Transform rootView)
@@ -89,6 +99,32 @@ public class settingsResearches: MonoBehaviour
             textTI = rootView.Find("TextTerraIndex").GetComponent<Text>();
         }
     }
+
+    // connection between UI(information) and script 
+    void InitializeInformView(Transform viewGameObject, settings.TestItemModel planet)
+    {
+        TestInformView view = new TestInformView(viewGameObject);
+        view.material = settings.sMaterials[planet.numMaterial];
+        view.textIntroduction.text = planet.textIntroduction;
+        view.textResources.text = planet.textResources;
+    }
+
+    // UI: data for one planet (Inform)
+    public class TestInformView
+    {
+        public Material material;
+        public Text textIntroduction;
+        public Text textResources;
+
+        // constructor
+        public TestInformView(Transform rootView)
+        {
+            material = rootView.Find("Sphere").GetComponent<Material>(); 
+            textIntroduction = rootView.Find("TextIntroduction").GetComponent<Text>();
+            textResources = rootView.Find("TextResources").GetComponent<Text>();
+        }
+    }
+
 }
 
 

@@ -111,6 +111,9 @@ public class settings : MonoBehaviour
             results[i].textTI = TI[i];
             results[i].numMaterial = NMat[i];
 
+            results[i].textIntroduction = "111";
+            results[i].textResources = "222";
+
             results[i].flagActive = false;
             results[i].flagResearched = false;
         }
@@ -239,9 +242,8 @@ public class settings : MonoBehaviour
         public bool flagActive; // 0 - not active, 1 - active
         public bool flagResearched; // 0 - not researched, 1 - researched
 
-        // public GameObject texture;
-        // public string textFiller;
-        // public string textResources;
+        public string textIntroduction;
+        public string textResources;
         // public int[3] nessesaryResourses; // delivered once
         // public int[5] extraResourses; // needs regular delivery
     }
