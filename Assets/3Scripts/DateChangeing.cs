@@ -14,12 +14,19 @@ public class DateChangeing : MonoBehaviour
     public string result;
 
     private static int nDay = 1;
+    // account of coins
+    private static int sCoins = 500;
+    // account of everyday coins
+    public static int stepCoins = 2;
     // reference
     public GameObject textCoinsObject; 
     // Start is called before the first frame update
     void Start()
     {
         pause = false;
+        GetComponent<Text>().text = settings.sStringTextDays;
+        textCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
+
         InvokeRepeating("changeData", 0, nSecondsStep);
     }
 
@@ -28,11 +35,12 @@ public class DateChangeing : MonoBehaviour
         if (!pause)
         {
             // days counter increment 
-            GetComponent<Text>().text = "day " + nDay;
+            settings.sStringTextDays = "day " + nDay;
+            GetComponent<Text>().text = settings.sStringTextDays;
 
             // coins increment
-            coinsRegister.coins += coinsRegister.stepCoins;
-            textCoinsObject.GetComponent<Text>().text = Convert.ToString(coinsRegister.coins);
+            sCoins += stepCoins;
+            textCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
 
             nDay++;
         }
