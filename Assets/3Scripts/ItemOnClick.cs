@@ -9,10 +9,6 @@ public class ItemOnClick : MonoBehaviour
     public GameObject Planet;
     private static GameObject sPlanet;
 
-    // gameobject to set its material
-    public GameObject Sphere;
-    private static GameObject sSphere;
-
     private static Outline myOutline;
 
     private static Color colorSelected = new Color(0, 0, 0); // Black
@@ -24,7 +20,6 @@ public class ItemOnClick : MonoBehaviour
         myOutline = GetComponent<Outline>();
 
         sPlanet = Planet;
-        sSphere = Sphere;
         sOnMouseDown();
     }
 
@@ -38,7 +33,6 @@ public class ItemOnClick : MonoBehaviour
         ItemDeselect(settingsResearches.ChosenPlanet);
         // update chosen planet
         settingsResearches.ChosenPlanet = sPlanet;
-        //settingsResearches.sPlanet;
         ItemSelect();
         //}
     }
@@ -59,19 +53,12 @@ public class ItemOnClick : MonoBehaviour
 
 
         // dealing with the PanelInformation
-        //InformationPlanetView();
+        string textNumber = instance.transform.Find("TextNumber").GetComponent<Text>().text;
+        int nPlanet = System.Convert.ToInt32(textNumber);
+        
+        settings.planetProperty PP = settings.sPlanetProperty[nPlanet];
+        settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
 
-
-        // Sphere's texture
-        //settingsResearches.TestItemView view = new settingsResearches.TestItemView(instance.transform);
-        //view.material = settings.sMaterials[settingsResearches.sPlanet.numMaterial];
-        //print(view.material);
-
-        // connect with panelInformation
-        //settingsResearches.ChosenPlanet.transform.numMaterial;
-
-        //sSphere.GetComponent<Renderer>.material = settings.sMaterials[0];
-        //Material M = GetComponent<Renderer>().material;
     }
 
     // reaction to the "OnMouseDown" event

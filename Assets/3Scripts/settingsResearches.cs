@@ -22,20 +22,18 @@ public class settingsResearches: MonoBehaviour
     public static GameObject ChosenPlanet = null;
     public static settings.TestItemModel sPlanet = null;
 
-    // gameobject to set its material
+    // gameobjects to fill PanelInformation
     public GameObject Sphere;
-    private static GameObject sSphere;
+    public static GameObject sSphere;
+    public GameObject NamePlanet;
+    public static GameObject sNamePlanet;
+
 
     void Start()
     {
-        // flag - was the game paused before OnMouseDown?
-        //settings.flagPauseBeforePrefab = DateChangeing.pause;
-
-        // a frame for current chosen planet
-        //sRectSelect = prefabRectangleSelected;
-
-        // gameobject to set its material
+        // gameobject to fill PanelInformation
         sSphere = Sphere;
+        sNamePlanet = NamePlanet;
 
         // upload settings
         textDays.GetComponent<Text>().text = settings.sStringTextDays;
@@ -67,7 +65,7 @@ public class settingsResearches: MonoBehaviour
             {
                 ChosenPlanet = instance;
                 sPlanet = planet;
-                InitializeInformView(panelInform.transform, planet);
+                //InitializeInformView(panelInform.transform, planet);
                 ItemOnClick.ItemSelect();
                 
             }

@@ -50,6 +50,16 @@ public class settings : MonoBehaviour
     public Material[] materials;
     public static Material[] sMaterials;
 
+    public class planetProperty
+    {
+        public int numMaterial;
+        public string textName;
+        public string textIntroduction;
+        public string textResources;
+    }
+
+    public static Dictionary<int, planetProperty> sPlanetProperty;
+
     void Start()
     {
         sPrefabPauseRectangle = prefabPauseRectangle;
@@ -101,21 +111,31 @@ public class settings : MonoBehaviour
 
         string[] Name = SetNameGenerate(NPlanets);
         int[] TI = SetTIndexGenerate(NPlanets);
-        int[] NMat = SetNumMaterial(NPlanets);
+        int[] NMat = SetNumMaterial(NPlanets);        
+
+        sPlanetProperty = new Dictionary<int, planetProperty>();
 
         for (int i = 0; i < NPlanets; i++)
         {
-            results[i] = new TestItemModel();
-            results[i].textNumber = System.Convert.ToString(i + 1);
-            results[i].textName = Name[i];
-            results[i].textTI = TI[i];
-            results[i].numMaterial = NMat[i];
+            results[i] = new TestItemModel
+            {
+                textNumber = System.Convert.ToString(i + 1),
+                textName = Name[i],
+                textTI = TI[i],
 
-            results[i].textIntroduction = "111";
-            results[i].textResources = "222";
+                flagActive = false,
+                flagResearched = false
+            };
 
-            results[i].flagActive = false;
-            results[i].flagResearched = false;
+            planetProperty PP = new planetProperty
+            {
+                numMaterial = NMat[i],
+                textName = Name[i],
+                textIntroduction = "intro " + System.Convert.ToString(i + 201),
+                textResources = "resourses " + System.Convert.ToString(i + 101)
+            };
+
+            sPlanetProperty.Add((i + 1), PP);
         }
 
         results[nActivePlanet].flagActive = true;
@@ -126,15 +146,6 @@ public class settings : MonoBehaviour
     // generator: set of probable Names
     private static string[] SetNameGenerate(int NPlanets)
     {
-        // чтение из файла
-        //string[] GA = File.ReadAllLines(@"GreekAlphabet.txt");
-        string[] GA = {
-                "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota",
-                "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau",
-                "Upsilon", "Phi", "Chi", "Psi", "Omega" };
-        // amount of GA elements
-        int NSymbols = GA.Length - 1;
-
         // generate set of unique numbers 
         int minVal = 12, maxVal = 999;
         int[] Numbers = SetNumbersGenerate(NPlanets, minVal, maxVal);
@@ -142,7 +153,7 @@ public class settings : MonoBehaviour
         string[] Name = new string[NPlanets];
         for (int i = 0; i < NPlanets; i++)
         {
-            Name[i] = GA[rnd.Next(0, NSymbols)] + '-' + Numbers[i];
+            Name[i] = sGreekAlph[rnd.Next(0, sNSymbols)] + '-' + Numbers[i];
         }
 
         return Name;
@@ -223,7 +234,7 @@ public class settings : MonoBehaviour
         System.Random rnd = new System.Random();
 
         int L = sMaterials.Length;
-        for (int i = 0; i < L; i++)
+        for (int i = 0; i < len; i++)
         {
             tempSetMaterial[i] = rnd.Next(0, L - 1);
         }
