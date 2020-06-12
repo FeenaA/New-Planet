@@ -28,7 +28,6 @@ public class settingsResearches: MonoBehaviour
     public GameObject NamePlanet;
     public static GameObject sNamePlanet;
 
-
     void Start()
     {
         // gameobject to fill PanelInformation
@@ -46,10 +45,6 @@ public class settingsResearches: MonoBehaviour
     // fill information about planets
     void OnReceivedModels(settings.TestItemModel[] setPlanets)
     {
-        // destroy existed items
-        foreach (Transform child in content)
-        { Destroy(child.gameObject); }
-
         // by default the Planet0 is chosen
         int nPlanet = 0;
         // add new items with data
@@ -65,9 +60,8 @@ public class settingsResearches: MonoBehaviour
             {
                 ChosenPlanet = instance;
                 sPlanet = planet;
-                //InitializeInformView(panelInform.transform, planet);
+                ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();
                 ItemOnClick.ItemSelect();
-                
             }
             nPlanet++;
         }
@@ -77,8 +71,8 @@ public class settingsResearches: MonoBehaviour
     void InitializeItemView(Transform viewGameObject, settings.TestItemModel planet)
     {
         TestItemView view = new TestItemView(viewGameObject);
-        view.textNumber.text = planet.textNumber;
-        view.textName.text = planet.textName;
+        view.textNumber.text = System.Convert.ToString(planet.numPlanet);
+        view.buttonName.GetComponentInChildren<Text>().text = planet.textName;
         view.textTI.text = System.Convert.ToString(planet.textTI);
     }
 
@@ -86,25 +80,17 @@ public class settingsResearches: MonoBehaviour
     public class TestItemView
     {
         public Text textNumber;
-        public Text textName;
+        //public Text textName;
+        public Button buttonName;
         public Text textTI;
 
         // constructor
         public TestItemView(Transform rootView)
         {
             textNumber = rootView.Find("TextNumber").GetComponent<Text>();
-            textName = rootView.Find("TextNamePlanet").GetComponent<Text>();
+            buttonName = rootView.Find("ButtonName").GetComponent<Button>();
             textTI = rootView.Find("TextTerraIndex").GetComponent<Text>();
         }
-    }
-
-    // connection between UI(information) and script 
-    void InitializeInformView(Transform viewGameObject, settings.TestItemModel planet)
-    {
-        TestInformView view = new TestInformView(viewGameObject);
-        view.material = settings.sMaterials[planet.numMaterial];
-        view.textIntroduction.text = planet.textIntroduction;
-        view.textResources.text = planet.textResources;
     }
 
     // UI: data for one planet (Inform)

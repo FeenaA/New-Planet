@@ -7,6 +7,11 @@ using UnityEngine.UI; // это важно
 
 public class buttons : MonoBehaviour
 {
+    /*public void Myau()
+    {
+        print("Myau");
+    }*/
+
     // нажата кнопка МЕНЮ
     public void MenuPressed()
     {

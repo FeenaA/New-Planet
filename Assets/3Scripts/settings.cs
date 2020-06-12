@@ -32,18 +32,26 @@ public class settings : MonoBehaviour
     // flag - was the game paused before the instance of prefab instanciated?
     public static bool flagPauseBeforePrefab = false;
 
-    //
+    // name of your native planet
     public static string sNameNativePlanet = null;
     public static int sValNativePlanet;
+
+    // pull of possible texts
     public static string[] sGreekAlph = {
         "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota","Kappa", "Lambda", "Mu",
         "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega" };
     public static int sNSymbols;
+    public static string[] sIntroduction = {
+        "This planet may become your new home!", 
+        "Chose the planet to populate it!" };
+    public static int sNIntroduction;
+
+
     // amount of planets
     public static int sNPlanets = 50;
     // information about planets
     public static TestItemModel[] sSetPlanets;
-    public static TestItemModel sItemPlanet;
+    //public static TestItemModel sItemPlanet;
     public static int nActivePlanet = 0;
 
     // materials for planets
@@ -54,7 +62,7 @@ public class settings : MonoBehaviour
     {
         public int numMaterial;
         public string textName;
-        public string textIntroduction;
+        public int numIntro;
         public string textResources;
     }
 
@@ -83,7 +91,8 @@ public class settings : MonoBehaviour
         }
 
         // information about planets
-        sNSymbols = sGreekAlph.Length - 1;
+        sNSymbols = sGreekAlph.Length;
+        sNIntroduction = sIntroduction.Length;
         if (String.IsNullOrEmpty(sNameNativePlanet))
         {
             sNameNativePlanet = NameGenerate(out sValNativePlanet);
@@ -111,7 +120,10 @@ public class settings : MonoBehaviour
 
         string[] Name = SetNameGenerate(NPlanets);
         int[] TI = SetTIndexGenerate(NPlanets);
-        int[] NMat = SetNumMaterial(NPlanets);        
+        //int[] NMat = SetNumMaterial(NPlanets);
+        System.Random rnd = new System.Random();
+        int NMat = sMaterials.Length - 1;
+        int NIntro = sIntroduction.Length - 1;
 
         sPlanetProperty = new Dictionary<int, planetProperty>();
 
@@ -119,7 +131,7 @@ public class settings : MonoBehaviour
         {
             results[i] = new TestItemModel
             {
-                textNumber = System.Convert.ToString(i + 1),
+                numPlanet = i + 1,
                 textName = Name[i],
                 textTI = TI[i],
 
@@ -129,10 +141,11 @@ public class settings : MonoBehaviour
 
             planetProperty PP = new planetProperty
             {
-                numMaterial = NMat[i],
                 textName = Name[i],
-                textIntroduction = "intro " + System.Convert.ToString(i + 201),
-                textResources = "resourses " + System.Convert.ToString(i + 101)
+                numMaterial = rnd.Next(0, NMat),
+                numIntro = rnd.Next(0, NIntro),
+                //textResources = "resourses " + System.Convert.ToString(i + 101)
+                //numResources = "resourses " + System.Convert.ToString(i + 101)
             };
 
             sPlanetProperty.Add((i + 1), PP);
@@ -245,18 +258,13 @@ public class settings : MonoBehaviour
     // data for one planet 
     public class TestItemModel
     {
-        public string textNumber;
+        public int numPlanet;
         public string textName;
         public int textTI; // terraindex
         public int numMaterial;
 
         public bool flagActive; // 0 - not active, 1 - active
         public bool flagResearched; // 0 - not researched, 1 - researched
-
-        public string textIntroduction;
-        public string textResources;
-        // public int[3] nessesaryResourses; // delivered once
-        // public int[5] extraResourses; // needs regular delivery
     }
 }
 

@@ -8,6 +8,8 @@ public class ItemOnClick : MonoBehaviour
     // chosen planet
     public GameObject Planet;
     private static GameObject sPlanet;
+    public Button buttonName;
+    public static Button sButtonName;
 
     private static Outline myOutline;
 
@@ -20,6 +22,8 @@ public class ItemOnClick : MonoBehaviour
         myOutline = GetComponent<Outline>();
 
         sPlanet = Planet;
+        sButtonName = buttonName;
+
         sOnMouseDown();
     }
 
@@ -44,13 +48,14 @@ public class ItemOnClick : MonoBehaviour
         GameObject instance = settingsResearches.ChosenPlanet;
 
         // illustrate the ItemImage changeing 
-        if (colorDeselected== colorSelected)
+        if (colorDeselected == colorSelected)
         {   colorDeselected = instance.transform.GetComponent<Image>().color;   }
 
         instance.transform.GetComponent<Image>().color = colorSelected;
         myOutline = instance.GetComponent<Outline>();
         myOutline.enabled = true;
 
+        sButtonName.GetComponent<Graphic>().color = colorSelected;
 
         // dealing with the PanelInformation
         string textNumber = instance.transform.Find("TextNumber").GetComponent<Text>().text;
@@ -58,6 +63,7 @@ public class ItemOnClick : MonoBehaviour
         
         settings.planetProperty PP = settings.sPlanetProperty[nPlanet];
         settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
+        settingsResearches.sNamePlanet.GetComponent<Text>().text = PP.textName;
 
     }
 
@@ -66,6 +72,11 @@ public class ItemOnClick : MonoBehaviour
     {
         GameObject instance = settingsResearches.ChosenPlanet;
         instance.transform.GetComponent<Image>().color = colorDeselected;
+
+        Button buttonName = previousPlanet.transform.Find("ButtonName").GetComponent<Button>();
+        buttonName.transform.GetComponent<Image>().color = colorDeselected;
+
+        //sButtonName.GetComponent<Graphic>().color = colorDeselected;
         myOutline = instance.GetComponent<Outline>();
         myOutline.enabled = false;
     }
