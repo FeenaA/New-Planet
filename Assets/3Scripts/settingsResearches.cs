@@ -27,12 +27,18 @@ public class settingsResearches: MonoBehaviour
     public static GameObject sSphere;
     public GameObject NamePlanet;
     public static GameObject sNamePlanet;
+    public GameObject textIntro;
+    public static GameObject sTextIntro;
+    public GameObject textResource;
+    public static GameObject sTextResource;
 
     void Start()
     {
         // gameobject to fill PanelInformation
         sSphere = Sphere;
         sNamePlanet = NamePlanet;
+        sTextIntro = textIntro;
+        sTextResource = textResource;
 
         // upload settings
         textDays.GetComponent<Text>().text = settings.sStringTextDays;
@@ -61,7 +67,7 @@ public class settingsResearches: MonoBehaviour
                 ChosenPlanet = instance;
                 sPlanet = planet;
                 ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();
-                ItemOnClick.ItemSelect();
+                ItemOnClick.ItemSelect(instance);
             }
             nPlanet++;
         }

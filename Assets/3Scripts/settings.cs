@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class settings : MonoBehaviour
 {
-    // prefab - PauseRectangle aroung the scene
-    public GameObject prefabPauseRectangle;
+// prefab - PauseRectangle aroung the scene
+public GameObject prefabPauseRectangle;
     public static GameObject sPrefabPauseRectangle;
     // text - amount of coins
     public GameObject textCoins;
@@ -36,16 +36,35 @@ public class settings : MonoBehaviour
     public static string sNameNativePlanet = null;
     public static int sValNativePlanet;
 
-    // pull of possible texts
-    public static string[] sGreekAlph = {
-        "Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota","Kappa", "Lambda", "Mu",
-        "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega" };
-    public static int sNSymbols;
+    public static List<string> sGreekAlph;
+    private static int sNSymbols;
     public static string[] sIntroduction = {
         "This planet may become your new home!", 
-        "Chose the planet to populate it!" };
-    public static int sNIntroduction;
-
+        "Chose the planet to populate it!",
+        "Exert oneself to make this planet a paradise!",
+        "Home, sweet home. Is it about this planet?"};
+    public static Dictionary<int, string> ResourceNess = new Dictionary<int, string>
+    {
+        {1, "Air" },
+        {2, "Water" },
+        {3, "Soil" }
+    };
+    public static Dictionary<int, string> ResourceAdd = new Dictionary<int, string>
+    {
+        {1, "Oil" },
+        {2, "gas" },
+        {3, "peat" },
+        {4, "coal" },
+        {5, "ore" },
+        {6, "sand" },
+        {7, "clay" },
+        {8, "granite" },
+        {9, "agate" },
+        {10, "onyx" },
+        {11, "ruby" },
+        {12, "apatite" },
+        {13, "barite" }
+    };
 
     // amount of planets
     public static int sNPlanets = 50;
@@ -63,13 +82,20 @@ public class settings : MonoBehaviour
         public int numMaterial;
         public string textName;
         public int numIntro;
-        public string textResources;
+        public Dictionary<int, int> dictNResNess_Amount;
+        public Dictionary<int, int> dictNResAdd_Amount;
+        public bool status = true; // true - planet is avaliable to research, false - not
     }
+
+
 
     public static Dictionary<int, planetProperty> sPlanetProperty;
 
     void Start()
     {
+        // read all informationf from *.xml
+        readAll.GetAll();
+
         sPrefabPauseRectangle = prefabPauseRectangle;
         sTextCoins = textCoins;
         sTextDays = textDays;
@@ -91,13 +117,15 @@ public class settings : MonoBehaviour
         }
 
         // information about planets
-        sNSymbols = sGreekAlph.Length;
-        sNIntroduction = sIntroduction.Length;
+        //sNSymbols = sGreekAlph.Length;
+        sNSymbols = sGreekAlph.Count;
         if (String.IsNullOrEmpty(sNameNativePlanet))
         {
             sNameNativePlanet = NameGenerate(out sValNativePlanet);
             sSetPlanets = GetItems();
         }
+
+
     }
 
     // Name for Native Planet
@@ -120,10 +148,10 @@ public class settings : MonoBehaviour
 
         string[] Name = SetNameGenerate(NPlanets);
         int[] TI = SetTIndexGenerate(NPlanets);
-        //int[] NMat = SetNumMaterial(NPlanets);
         System.Random rnd = new System.Random();
         int NMat = sMaterials.Length - 1;
         int NIntro = sIntroduction.Length - 1;
+        //int NRes = sResources.Length - 1;
 
         sPlanetProperty = new Dictionary<int, planetProperty>();
 
@@ -267,5 +295,3 @@ public class settings : MonoBehaviour
         public bool flagResearched; // 0 - not researched, 1 - researched
     }
 }
-
-
