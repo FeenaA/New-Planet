@@ -32,6 +32,16 @@ public class settingsResearches: MonoBehaviour
     public GameObject textResource;
     public static GameObject sTextResource;
 
+
+    public GameObject buttonResearchSelect;
+    public static GameObject sButtonResearchSelect;
+    /*    public RectTransform prefabPanelInf;
+        public static RectTransform sPrefabPanelInf;
+        public GameObject prefabResearch;
+        public static GameObject sPrefabResearch;
+        public GameObject prefabSelect;
+        public static GameObject sPrefabSelect;*/
+
     void Start()
     {
         // gameobject to fill PanelInformation
@@ -39,6 +49,9 @@ public class settingsResearches: MonoBehaviour
         sNamePlanet = NamePlanet;
         sTextIntro = textIntro;
         sTextResource = textResource;
+
+        // button to Research or Select planet
+        sButtonResearchSelect = buttonResearchSelect;
 
         // upload settings
         textDays.GetComponent<Text>().text = settings.sStringTextDays;
@@ -64,6 +77,13 @@ public class settingsResearches: MonoBehaviour
             instance.transform.name = "Planet" + nPlanet;
             if (nChoosenPlanet == nPlanet)
             {
+                //settings.planetProperty PP = settings.sPlanetProperty[nPlanet];
+                //GameObject prefab;
+                /*if (PP.flagIsResearched == false)
+                { sButtonResearchSelect.GetComponent<Text>().text = "Research";   }
+                else
+                { sButtonResearchSelect.GetComponent<Text>().text = "Select";   }*/
+
                 ChosenPlanet = instance;
                 sPlanet = planet;
                 ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();

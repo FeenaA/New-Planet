@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class settings : MonoBehaviour
 {
-// prefab - PauseRectangle aroung the scene
-public GameObject prefabPauseRectangle;
+    // prefab - PauseRectangle aroung the scene
+    public GameObject prefabPauseRectangle;
     public static GameObject sPrefabPauseRectangle;
     // text - amount of coins
     public GameObject textCoins;
@@ -77,6 +77,9 @@ public GameObject prefabPauseRectangle;
     public Material[] materials;
     public static Material[] sMaterials;
 
+    // !!! 0
+    public static int NProbes = 3;
+
     public class planetProperty
     {
         public int numMaterial;
@@ -84,7 +87,7 @@ public GameObject prefabPauseRectangle;
         public int numIntro;
         public Dictionary<int, int> dictNResNess_Amount;
         public Dictionary<int, int> dictNResAdd_Amount;
-        public bool status = true; // true - planet is avaliable to research, false - not
+        public bool flagIsResearched = false;
     }
 
 
@@ -151,7 +154,11 @@ public GameObject prefabPauseRectangle;
         System.Random rnd = new System.Random();
         int NMat = sMaterials.Length - 1;
         int NIntro = sIntroduction.Length - 1;
-        //int NRes = sResources.Length - 1;
+
+
+        // additional resources
+        //Dictionary<int, int> Res2;
+
 
         sPlanetProperty = new Dictionary<int, planetProperty>();
 
@@ -167,14 +174,18 @@ public GameObject prefabPauseRectangle;
                 flagResearched = false
             };
 
+            
+
             planetProperty PP = new planetProperty
             {
                 textName = Name[i],
                 numMaterial = rnd.Next(0, NMat),
                 numIntro = rnd.Next(0, NIntro),
-                //textResources = "resourses " + System.Convert.ToString(i + 101)
-                //numResources = "resourses " + System.Convert.ToString(i + 101)
-            };
+                // nesessary resources
+                dictNResNess_Amount = GenerateNessRes(TI[i])
+            //textResources = "resourses " + System.Convert.ToString(i + 101)
+            //numResources = "resourses " + System.Convert.ToString(i + 101)
+        };
 
             sPlanetProperty.Add((i + 1), PP);
         }
@@ -182,6 +193,46 @@ public GameObject prefabPauseRectangle;
         results[nActivePlanet].flagActive = true;
 
         return results;
+    }
+
+    // generator: nesessary resources
+    private Dictionary<int, int> GenerateNessRes(int TI)
+    {
+        Dictionary<int, int> Res1 = new Dictionary<int, int>();
+        System.Random rnd = new System.Random();
+
+        int ti = TI * 3 / 10;
+        
+        int MaxN = (ti > 10) ? 10 : ti;
+        int n1 = rnd.Next(0, MaxN);
+
+        int ti1 = ti - n1;
+        MaxN = (ti1 > 10) ? 10 : ti1;
+        int n2 = rnd.Next(0, MaxN);
+        
+        int n3 = ti - n1 - n2;
+        if (n3 > 10)
+        {
+            int x = n3 - 10;
+            n3 = 10;
+            int add = rnd.Next(0, x);
+            n1 += add;
+            if (n1 > 10)
+            {
+                n1 = 10;
+                n2 += (n1 - 10);
+                if (n2 > 10) n2 = 10;
+            }
+        }
+
+        Res1.Add(1, n1);
+        Res1.Add(2, n2);
+        Res1.Add(3, n3);
+
+        print("TI=" + TI);
+        print(n1); print(n2); print(n3);
+
+        return Res1;
     }
 
     // generator: set of probable Names

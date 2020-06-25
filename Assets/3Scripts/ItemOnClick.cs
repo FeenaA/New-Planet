@@ -39,7 +39,7 @@ public class ItemOnClick : MonoBehaviour
         //}
     }
 
-    // reaction to the "OnMouseDown" event
+    // reaction to the "OnMouseDown" event for table
     public static void ItemSelect(GameObject instance)
     {
         // illustrate the ItemImage changeing 
@@ -62,10 +62,15 @@ public class ItemOnClick : MonoBehaviour
         settingsResearches.sTextIntro.GetComponent<Text>().text = settings.sIntroduction[PP.numIntro];
         settingsResearches.sTextResource.GetComponent<Text>().text = PP.textName;
 
+        if (PP.flagIsResearched == false)
+        {   settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Research";  }
+        else
+        {   settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";    }
+
         sPreviousPlanet = instance;
     }
 
-    // reaction to the "OnMouseDown" event
+    // reaction to the "OnMouseDown" event for table
     private static void ItemDeselect(GameObject instance)
     {
         instance.transform.GetComponent<Image>().color = colorDeselected;
