@@ -14,6 +14,9 @@ public class ItemOnClick : MonoBehaviour
 
     private static Color colorSelected = new Color(0, 0, 0); // Black
     private static Color colorDeselected = new Color(0, 0, 0); // needs changeing
+    private static int nCurrentPlanet;
+    // properties of chosen planet
+    public static getItems.planetProperty PP;
 
     // Method to be called from the inspector
     public void OnMouseDown()
@@ -54,18 +57,38 @@ public class ItemOnClick : MonoBehaviour
 
         // dealing with the PanelInformation
         string textNumber = instance.transform.Find("TextNumber").GetComponent<Text>().text;
-        int nPlanet = System.Convert.ToInt32(textNumber);
+        nCurrentPlanet = System.Convert.ToInt32(textNumber);
         
-        settings.planetProperty PP = settings.sPlanetProperty[nPlanet];
+        // PP includes all information about particular planet
+        PP = getItems.sPlanetProperty[nCurrentPlanet];
         settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
         settingsResearches.sNamePlanet.GetComponent<Text>().text = PP.textName;
-        settingsResearches.sTextIntro.GetComponent<Text>().text = settings.sIntroduction[PP.numIntro];
-        settingsResearches.sTextResource.GetComponent<Text>().text = PP.textName;
+        settingsResearches.sTextIntro.GetComponent<Text>().text = getItems.sIntroduction[PP.numIntro];
+
+        //show nesessary resources
+        settingsResearches.rAir.GetComponentInChildren<Text>().text = "Air      = " + PP.ResNess_Amount[0];
+        settingsResearches.rWater.GetComponentInChildren<Text>().text = "Water = " + PP.ResNess_Amount[1];
+        settingsResearches.rSoil.GetComponentInChildren<Text>().text = "Soil     = " + PP.ResNess_Amount[2];
 
         if (PP.flagIsResearched == false)
-        {   settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Research";  }
+        {   
+            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Research";
+            settingsResearches.r1.GetComponentInChildren<Text>().text = "-";
+            settingsResearches.r2.GetComponentInChildren<Text>().text = "-";
+            settingsResearches.r3.GetComponentInChildren<Text>().text = "-";
+        }
         else
-        {   settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";    }
+        {   
+            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
+
+            //show additional resources
+            settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
+                (int)(ItemOnClick.PP.ResAdd.x)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.x);
+            settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
+                (int)(ItemOnClick.PP.ResAdd.y)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.y);
+            settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
+                (int)(ItemOnClick.PP.ResAdd.z)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.z);
+        }
 
         sPreviousPlanet = instance;
     }
@@ -73,12 +96,16 @@ public class ItemOnClick : MonoBehaviour
     // reaction to the "OnMouseDown" event for table
     private static void ItemDeselect(GameObject instance)
     {
-        instance.transform.GetComponent<Image>().color = colorDeselected;
-
+        getItems.planetProperty PP = getItems.sPlanetProperty[nCurrentPlanet];
         Button buttonName = instance.transform.Find("ButtonName").GetComponent<Button>();
-        buttonName.transform.GetComponent<Image>().color = colorDeselected;
-        buttonName.GetComponent<Outline>().enabled = false;
 
+        if (!PP.flagIsResearched)
+        {
+            instance.transform.GetComponent<Image>().color = colorDeselected;
+            buttonName.transform.GetComponent<Image>().color = colorDeselected;
+        }        
+        
+        buttonName.GetComponent<Outline>().enabled = false;
         instance.GetComponent<Outline>().enabled = false;
     }
 }

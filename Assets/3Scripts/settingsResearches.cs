@@ -15,8 +15,6 @@ public class settingsResearches: MonoBehaviour
     public GameObject panelInform;
     // number of choosen palnet
     public static int nChoosenPlanet = 0;
-    // prefab - RectangleSelected aroung the chosen planet
-    //public GameObject prefabRectangleSelected = null;
     public static GameObject sRectSelect = null;
     // chosen planet
     public static GameObject ChosenPlanet = null;
@@ -29,26 +27,35 @@ public class settingsResearches: MonoBehaviour
     public static GameObject sNamePlanet;
     public GameObject textIntro;
     public static GameObject sTextIntro;
-    public GameObject textResource;
-    public static GameObject sTextResource;
 
+    // nesessary resources
+    public Transform ResWater, ResAir, ResSoil;
+    public static Transform rWater, rAir, rSoil;
+
+    // extraordinary resources
+    public Transform ResAdd1, ResAdd2, ResAdd3;
+    public static Transform r1, r2, r3;
 
     public GameObject buttonResearchSelect;
     public static GameObject sButtonResearchSelect;
-    /*    public RectTransform prefabPanelInf;
-        public static RectTransform sPrefabPanelInf;
-        public GameObject prefabResearch;
-        public static GameObject sPrefabResearch;
-        public GameObject prefabSelect;
-        public static GameObject sPrefabSelect;*/
+
+    public GameObject textProbes;
+    public static GameObject sTextProbes;
 
     void Start()
     {
-        // gameobject to fill PanelInformation
+        // gameobjects to fill PanelInformation
         sSphere = Sphere;
         sNamePlanet = NamePlanet;
         sTextIntro = textIntro;
-        sTextResource = textResource;
+
+        rWater = ResWater;
+        rAir = ResAir;
+        rSoil = ResSoil;
+
+        r1 = ResAdd1;
+        r2 = ResAdd2;
+        r3 = ResAdd3;
 
         // button to Research or Select planet
         sButtonResearchSelect = buttonResearchSelect;
@@ -56,6 +63,9 @@ public class settingsResearches: MonoBehaviour
         // upload settings
         textDays.GetComponent<Text>().text = settings.sStringTextDays;
         textDays.GetComponent<Text>().color = settings.sColorCurrent;
+
+        sTextProbes = textProbes;
+        sTextProbes.GetComponent<Text>().text = settings.NProbes + " probes";
 
         // fill information about planets
         OnReceivedModels(settings.sSetPlanets);
@@ -77,13 +87,6 @@ public class settingsResearches: MonoBehaviour
             instance.transform.name = "Planet" + nPlanet;
             if (nChoosenPlanet == nPlanet)
             {
-                //settings.planetProperty PP = settings.sPlanetProperty[nPlanet];
-                //GameObject prefab;
-                /*if (PP.flagIsResearched == false)
-                { sButtonResearchSelect.GetComponent<Text>().text = "Research";   }
-                else
-                { sButtonResearchSelect.GetComponent<Text>().text = "Select";   }*/
-
                 ChosenPlanet = instance;
                 sPlanet = planet;
                 ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();
@@ -97,8 +100,15 @@ public class settingsResearches: MonoBehaviour
     void InitializeItemView(Transform viewGameObject, settings.TestItemModel planet)
     {
         TestItemView view = new TestItemView(viewGameObject);
+
+        getItems.planetProperty PP = getItems.sPlanetProperty[planet.numPlanet];
+        if (PP.flagIsResearched)
+        {
+            viewGameObject.GetComponent<Image>().color = Color.black;
+            view.buttonName.transform.GetComponent<Image>().color = Color.black;
+        }
         view.textNumber.text = System.Convert.ToString(planet.numPlanet);
-        view.buttonName.GetComponentInChildren<Text>().text = planet.textName;
+        view.buttonName.GetComponentInChildren<Text>().text = PP.textName;
         view.textTI.text = System.Convert.ToString(planet.textTI);
     }
 
@@ -116,22 +126,6 @@ public class settingsResearches: MonoBehaviour
             textNumber = rootView.Find("TextNumber").GetComponent<Text>();
             buttonName = rootView.Find("ButtonName").GetComponent<Button>();
             textTI = rootView.Find("TextTerraIndex").GetComponent<Text>();
-        }
-    }
-
-    // UI: data for one planet (Inform)
-    public class TestInformView
-    {
-        public Material material;
-        public Text textIntroduction;
-        public Text textResources;
-
-        // constructor
-        public TestInformView(Transform rootView)
-        {
-            material = rootView.Find("Sphere").GetComponent<Material>(); 
-            textIntroduction = rootView.Find("TextIntroduction").GetComponent<Text>();
-            textResources = rootView.Find("TextResources").GetComponent<Text>();
         }
     }
 
