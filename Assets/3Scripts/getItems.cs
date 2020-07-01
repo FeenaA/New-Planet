@@ -24,7 +24,11 @@ public class getItems : MonoBehaviour
         public Vector3 ResAdd;// numbers of resources
         public Vector3 ResAddAmount;// amounts of resources
         public bool flagIsResearched = false;
+        public bool flagIsSelected = false;
     }
+
+    // requirements to the SelectedPlanet
+
 
     // the Dictionary containing all information about all planets
     public static Dictionary<int, planetProperty> sPlanetProperty;

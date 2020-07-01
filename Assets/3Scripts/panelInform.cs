@@ -11,21 +11,51 @@ public class panelInform : MonoBehaviour
     public void ResearchPressed()
     {
         // if researching is avaliable
-        if ((!ItemOnClick.PP.flagIsResearched) && (settings.NProbes > 0))
+        if (!ItemOnClick.PP.flagIsResearched)
         {
-            settings.NProbes --;
-            TextProbes.GetComponent<Text>().text = settings.NProbes + " probes";
-            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
-            ItemOnClick.PP.flagIsResearched = true;
+            if (settings.NProbes > 0)
+            {
+                settings.NProbes --;
+                TextProbes.GetComponent<Text>().text = settings.NProbes + " probes";
 
-            // show resources
-            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
-            settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                (int)(ItemOnClick.PP.ResAdd.x)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.x);
-            settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                (int)(ItemOnClick.PP.ResAdd.y)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.y);
-            settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                (int)(ItemOnClick.PP.ResAdd.z)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.z);
+                if (settings.flagSelectedPlanet==false)
+                {
+                    settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
+                }
+                else
+                {
+                    settingsResearches.sButtonResearchSelect.SetActive(false);
+                }
+
+                
+                
+                ItemOnClick.PP.flagIsResearched = true;
+
+                // show resources
+                settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
+                    (int)(ItemOnClick.PP.ResAdd.x)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.x);
+                settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
+                    (int)(ItemOnClick.PP.ResAdd.y)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.y);
+                settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
+                    (int)(ItemOnClick.PP.ResAdd.z)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.z);
+            }
+            else
+            {
+                // ask to make order to a probe factory OR to get a probe free by Advert 
+
+            }
+        }
+        else
+        {
+            // Select is pressed
+            ItemOnClick.PP.flagIsSelected = true;
+
+            settings.flagSelectedPlanet = true;
+            settings.SelectedPlanet = ItemOnClick.PP;
+            settingsResearches.sButtonResearchSelect.SetActive(false);
+
+            settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = settings.sColorPause;
+            ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = settings.sColorPause;
 
         }
     }

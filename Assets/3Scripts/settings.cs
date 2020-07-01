@@ -36,8 +36,6 @@ public class settings : MonoBehaviour
     public static string sNameNativePlanet = null;
     public static int sValNativePlanet;
 
-    //private static int sNSymbols;
-
     public static Dictionary<int, string> ResourceNess = new Dictionary<int, string>
     {
         {1, "Air   = " },
@@ -58,8 +56,13 @@ public class settings : MonoBehaviour
 
     // !!! 0
     public static int NProbes = 3;
+    public static int NSpaceships = 3;
+
     // !!! download
     public static int nLanguage = 0; // 0 - Russian, 1 - English
+
+    public static bool flagSelectedPlanet = false;
+    public static getItems.planetProperty SelectedPlanet;
 
     void Start()
     {

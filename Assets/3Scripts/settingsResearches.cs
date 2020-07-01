@@ -42,6 +42,7 @@ public class settingsResearches: MonoBehaviour
     public GameObject textProbes;
     public static GameObject sTextProbes;
 
+
     void Start()
     {
         // gameobjects to fill PanelInformation
@@ -106,6 +107,13 @@ public class settingsResearches: MonoBehaviour
         {
             viewGameObject.GetComponent<Image>().color = Color.black;
             view.buttonName.transform.GetComponent<Image>().color = Color.black;
+        }
+        if (PP.flagIsSelected)
+        {
+            view.buttonName.GetComponent<Outline>().enabled = true;
+            view.buttonName.GetComponent<Outline>().effectColor = settings.sColorPause;
+            viewGameObject.GetComponent<Outline>().enabled = true;
+            viewGameObject.GetComponent<Outline>().effectColor = settings.sColorPause;
         }
         view.textNumber.text = System.Convert.ToString(planet.numPlanet);
         view.buttonName.GetComponentInChildren<Text>().text = PP.textName;

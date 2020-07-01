@@ -71,23 +71,32 @@ public class ItemOnClick : MonoBehaviour
         settingsResearches.rSoil.GetComponentInChildren<Text>().text = "Soil     = " + PP.ResNess_Amount[2];
 
         if (PP.flagIsResearched == false)
-        {   
+        {
+            settingsResearches.sButtonResearchSelect.SetActive(true);
             settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Research";
             settingsResearches.r1.GetComponentInChildren<Text>().text = "-";
             settingsResearches.r2.GetComponentInChildren<Text>().text = "-";
             settingsResearches.r3.GetComponentInChildren<Text>().text = "-";
         }
         else
-        {   
-            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
+        {
+            if (settings.flagSelectedPlanet == false)
+            {
+                settingsResearches.sButtonResearchSelect.SetActive(true);
+                settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
+            }
+            else
+            {
+                settingsResearches.sButtonResearchSelect.SetActive(false);
+            }
 
             //show additional resources
-            settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                (int)(ItemOnClick.PP.ResAdd.x)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.x);
-            settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                (int)(ItemOnClick.PP.ResAdd.y)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.y);
-            settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                (int)(ItemOnClick.PP.ResAdd.z)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.z);
+            settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[(int)(PP.ResAdd.x)] + 
+            " = " + (int)(PP.ResAddAmount.x);
+            settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[(int)(PP.ResAdd.y)] + 
+            " = " + (int)(PP.ResAddAmount.y);
+            settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[(int)(PP.ResAdd.z)] + 
+            " = " + (int)(PP.ResAddAmount.z);
         }
 
         sPreviousPlanet = instance;
@@ -103,9 +112,12 @@ public class ItemOnClick : MonoBehaviour
         {
             instance.transform.GetComponent<Image>().color = colorDeselected;
             buttonName.transform.GetComponent<Image>().color = colorDeselected;
-        }        
-        
-        buttonName.GetComponent<Outline>().enabled = false;
-        instance.GetComponent<Outline>().enabled = false;
+        }
+
+        if (!PP.flagIsSelected)
+        {
+            buttonName.GetComponent<Outline>().enabled = false;
+            instance.GetComponent<Outline>().enabled = false;
+        }
     }
 }
