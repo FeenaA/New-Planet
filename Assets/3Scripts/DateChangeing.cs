@@ -14,18 +14,23 @@ public class DateChangeing : MonoBehaviour
     public string result;
 
     private static int nDay = 1;
+    private static int nDayPF = 0;
     // account of coins
-    private static int sCoins = 500;
+    public static int sCoins = 99999;
     // account of everyday coins
     public static int stepCoins = 2;
     // reference
-    public GameObject textCoinsObject; 
-    // Start is called before the first frame update
+    public GameObject textCoinsObject;
+    public static GameObject sTextCoinsObject;
+
+    private int MaxCoins = 99999;
+
     void Start()
     {
         pause = false;
+        sTextCoinsObject = textCoinsObject;
         GetComponent<Text>().text = settings.sStringTextDays;
-        textCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
+        sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
 
         InvokeRepeating("changeData", 0, nSecondsStep);
     }
@@ -39,8 +44,26 @@ public class DateChangeing : MonoBehaviour
             GetComponent<Text>().text = settings.sStringTextDays;
 
             // coins increment
-            sCoins += stepCoins;
-            textCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
+            if (sCoins + stepCoins > MaxCoins)
+            {
+                sCoins = MaxCoins;
+            }
+            else
+            {
+                sCoins += stepCoins;
+            }
+            
+            sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
+
+            if (BuildingsOperations.ProbeFactory.N > 0 )
+            {
+                nDayPF++;
+                if (nDayPF == BuildingsOperations.ProbeFactory.Time)
+                {
+                    settings.sNProbes++;
+                    nDayPF = 0;
+                }
+            }
 
             nDay++;
         }

@@ -21,8 +21,8 @@ public class EarthOnClick : MonoBehaviour
         {
             // show prefabBuildings 
             flagBuildings = true;
-            //GameObject instance = 
-                Instantiate(prefabBuildings);
+            settings.sCanvasBuildings.SetActive(true);
+            //Instantiate(prefabBuildings);
 
             // make a DateCounter to be paused
             if (!settings.flagPauseBeforePrefab)

@@ -7,11 +7,6 @@ using UnityEngine.UI; // это важно
 
 public class buttons : MonoBehaviour
 {
-    /*public void Myau()
-    {
-        print("Myau");
-    }*/
-
     // нажата кнопка МЕНЮ
     public void MenuPressed()
     {
@@ -115,6 +110,17 @@ public class buttons : MonoBehaviour
             sPausePressed();
         }
     }
+
+    // "cross at canvas" is pressed
+    /*public void ExitBuildings()
+    {
+        EarthOnClick.flagBuildings = false;
+        settings.sCanvasBuildings.SetActive(false);
+        if (!settings.flagPauseBeforePrefab)
+        {
+            sPausePressed();
+        }
+    }*/
 
     // Нажата кнопка "Выход из игры"
     public void ExitPressed()

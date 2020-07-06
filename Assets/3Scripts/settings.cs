@@ -20,6 +20,9 @@ public class settings : MonoBehaviour
     public static Color sColorProcess = new Color(255, 255, 255); //white
     public static Color sColorPause = new Color(221, 84, 0);//orange
     public static Color sColorCurrent;
+    // canvas for buildings
+    public GameObject canvasBuildings;
+    public static GameObject sCanvasBuildings;
 
     // Sprites, Button - changeing images of ButtonPause
     public Sprite pauseImage;
@@ -55,8 +58,8 @@ public class settings : MonoBehaviour
     public static Material[] sMaterials;
 
     // !!! 0
-    public static int NProbes = 3;
-    public static int NSpaceships = 3;
+    public static int sNProbes = 0;
+    public static int sNSpaceships = 3;
 
     // !!! download
     public static int nLanguage = 0; // 0 - Russian, 1 - English
@@ -66,6 +69,8 @@ public class settings : MonoBehaviour
 
     void Start()
     {
+        print("!");
+
         // read all informationf from *.xml
         readAll.GetAll();
 
@@ -77,6 +82,7 @@ public class settings : MonoBehaviour
         sPauseImage = pauseImage;
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
+        sCanvasBuildings = canvasBuildings;
 
         if (flagPauseBeforePrefab)  {buttons.sPausePressed();}
 

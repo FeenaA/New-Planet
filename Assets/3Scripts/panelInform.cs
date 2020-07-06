@@ -13,10 +13,10 @@ public class panelInform : MonoBehaviour
         // if researching is avaliable
         if (!ItemOnClick.PP.flagIsResearched)
         {
-            if (settings.NProbes > 0)
+            if (settings.sNProbes > 0)
             {
-                settings.NProbes --;
-                TextProbes.GetComponent<Text>().text = settings.NProbes + " probes";
+                settings.sNProbes --;
+                TextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
 
                 if (settings.flagSelectedPlanet==false)
                 {

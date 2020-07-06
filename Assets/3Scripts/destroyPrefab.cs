@@ -10,7 +10,6 @@ public class destroyPrefab : MonoBehaviour
         Transform canvas = transform.Find("Canvas");
         Transform panel = canvas.Find("Panel");
         // give actual information about N coins per day
-        //panel.Find("Text").GetComponent<Text>().text = coinsRegister.stepCoins + " per day";
         panel.Find("Text").GetComponent<Text>().text = DateChangeing.stepCoins + " per day";
 
         // destroy the "N coins per day" object in 3 seconds

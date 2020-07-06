@@ -201,7 +201,7 @@ public class getItems : MonoBehaviour
         System.Random rnd = new System.Random();
         int value_Symbol = rnd.Next(0, sGreekAlph.Count);
         value_Numb = rnd.Next(12, 999);
-        return getItems.sGreekAlph[value_Symbol] + value_Numb;
+        return getItems.sGreekAlph[value_Symbol] + "-" + value_Numb;
     }
 }
 

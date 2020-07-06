@@ -66,7 +66,7 @@ public class settingsResearches: MonoBehaviour
         textDays.GetComponent<Text>().color = settings.sColorCurrent;
 
         sTextProbes = textProbes;
-        sTextProbes.GetComponent<Text>().text = settings.NProbes + " probes";
+        sTextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
 
         // fill information about planets
         OnReceivedModels(settings.sSetPlanets);
