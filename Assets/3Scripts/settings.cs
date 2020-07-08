@@ -16,6 +16,11 @@ public class settings : MonoBehaviour
     public GameObject textDays;
     public static GameObject sTextDays;
     public static string sStringTextDays;
+    // panels - People and resources
+    public GameObject PanelPeople;
+    public GameObject PanelResources;
+    public static GameObject sPanelPeople;
+    public static GameObject sPanelResources;
     // colors of "textCoins" and "textDays"
     public static Color sColorProcess = new Color(255, 255, 255); //white
     public static Color sColorPause = new Color(221, 84, 0);//orange
@@ -57,9 +62,9 @@ public class settings : MonoBehaviour
     public Material[] materials;
     public static Material[] sMaterials;
 
-    // !!! 0
-    public static int sNProbes = 0;
-    public static int sNSpaceships = 3;
+    // !!! 
+    public static int sNProbes = 10;
+    public static int sNSpacecraft = 3;
 
     // !!! download
     public static int nLanguage = 0; // 0 - Russian, 1 - English
@@ -67,12 +72,45 @@ public class settings : MonoBehaviour
     public static bool flagSelectedPlanet = false;
     public static getItems.planetProperty SelectedPlanet;
 
+    private static bool flagFirstTime = true;
+
+    public static Dictionary<int, int> reqRes;
+
     void Start()
     {
-        print("!");
-
         // read all informationf from *.xml
-        readAll.GetAll();
+        if (flagFirstTime == true)
+        {
+            flagFirstTime = false;
+
+            readAll.GetAll();
+
+            // set of materials for planets
+            sMaterials = new Material[materials.Length];
+            int L = materials.Length;
+            for (int i = 0; i < L; i++)
+            { sMaterials[i] = materials[i]; }
+
+            // information about planets
+            if (String.IsNullOrEmpty(sNameNativePlanet))
+            {
+                sNameNativePlanet = getItems.NameGenerate(out sValNativePlanet);
+                sSetPlanets = getItems.GetItems();
+            }
+
+            reqRes = getItems.setReqs();
+
+            
+        }
+
+        sPanelResources = PanelResources;
+        string s = "";
+        foreach (var resource in reqRes)
+        {
+            s += getItems.ResourceAdd[resource.Key] + ": " + resource.Value + "/10\n";
+        }
+        Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
+        TextReqs.GetComponent<Text>().text = s;    
 
         sPrefabPauseRectangle = prefabPauseRectangle;
         sTextCoins = textCoins;
@@ -83,24 +121,10 @@ public class settings : MonoBehaviour
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
         sCanvasBuildings = canvasBuildings;
+        sPanelPeople = PanelPeople;
+        
 
         if (flagPauseBeforePrefab)  {buttons.sPausePressed();}
-
-        // set of materials for planets
-        if (sMaterials == null)
-        {
-            sMaterials = new Material[materials.Length];
-            int L = materials.Length;
-            for (int i = 0; i < L; i++)
-            {sMaterials[i] = materials[i];}
-        }
-
-        // information about planets
-        if (String.IsNullOrEmpty(sNameNativePlanet))
-        {
-            sNameNativePlanet = getItems.NameGenerate(out sValNativePlanet);
-            sSetPlanets = getItems.GetItems();
-        }
     }
     
     // data for one planet 

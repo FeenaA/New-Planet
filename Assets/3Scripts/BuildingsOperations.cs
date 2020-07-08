@@ -14,10 +14,13 @@ public class BuildingsOperations : MonoBehaviour
     public GameObject textCostPF;
     public GameObject textProfitPF;
     public GameObject buttonPF;
+    public GameObject imageCompletedPF;
 
     public GameObject buttonHospital;
     public GameObject buttonMine;
     public GameObject buttonSC;
+
+
 
     public static bool flagPF = false;
 
@@ -25,6 +28,7 @@ public class BuildingsOperations : MonoBehaviour
     private static GameObject textCost;
     public static GameObject textProfit;
     private static GameObject buttonBuild;
+    private static GameObject imageCompleted;
 
     public class Building
     {
@@ -53,7 +57,7 @@ public class BuildingsOperations : MonoBehaviour
 
         textXPF.GetComponent<Text>().text = "X" + ProbeFactory.N;
         textCostPF.GetComponent<Text>().text = "Cost:   " + ProbeFactory.Cost;
-        textProfitPF.GetComponent<Text>().text = "  +1 per " + initialTime + " days\n  ";
+        textProfitPF.GetComponent<Text>().text = "  +1 per " + initialTime + " days\n (now +0)";
 
     }
 
@@ -66,6 +70,7 @@ public class BuildingsOperations : MonoBehaviour
                 textCost = textCostPF;
                 buttonBuild = buttonPF;
                 textProfit = textProfitPF;
+                imageCompleted = imageCompletedPF;
                 buildBuilding(ProbeFactory);
                 break;
             case 1:
@@ -128,7 +133,18 @@ public class BuildingsOperations : MonoBehaviour
         building.Time = followingTime;
         followingTime = building.Time / 2;
         settings.sNProbes++;
-        textProfitPF.GetComponent<Text>().text = "  +1 per " + followingTime + " days\n  (now "+ building.Time + ")";
+        //textProfitPF.GetComponent<Text>().text = "  +1 per " + followingTime + " days\n  (now "+ building.Time + ")";
+
+        // to prevent building extra buildings
+        if (building.N < NMaxBuildings)
+        {
+            textProfitPF.GetComponent<Text>().text = "  +1 per " + followingTime + " days\n  (now " + building.Time + ")";
+        }
+        else
+        {
+            textProfitPF.GetComponent<Text>().text = "  +1 per " + building.Time + " days\n";
+            textCostPF.SetActive(false);
+        }
     }
 
     // "cross at canvas" is pressed
@@ -136,6 +152,9 @@ public class BuildingsOperations : MonoBehaviour
     {
         EarthOnClick.flagBuildings = false;
         settings.sCanvasBuildings.SetActive(false);
+        settings.sPanelPeople.SetActive(true);
+        settings.sPanelResources.SetActive(true);
+
         if (!settings.flagPauseBeforePrefab)
         {
             buttons.sPausePressed();

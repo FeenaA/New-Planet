@@ -39,9 +39,13 @@ public class settingsResearches: MonoBehaviour
     public GameObject buttonResearchSelect;
     public static GameObject sButtonResearchSelect;
 
+    // amount of probes
     public GameObject textProbes;
     public static GameObject sTextProbes;
 
+    // amount of spacecrafts
+    public GameObject textSC;
+    public static GameObject sTextSC;
 
     void Start()
     {
@@ -66,7 +70,10 @@ public class settingsResearches: MonoBehaviour
         textDays.GetComponent<Text>().color = settings.sColorCurrent;
 
         sTextProbes = textProbes;
-        sTextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
+        sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
+
+        sTextSC = textSC;
+        sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
 
         // fill information about planets
         OnReceivedModels(settings.sSetPlanets);
