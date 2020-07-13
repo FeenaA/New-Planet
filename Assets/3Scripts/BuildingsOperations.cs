@@ -30,6 +30,7 @@ public class BuildingsOperations : MonoBehaviour
     private static GameObject buttonBuild;
     private static GameObject imageCompleted;
 
+
     public class Building
     {
         public int Cost;
@@ -50,15 +51,24 @@ public class BuildingsOperations : MonoBehaviour
     public static Building Mine = new Building { Cost = 200, N = 0};
     public static Building SCfactory = new Building { Cost = 1000, N = 0};
 
+    private static string ProfitPF = "  +1 per " + initialTime + " days\n (now +0)";
+
     // Start is called before the first frame update
     void Start()
     {
+        // title
         textTitle.GetComponent<Text>().text = settings.sNameNativePlanet + "'s buildings";
 
         textXPF.GetComponent<Text>().text = "X" + ProbeFactory.N;
         textCostPF.GetComponent<Text>().text = "Cost:   " + ProbeFactory.Cost;
-        textProfitPF.GetComponent<Text>().text = "  +1 per " + initialTime + " days\n (now +0)";
+        textProfitPF.GetComponent<Text>().text = ProfitPF;
 
+        // to prevent building extra buildings
+        if (ProbeFactory.N == NMaxBuildings)
+        {
+            Destroy(textCostPF);
+            Destroy(buttonPF);
+        }
     }
 
     public void BuildBuilding(int N)
@@ -118,7 +128,7 @@ public class BuildingsOperations : MonoBehaviour
             // to prevent building extra buildings
             if ( building.N == NMaxBuildings)
             {
-               buttonBuild.SetActive(false);
+               Destroy(buttonBuild);
             }
         }
         else
@@ -133,18 +143,18 @@ public class BuildingsOperations : MonoBehaviour
         building.Time = followingTime;
         followingTime = building.Time / 2;
         settings.sNProbes++;
-        //textProfitPF.GetComponent<Text>().text = "  +1 per " + followingTime + " days\n  (now "+ building.Time + ")";
 
         // to prevent building extra buildings
         if (building.N < NMaxBuildings)
         {
-            textProfitPF.GetComponent<Text>().text = "  +1 per " + followingTime + " days\n  (now " + building.Time + ")";
+            ProfitPF = "  +1 per " + followingTime + " days\n  (now " + building.Time + ")";
         }
         else
         {
-            textProfitPF.GetComponent<Text>().text = "  +1 per " + building.Time + " days\n";
-            textCostPF.SetActive(false);
+            ProfitPF = "  +1 per " + building.Time + " days\n";
+            Destroy(textCostPF);
         }
+        textProfitPF.GetComponent<Text>().text = ProfitPF;
     }
 
     // "cross at canvas" is pressed

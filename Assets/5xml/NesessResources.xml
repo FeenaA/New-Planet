@@ -1,0 +1,18 @@
+<NesessRecources>
+	<Recource language="Russian">
+        <Res name="Воздух" number="-3">
+        </Res>
+        <Res name="Вода" number="-2">
+        </Res>
+        <Res name="Почва" number="-1">
+        </Res>
+    </Recource>
+    <Recource language="English">
+        <Res name="Air" number="-3">
+        </Res>
+        <Res name="Water" number="-2">
+        </Res>
+        <Res name="Soil" number="-1">
+        </Res>
+    </Recource>
+</NesessRecources>

@@ -44,12 +44,7 @@ public class settings : MonoBehaviour
     public static string sNameNativePlanet = null;
     public static int sValNativePlanet;
 
-    public static Dictionary<int, string> ResourceNess = new Dictionary<int, string>
-    {
-        {1, "Air   = " },
-        {2, "Water = " },
-        {3, "Soil  = " }
-    };
+
 
     // amount of planets
     public static int sNPlanets = 50;
@@ -67,7 +62,7 @@ public class settings : MonoBehaviour
     public static int sNSpacecraft = 3;
 
     // !!! download
-    public static int nLanguage = 0; // 0 - Russian, 1 - English
+    public static int nLanguage = 1; // 0 - Russian, 1 - English
 
     public static bool flagSelectedPlanet = false;
     public static getItems.planetProperty SelectedPlanet;
@@ -98,19 +93,13 @@ public class settings : MonoBehaviour
                 sSetPlanets = getItems.GetItems();
             }
 
+            // set requested resources
             reqRes = getItems.setReqs();
-
-            
         }
-
+        
         sPanelResources = PanelResources;
-        string s = "";
-        foreach (var resource in reqRes)
-        {
-            s += getItems.ResourceAdd[resource.Key] + ": " + resource.Value + "/10\n";
-        }
         Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
-        TextReqs.GetComponent<Text>().text = s;    
+        TextReqs.GetComponent<Text>().text = showProgress.Show(reqRes);
 
         sPrefabPauseRectangle = prefabPauseRectangle;
         sTextCoins = textCoins;

@@ -47,12 +47,17 @@ public class settingsResearches: MonoBehaviour
     public GameObject textSC;
     public static GameObject sTextSC;
 
+    // text for requested resources
+    public GameObject TextRequestedResources;
+    public static GameObject sTextRequestedResources;
+
     void Start()
     {
         // gameobjects to fill PanelInformation
         sSphere = Sphere;
         sNamePlanet = NamePlanet;
         sTextIntro = textIntro;
+        sTextRequestedResources = TextRequestedResources;
 
         rWater = ResWater;
         rAir = ResAir;
@@ -77,6 +82,8 @@ public class settingsResearches: MonoBehaviour
 
         // fill information about planets
         OnReceivedModels(settings.sSetPlanets);
+
+        sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
     }
 
     // fill information about planets

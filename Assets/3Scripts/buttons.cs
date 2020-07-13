@@ -111,16 +111,7 @@ public class buttons : MonoBehaviour
         }
     }
 
-    // "cross at canvas" is pressed
-    /*public void ExitBuildings()
-    {
-        EarthOnClick.flagBuildings = false;
-        settings.sCanvasBuildings.SetActive(false);
-        if (!settings.flagPauseBeforePrefab)
-        {
-            sPausePressed();
-        }
-    }*/
+
 
     // Нажата кнопка "Выход из игры"
     public void ExitPressed()

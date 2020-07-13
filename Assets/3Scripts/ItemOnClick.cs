@@ -66,9 +66,9 @@ public class ItemOnClick : MonoBehaviour
         settingsResearches.sTextIntro.GetComponent<Text>().text = getItems.sIntroduction[PP.numIntro];
 
         //show nesessary resources
-        settingsResearches.rAir.GetComponentInChildren<Text>().text = "Air      = " + PP.ResNess_Amount[0];
+        settingsResearches.rAir.GetComponentInChildren<Text>().text = "Air = " + PP.ResNess_Amount[0];
         settingsResearches.rWater.GetComponentInChildren<Text>().text = "Water = " + PP.ResNess_Amount[1];
-        settingsResearches.rSoil.GetComponentInChildren<Text>().text = "Soil     = " + PP.ResNess_Amount[2];
+        settingsResearches.rSoil.GetComponentInChildren<Text>().text = "Soil = " + PP.ResNess_Amount[2];
 
         if (PP.flagIsResearched == false)
         {

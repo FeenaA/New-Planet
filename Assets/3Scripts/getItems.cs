@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class getItems : MonoBehaviour
 {
-
     public static List<string> sGreekAlph;
     public static List<string> sIntroduction;
     public static List<string> sAdditionalResources;
@@ -13,7 +12,9 @@ public class getItems : MonoBehaviour
 
     private static System.Random rnd;
 
-    // download
+    // nesessary resources // download
+    public static Dictionary<int, string> ResNess;
+    // extra resources // download
     public static Dictionary<int, string> ResourceAdd;
 
     public class planetProperty
@@ -28,15 +29,20 @@ public class getItems : MonoBehaviour
         public bool flagIsSelected = false;
     }
 
-
-
     // the Dictionary containing all information about all planets
     public static Dictionary<int, planetProperty> sPlanetProperty;
 
     // requirements to the SelectedPlanet (number of resources and amount)
     public static Dictionary<int, int> setReqs()
+    //public static void setReqs( Dictionary<int, int> res )
     {
         Dictionary<int, int> res = new Dictionary<int, int>();
+
+        foreach (var resourse in ResNess)
+        {
+            res[resourse.Key] = 0;
+        }
+        // extarordinary resources
         int[] arr3 = SetNumbersGenerate(3, 1, ResourceAdd.Count);
         for (int i = 0; i < 3; i++)
         {

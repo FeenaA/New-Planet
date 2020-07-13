@@ -26,8 +26,6 @@ public class panelInform : MonoBehaviour
                 {
                     settingsResearches.sButtonResearchSelect.SetActive(false);
                 }
-
-                
                 
                 ItemOnClick.PP.flagIsResearched = true;
 
@@ -47,24 +45,42 @@ public class panelInform : MonoBehaviour
         }
         else
         {
-            // Select is pressed
-            ItemOnClick.PP.flagIsSelected = true;
-
-            settings.flagSelectedPlanet = true;
-            settings.SelectedPlanet = ItemOnClick.PP;
-            settingsResearches.sButtonResearchSelect.SetActive(false);
-
-            settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = settings.sColorPause;
-            ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = settings.sColorPause;
-
+            SelectPressed();
         }
     }
 
-    // choose the planet to populate
-    public void SelectPressed()
+    // choose the planet to populate it
+    private void SelectPressed()
     {
+        ItemOnClick.PP.flagIsSelected = true;
 
+        settings.flagSelectedPlanet = true;
+        settings.SelectedPlanet = ItemOnClick.PP;
+        settingsResearches.sButtonResearchSelect.SetActive(false);
+
+        settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = settings.sColorPause;
+        ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = settings.sColorPause;
+
+        // change requested resources
+        settings.reqRes[-3] = (int)ItemOnClick.PP.ResNess_Amount[0];
+        settings.reqRes[-2] = (int)ItemOnClick.PP.ResNess_Amount[1];
+        settings.reqRes[-1] = (int)ItemOnClick.PP.ResNess_Amount[2];
+
+        int n = (int)(ItemOnClick.PP.ResAdd.x);
+        if (settings.reqRes.ContainsKey(n))
+        {
+            settings.reqRes[n] = (int)ItemOnClick.PP.ResAddAmount[0];
+        }
+        n = (int)(ItemOnClick.PP.ResAdd.y);
+        if (settings.reqRes.ContainsKey(n))
+        {
+            settings.reqRes[n] = (int)ItemOnClick.PP.ResAddAmount[1];
+        }
+        n = (int)(ItemOnClick.PP.ResAdd.z);
+        if (settings.reqRes.ContainsKey(n))
+        {
+            settings.reqRes[n] = (int)ItemOnClick.PP.ResAddAmount[2];
+        }
+        settingsResearches.sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
     }
-
-
 }
