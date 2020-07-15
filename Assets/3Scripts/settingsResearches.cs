@@ -15,7 +15,6 @@ public class settingsResearches: MonoBehaviour
     public GameObject panelInform;
     // number of choosen palnet
     public static int nChoosenPlanet = 0;
-    public static GameObject sRectSelect = null;
     // chosen planet
     public static GameObject ChosenPlanet = null;
     public static settings.TestItemModel sPlanet = null;
@@ -27,6 +26,8 @@ public class settingsResearches: MonoBehaviour
     public static GameObject sNamePlanet;
     public GameObject textIntro;
     public static GameObject sTextIntro;
+    public GameObject buttonResearchSelect;
+    public static GameObject sButtonResearchSelect;
 
     // nesessary resources
     public Transform ResWater, ResAir, ResSoil;
@@ -35,9 +36,6 @@ public class settingsResearches: MonoBehaviour
     // extraordinary resources
     public Transform ResAdd1, ResAdd2, ResAdd3;
     public static Transform r1, r2, r3;
-
-    public GameObject buttonResearchSelect;
-    public static GameObject sButtonResearchSelect;
 
     // amount of probes
     public GameObject textProbes;
@@ -50,6 +48,15 @@ public class settingsResearches: MonoBehaviour
     // text for requested resources
     public GameObject TextRequestedResources;
     public static GameObject sTextRequestedResources;
+
+    public class AcceptableResource
+    {
+        int amount;
+        // number of source planet
+        int numPlanet;
+    }
+    // key - number of resource
+    public static Dictionary<int, List<AcceptableResource>> ARes = new Dictionary<int, List<AcceptableResource>>();
 
     void Start()
     {
@@ -116,7 +123,7 @@ public class settingsResearches: MonoBehaviour
     {
         TestItemView view = new TestItemView(viewGameObject);
 
-        getItems.planetProperty PP = getItems.sPlanetProperty[planet.numPlanet];
+        getItems.PlanetProperty PP = getItems.sPlanetProperty[planet.numPlanet];
         if (PP.flagIsResearched)
         {
             viewGameObject.GetComponent<Image>().color = Color.black;

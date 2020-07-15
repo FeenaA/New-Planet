@@ -59,13 +59,15 @@ public class settings : MonoBehaviour
 
     // !!! 
     public static int sNProbes = 10;
-    public static int sNSpacecraft = 3;
+    public static int sNSpacecraft = 10;
+    public static int sNEither = 3;
+    public static int sNBlueCoin= 2;
 
     // !!! download
     public static int nLanguage = 1; // 0 - Russian, 1 - English
 
     public static bool flagSelectedPlanet = false;
-    public static getItems.planetProperty SelectedPlanet;
+    public static getItems.PlanetProperty SelectedPlanet;
 
     private static bool flagFirstTime = true;
 

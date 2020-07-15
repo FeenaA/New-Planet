@@ -7,6 +7,48 @@ public class panelInform : MonoBehaviour
 {
     public GameObject TextProbes;
 
+    // reset currently planet's properties
+    public static void ResetPlanet( getItems.PlanetProperty PP)
+    {
+        settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
+        settingsResearches.sNamePlanet.GetComponent<Text>().text = PP.textName;
+        settingsResearches.sTextIntro.GetComponent<Text>().text = getItems.sIntroduction[PP.numIntro];
+
+        //show nesessary resources
+        settingsResearches.rAir.GetComponentInChildren<Text>().text = getItems.ResNess[-3] + " = " + PP.ResNess_Amount[0];
+        settingsResearches.rWater.GetComponentInChildren<Text>().text = getItems.ResNess[-2] + " = " + PP.ResNess_Amount[1];
+        settingsResearches.rSoil.GetComponentInChildren<Text>().text = getItems.ResNess[-1] + " = " + PP.ResNess_Amount[2];
+
+        if (PP.flagIsResearched == false)
+        {
+            settingsResearches.sButtonResearchSelect.SetActive(true);
+            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Research";
+            settingsResearches.r1.GetComponentInChildren<Text>().text = "-";
+            settingsResearches.r2.GetComponentInChildren<Text>().text = "-";
+            settingsResearches.r3.GetComponentInChildren<Text>().text = "-";
+        }
+        else
+        {
+            if (settings.flagSelectedPlanet == false)
+            {
+                settingsResearches.sButtonResearchSelect.SetActive(true);
+                settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
+            }
+            else
+            {
+                settingsResearches.sButtonResearchSelect.SetActive(false);
+            }
+
+            //show additional resources
+            settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[PP.ResAdd[0]] +
+            " = " + PP.ResAddAmount[0];
+            settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[PP.ResAdd[1]] +
+            " = " + PP.ResAddAmount[1];
+            settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[PP.ResAdd[2]] +
+            " = " + PP.ResAddAmount[2];
+        }
+    }
+    
     // learn more about this planet
     public void ResearchPressed()
     {
@@ -17,6 +59,9 @@ public class panelInform : MonoBehaviour
             {
                 settings.sNProbes --;
                 TextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
+
+                // update resources at storage
+
 
                 if (settings.flagSelectedPlanet==false)
                 {
@@ -31,11 +76,11 @@ public class panelInform : MonoBehaviour
 
                 // show resources
                 settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                    (int)(ItemOnClick.PP.ResAdd.x)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.x);
+                    ItemOnClick.PP.ResAdd[0]] + " = " + ItemOnClick.PP.ResAddAmount[0];
                 settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                    (int)(ItemOnClick.PP.ResAdd.y)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.y);
+                    ItemOnClick.PP.ResAdd[1]] + " = " + ItemOnClick.PP.ResAddAmount[1];
                 settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                    (int)(ItemOnClick.PP.ResAdd.z)] + " = " + (int)(ItemOnClick.PP.ResAddAmount.z);
+                    ItemOnClick.PP.ResAdd[2]] + " = " + ItemOnClick.PP.ResAddAmount[2];
             }
             else
             {
@@ -62,24 +107,17 @@ public class panelInform : MonoBehaviour
         ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = settings.sColorPause;
 
         // change requested resources
-        settings.reqRes[-3] = (int)ItemOnClick.PP.ResNess_Amount[0];
-        settings.reqRes[-2] = (int)ItemOnClick.PP.ResNess_Amount[1];
-        settings.reqRes[-1] = (int)ItemOnClick.PP.ResNess_Amount[2];
-
-        int n = (int)(ItemOnClick.PP.ResAdd.x);
-        if (settings.reqRes.ContainsKey(n))
+        // nesessary
+        for (int i = 0; i < 3; i++)
+        {settings.reqRes[i - 3] = ItemOnClick.PP.ResNess_Amount[i];}
+        // extraordinary 
+        for (int i = 0; i < 3; i++)
         {
-            settings.reqRes[n] = (int)ItemOnClick.PP.ResAddAmount[0];
-        }
-        n = (int)(ItemOnClick.PP.ResAdd.y);
-        if (settings.reqRes.ContainsKey(n))
-        {
-            settings.reqRes[n] = (int)ItemOnClick.PP.ResAddAmount[1];
-        }
-        n = (int)(ItemOnClick.PP.ResAdd.z);
-        if (settings.reqRes.ContainsKey(n))
-        {
-            settings.reqRes[n] = (int)ItemOnClick.PP.ResAddAmount[2];
+            int n = ItemOnClick.PP.ResAdd[i];
+            if (settings.reqRes.ContainsKey(n))
+            {
+                settings.reqRes[n] = ItemOnClick.PP.ResAddAmount[i];
+            }
         }
         settingsResearches.sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
     }
