@@ -10,26 +10,27 @@ public class readAll : MonoBehaviour
         // download settings (isFirstGame, language, achievements, amountOfStars, unlockedLevels,
         // if saved session exists, settingsOfSavedSession () )
 
-        getItems.sGreekAlph = GetTextFromXML("Assets/5xml/GreekAlph.xml");
-        getItems.sIntroduction = GetTextFromXML("Assets/5xml/Introduction.xml");
-
-        getItems.ResourceAdd = GetTextFromXML1("Assets/5xml/ExtraResources.xml");
-
-        getItems.ResNess = GetTextFromXML2("Assets/5xml/NesessResources.xml");
+        getItems.sGreekAlph = GetTextFromXML("GreekAlph");
+        getItems.ResourceAdd = GetTextFromXML1("ExtraResources");
+        getItems.sIntroduction = GetTextFromXML1("Introduction");
+        getItems.ResNess = GetTextFromXML2("NesessResources");
     }
 
     public static List<string> GetTextFromXML(string path)
     {
         List<string> result = new List<string>() { };
 
-        XmlTextReader Reader = new XmlTextReader(path);
-        while (Reader.Read())
+        #region //Здесь реализация через TextAsset
+        TextAsset xmlData = Resources.Load(path) as TextAsset;
+        XmlDocument xDoc = new XmlDocument();
+        xDoc.LoadXml(xmlData.text);
+        XmlElement xRoot = xDoc.DocumentElement;
+        foreach (XmlNode xnode in xRoot)
         {
-            if (Reader.NodeType == XmlNodeType.Text)
-            {
-                result.Add(Reader.Value);
-            }
+            result.Add(xnode.InnerText);
         }
+        #endregion
+
         return result;
     }
 
@@ -43,9 +44,9 @@ public class readAll : MonoBehaviour
         if (settings.nLanguage == 1) { language = "English"; }
 
 
-        // XmlTextReader Reader = new XmlTextReader();
+        TextAsset xmlData = Resources.Load(path) as TextAsset;
         XmlDocument xDoc = new XmlDocument();
-        xDoc.Load(path);
+        xDoc.LoadXml(xmlData.text);
         XmlElement xRoot = xDoc.DocumentElement;
         foreach (XmlNode xnode in xRoot)
         {
@@ -75,8 +76,10 @@ public class readAll : MonoBehaviour
         if (settings.nLanguage == 0) { language = "Russian"; }
         if (settings.nLanguage == 1) { language = "English"; }
 
+
+        TextAsset xmlData = Resources.Load(path) as TextAsset;
         XmlDocument xDoc = new XmlDocument();
-        xDoc.Load(path);
+        xDoc.LoadXml(xmlData.text);
         XmlElement xRoot = xDoc.DocumentElement;
         foreach (XmlNode xnode in xRoot)
         {

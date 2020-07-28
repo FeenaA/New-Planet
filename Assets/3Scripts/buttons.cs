@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI; // это важно 
 
@@ -13,31 +14,34 @@ public class buttons : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    // cross is pressed
+    // home is pressed
     public void BackPressed()
     {
         SceneManager.LoadScene("Game");
     }
 
     // Pause is pressed
+    public static GameObject PrefabTest = null;
     public void PausePressed()
     {
-        // call static function
         sPausePressed();
+    }
+
+    public void OKPressed()
+    {
+        Destroy(PrefabTest);
     }
 
     // нажата кнопка Pause
     private static bool flagPause = false;
-    public static GameObject pauseRectangle = null;
     public static void sPausePressed()
     {
-        // the object may be called several times
-        if (pauseRectangle != null) 
-                {   flagPause = true;   }
-        else    {   flagPause = false;  }
+        if (settings.sPrefabPauseRectangle.activeSelf)
+        { flagPause = true; }
+        else { flagPause = false; }
 
-        if (!flagPause) {   PauseOn();  }
-        else            {   PauseOff(); }
+        if (!flagPause) { PauseOn(); }
+        else { PauseOff(); }
     }
 
     // change pause status
@@ -45,25 +49,29 @@ public class buttons : MonoBehaviour
     // stop or resume days counter increment
     // change texts' color
     // change ButtonPause's sprite
+    public static Color sColorProcess = new Color(255, 255, 255); //white
+    public static Color sColorPause = new Color(221, 84, 0);//orange
+    public static Color sColorCurrent;
     private static void PauseOn()
     {
         flagPause = true;
-        pauseRectangle = Instantiate(settings.sPrefabPauseRectangle);
+        settings.sTextDays.GetComponent<Text>().color = Color.green;// sColorPause;
+        settings.sTextCoins.GetComponent<Text>().color = sColorPause; 
+        settings.sPrefabPauseRectangle.SetActive(true);
         DateChangeing.pause = true;
-        settings.sTextDays.GetComponent<Text>().color = settings.sColorPause;
-        settings.sTextCoins.GetComponent<Text>().color = settings.sColorPause;      
-        settings.sColorCurrent = settings.sColorPause;
+        sColorCurrent = sColorPause;
         settings.sButtonPause.GetComponent<Image>().sprite = settings.sContinueImage;
     }
     private static void PauseOff()
     {
         flagPause = false;
-        Destroy(pauseRectangle);
+        settings.sTextCoins.GetComponent<Text>().color = sColorProcess;//white
+        settings.sTextDays.GetComponent<Text>().color = sColorProcess;
+        settings.sPrefabPauseRectangle.SetActive(false);
         DateChangeing.pause = false;
-        settings.sTextCoins.GetComponent<Text>().color = settings.sColorProcess;//white
-        settings.sTextDays.GetComponent<Text>().color = settings.sColorProcess;
-        settings.sColorCurrent = settings.sColorProcess;
+        sColorCurrent = sColorProcess;
         settings.sButtonPause.GetComponent<Image>().sprite = settings.sPauseImage;
+
     }
 
     // нажата кнопка Research
@@ -80,23 +88,25 @@ public class buttons : MonoBehaviour
         SceneManager.LoadScene("Research");
     }
 
-    // нажата кнопка Buildings
-    public void BuildingsPressed()
-    {
-        SceneManager.LoadScene("Buildings");
-    }
-
     // нажата кнопка Монета
-    private bool flagCoin = false;
-    private GameObject instance = null;
+    public GameObject TextCoins;
     public void NCoinPressed(GameObject prefab)
     {
-        // объект мог быть уничтожен вне данного скрипта
-        if (instance != null)   { flagCoin = true;    }
-        else                    { flagCoin = false;   }
+        if (!TextCoins.activeSelf)
+        {
+            TextCoins.SetActive(true);
+            TextCoins.GetComponent<Text>().text = DateChangeing.stepCoins + " per day";
+            StartCoroutine(MakeSleepObject());
+        }
+    }
 
-        if (!flagCoin)  { flagCoin = true;    instance = Instantiate(prefab); }
-        else            { flagCoin = false;   Destroy(instance);              }
+    IEnumerator MakeSleepObject()
+    {
+        yield return new WaitForSeconds(3.0f);
+        if (TextCoins.activeSelf)
+        {
+            TextCoins.SetActive(false);
+        }
     }
 
     // "cross at prefab" is pressed
@@ -111,8 +121,6 @@ public class buttons : MonoBehaviour
         }
     }
 
-
-
     // Нажата кнопка "Выход из игры"
     public void ExitPressed()
     {
@@ -120,4 +128,12 @@ public class buttons : MonoBehaviour
         Debug.Log("Exit pressed!");
     }
 
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
 }

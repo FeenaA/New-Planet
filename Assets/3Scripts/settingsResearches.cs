@@ -49,14 +49,28 @@ public class settingsResearches: MonoBehaviour
     public GameObject TextRequestedResources;
     public static GameObject sTextRequestedResources;
 
-    public class AcceptableResource
+    public class AcceptRes
     {
-        int amount;
+        // amount of resource
+        public int amount;
         // number of source planet
-        int numPlanet;
+        public string NamePlanet;
     }
     // key - number of resource
-    public static Dictionary<int, List<AcceptableResource>> ARes = new Dictionary<int, List<AcceptableResource>>();
+    public static Dictionary<int, List<AcceptRes>> Storage = new Dictionary<int, List<AcceptRes>>();
+
+
+    //public GameObject prefabCrawnLine;
+
+    // image with script
+    public RectTransform ImageCrawlLine;
+    public GameObject anchor;
+    public static GameObject sPrefabCrawnLine;
+    //public static RectTransform sImageCrawlLine;
+    public static GameObject sAnchor;
+    public GameObject title; 
+    public static GameObject sTitle;
+
 
     void Start()
     {
@@ -79,10 +93,20 @@ public class settingsResearches: MonoBehaviour
 
         // upload settings
         textDays.GetComponent<Text>().text = settings.sStringTextDays;
-        textDays.GetComponent<Text>().color = settings.sColorCurrent;
+        textDays.GetComponent<Text>().color = buttons.sColorCurrent;
 
         sTextProbes = textProbes;
         sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
+
+        // craw line 
+        //sImageCrawlLine = ImageCrawlLine;
+        crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
+        sTitle = title;
+        cl.Show("Water was successfully transported from your native planet!");
+        //sPrefabCrawnLine = prefabCrawnLine;
+        //sPanelCrawlLine = panelCrawlLine; 
+        //sAnchor = anchor;
+        //crawlLine.Show("Water was successfully transported from your native planet!");
 
         sTextSC = textSC;
         sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
@@ -92,6 +116,28 @@ public class settingsResearches: MonoBehaviour
 
         sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
     }
+
+   /* private void MoveCrawlLine()
+    {
+        //Vector2 sizeContent = imageCrawnLine.transform.GetComponent<SpriteRenderer>().sprite.rect.size;
+        //Vector2 sz = imageCrawnLine.transform.GetComponent<SpriteRenderer>().sprite.rect.size;
+        float width = imageCrawnLine.rect.width;
+        float dist = 0;
+        while (dist < width)
+        //for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine(StepCrawlLine());
+            //yield return new WaitForSeconds(movementSpeed);
+            imageCrawnLine.transform.position = textCrawnLine.transform.position + new Vector3(-stepSize, 0, 0);
+            dist += stepSize;
+            print(dist);
+        }
+    }
+
+    IEnumerator StepCrawlLine()
+    {
+        yield return new WaitForSeconds(movementSpeed);
+    }*/
 
     // fill information about planets
     void OnReceivedModels(settings.TestItemModel[] setPlanets)
@@ -132,9 +178,9 @@ public class settingsResearches: MonoBehaviour
         if (PP.flagIsSelected)
         {
             view.buttonName.GetComponent<Outline>().enabled = true;
-            view.buttonName.GetComponent<Outline>().effectColor = settings.sColorPause;
+            view.buttonName.GetComponent<Outline>().effectColor = buttons.sColorPause;
             viewGameObject.GetComponent<Outline>().enabled = true;
-            viewGameObject.GetComponent<Outline>().effectColor = settings.sColorPause;
+            viewGameObject.GetComponent<Outline>().effectColor = buttons.sColorPause;
         }
         view.textNumber.text = System.Convert.ToString(planet.numPlanet);
         view.buttonName.GetComponentInChildren<Text>().text = PP.textName;

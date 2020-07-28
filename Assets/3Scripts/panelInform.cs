@@ -7,8 +7,8 @@ public class panelInform : MonoBehaviour
 {
     public GameObject TextProbes;
 
-    // reset currently planet's properties
-    public static void ResetPlanet( getItems.PlanetProperty PP)
+    // reset and show currently planet's properties
+    public static void ResetPlanet(getItems.PlanetProperty PP)
     {
         settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
         settingsResearches.sNamePlanet.GetComponent<Text>().text = PP.textName;
@@ -48,7 +48,7 @@ public class panelInform : MonoBehaviour
             " = " + PP.ResAddAmount[2];
         }
     }
-    
+
     // learn more about this planet
     public void ResearchPressed()
     {
@@ -57,13 +57,10 @@ public class panelInform : MonoBehaviour
         {
             if (settings.sNProbes > 0)
             {
-                settings.sNProbes --;
+                settings.sNProbes--;
                 TextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
 
-                // update resources at storage
-
-
-                if (settings.flagSelectedPlanet==false)
+                if (settings.flagSelectedPlanet == false)
                 {
                     settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
                 }
@@ -71,7 +68,7 @@ public class panelInform : MonoBehaviour
                 {
                     settingsResearches.sButtonResearchSelect.SetActive(false);
                 }
-                
+
                 ItemOnClick.PP.flagIsResearched = true;
 
                 // show resources
@@ -81,6 +78,9 @@ public class panelInform : MonoBehaviour
                     ItemOnClick.PP.ResAdd[1]] + " = " + ItemOnClick.PP.ResAddAmount[1];
                 settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
                     ItemOnClick.PP.ResAdd[2]] + " = " + ItemOnClick.PP.ResAddAmount[2];
+
+                // update resources at storage
+                AddToStorage();
             }
             else
             {
@@ -103,13 +103,13 @@ public class panelInform : MonoBehaviour
         settings.SelectedPlanet = ItemOnClick.PP;
         settingsResearches.sButtonResearchSelect.SetActive(false);
 
-        settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = settings.sColorPause;
-        ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = settings.sColorPause;
+        settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = buttons.sColorPause;
+        ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = buttons.sColorPause;
 
         // change requested resources
         // nesessary
         for (int i = 0; i < 3; i++)
-        {settings.reqRes[i - 3] = ItemOnClick.PP.ResNess_Amount[i];}
+        { settings.reqRes[i - 3] = ItemOnClick.PP.ResNess_Amount[i]; }
         // extraordinary 
         for (int i = 0; i < 3; i++)
         {
@@ -118,7 +118,124 @@ public class panelInform : MonoBehaviour
             {
                 settings.reqRes[n] = ItemOnClick.PP.ResAddAmount[i];
             }
+
+            // remove selected planet from storage
+            RemoveFromStorage();
         }
         settingsResearches.sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
+    }
+
+    // add new resources to be transportable
+    private void AddToStorage()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            int key = ItemOnClick.PP.ResAdd[i];
+            settingsResearches.AcceptRes PlanetAmount = new settingsResearches.AcceptRes
+            {
+                amount = ItemOnClick.PP.ResAddAmount[i],
+                NamePlanet = ItemOnClick.PP.textName
+            };
+            if (settingsResearches.Storage.ContainsKey(key))
+            {
+                settingsResearches.Storage[ItemOnClick.PP.ResAdd[i]].Add(PlanetAmount);
+            }
+            else
+            {
+                List<settingsResearches.AcceptRes> value = new List<settingsResearches.AcceptRes> { PlanetAmount };
+                settingsResearches.Storage.Add(key, value);
+            }
+        }
+
+        /*foreach (var item in settingsResearches.Storage)
+        {
+            foreach (var value in item.Value)
+            {
+                print(getItems.ResourceAdd[item.Key] + ": " + value.NamePlanet + ", " + value.amount);
+            }
+        }*/
+    }
+
+    // remove selected planet from storage
+    private void RemoveFromStorage()
+    {
+        var keysForRemove = new List<int>();
+
+        // remove information from Values
+        foreach (var item in settingsResearches.Storage)
+        {
+            int j = 0, Size = item.Value.Count;
+            bool flagFound = false;
+            while ((flagFound == false) && (j < Size))
+            {
+                if (item.Value[j].NamePlanet == ItemOnClick.PP.textName)
+                {
+                    flagFound = true;
+                    item.Value.Remove(item.Value[j]);
+
+                    // Make a list of keys with no resources
+                    if (Size - 1 == 0)
+                    {
+                        keysForRemove.Add(item.Key);
+                    }
+                }
+                j++;
+            }
+        }
+
+        // Remove empty resource from the storage
+        foreach (var key in keysForRemove)
+        {
+            settingsResearches.Storage.Remove(key);
+        }
+    }
+
+    // get amount of resourse "numRes" in the storage
+    public static int GetAmountInStorage(int key)
+    {
+        int res = 0;
+        if (settingsResearches.Storage.ContainsKey(key))
+        {
+            var content = settingsResearches.Storage[key];
+            foreach (var item in content)
+            {
+                res += item.amount;
+            }
+        }
+        return res;
+    }
+
+    // use 1 resource from the storage and remove empty resource
+    public static void TransportResource(int numRes)
+    {
+        // change amount of resource at the storage
+        --settingsResearches.Storage[numRes][0].amount;
+
+        // change amount of resource at the planet
+        int key = 1;
+        int Size = settings.sNPlanets;
+        bool flagPlanetFound = false;
+        string NamePlanet = settingsResearches.Storage[numRes][0].NamePlanet;
+        while ((!flagPlanetFound) && (key < Size))
+        {
+            if (getItems.sPlanetProperty[key].textName == NamePlanet)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (getItems.sPlanetProperty[key].ResAdd[j] == numRes)
+                    { getItems.sPlanetProperty[key].ResAddAmount[j]--; }
+                }
+                flagPlanetFound = true;
+            }
+            key++;
+        }
+
+        if (settingsResearches.Storage[numRes][0].amount == 0)
+        {
+            settingsResearches.Storage[numRes].Remove(settingsResearches.Storage[numRes][0]);
+            // remove empty resource from the storage
+            if (settingsResearches.Storage[numRes].Count == 0)
+            { settingsResearches.Storage.Remove(numRes); }
+        }
     }
 }

@@ -15,6 +15,7 @@ public class DateChangeing : MonoBehaviour
 
     private static int nDay = 1;
     private static int nDayPF = 0;
+    private static int nDaySC = 0;
     // account of coins
     public static int sCoins = 99999;
     // account of everyday coins
@@ -55,6 +56,7 @@ public class DateChangeing : MonoBehaviour
             
             sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
 
+            // probes increment
             if (BuildingsOperations.ProbeFactory.N > 0 )
             {
                 nDayPF++;
@@ -62,6 +64,17 @@ public class DateChangeing : MonoBehaviour
                 {
                     settings.sNProbes++;
                     nDayPF = 0;
+                }
+            }
+
+            // spacecrafts increment
+            if (BuildingsOperations.SCfactory.N > 0)
+            {
+                nDaySC++;
+                if (nDaySC == BuildingsOperations.ProbeFactory.Time)
+                {
+                    settings.sNSpacecraft++;
+                    nDaySC = 0;
                 }
             }
 

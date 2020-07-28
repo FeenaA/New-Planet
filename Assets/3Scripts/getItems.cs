@@ -5,7 +5,7 @@ using UnityEngine;
 public class getItems : MonoBehaviour
 {
     public static List<string> sGreekAlph;
-    public static List<string> sIntroduction;
+    //public static List<string> sIntroduction;
     public static List<string> sAdditionalResources;
     private static int NSymbols;
     private static int NPlanets;
@@ -16,6 +16,8 @@ public class getItems : MonoBehaviour
     public static Dictionary<int, string> ResNess;
     // extra resources // download
     public static Dictionary<int, string> ResourceAdd;
+    // introduction
+    public static Dictionary<int, string> sIntroduction;
 
     public class PlanetProperty
     {
@@ -37,7 +39,6 @@ public class getItems : MonoBehaviour
 
     // requirements to the SelectedPlanet (number of resources and amount)
     public static Dictionary<int, int> setReqs()
-    //public static void setReqs( Dictionary<int, int> res )
     {
         Dictionary<int, int> res = new Dictionary<int, int>();
 
@@ -60,6 +61,8 @@ public class getItems : MonoBehaviour
         NPlanets = settings.sNPlanets;
         NSymbols = sGreekAlph.Count;
 
+        int L = settings.sMaterials.Length - 1;
+
         // set of planets
         settings.TestItemModel[] results = new settings.TestItemModel[NPlanets];
 
@@ -71,7 +74,7 @@ public class getItems : MonoBehaviour
         rnd = new System.Random();
         //System.Random rnd = new System.Random();
         int NMat = settings.sMaterials.Length - 1;
-        int NIntro = sIntroduction.Count - 1;
+        int NIntro = sIntroduction.Count;
 
         // key - number of planet, value - number of an additional resource
         Dictionary<int, int[]> resAdd = new Dictionary<int, int[]>();
@@ -103,7 +106,7 @@ public class getItems : MonoBehaviour
             {
                 textName = Name[i],
                 numMaterial = rnd.Next(0, NMat),
-                numIntro = rnd.Next(0, NIntro),
+                numIntro = rnd.Next(1, NIntro),
                 // nesessary resources
                 ResNess_Amount = resources[i],
                 // numbers of resources

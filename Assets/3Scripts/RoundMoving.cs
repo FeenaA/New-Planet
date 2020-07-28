@@ -21,6 +21,7 @@ public class RoundMoving : MonoBehaviour
     // Earth moving radius
     private float r_E;
 
+    private static System.Random rnd = new System.Random();
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,7 @@ public class RoundMoving : MonoBehaviour
         // Получить вектор, который указывает от Sun position к Earth position
         Vector3 SunEarthVector = gameObjectCentre.transform.position - transform.position;
 
-        // получить расстояние между центром вращения и телом вращения
+        // get distance between the centre of moveing and the object   
         r_E = SunEarthVector.magnitude;
 
         // инициализация начального угла для Earth position
@@ -40,6 +41,15 @@ public class RoundMoving : MonoBehaviour
 
         step_phi = Mathf.PI / 2000f;
         step_phi *= rateRotate;
+
+        //-------------------------------------------
+        //getMaterial();
+    }
+
+    private void getMaterial()
+    {
+        int L = settings.sMaterials.Length - 1;
+        this.GetComponent<Renderer>().material = settings.sMaterials[rnd.Next(0, L)];
     }
 
 
@@ -54,7 +64,7 @@ public class RoundMoving : MonoBehaviour
 
 
         Vector3 CentrePos = gameObjectCentre.transform.position;
-        // изменить Earth position
+        // change Earth position
         transform.position = gameObjectCentre.transform.position + posEarth();
         //sunPos + posEarth(phi);
         phi1 += step_phi;
