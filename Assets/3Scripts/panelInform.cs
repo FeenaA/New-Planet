@@ -29,7 +29,8 @@ public class panelInform : MonoBehaviour
         }
         else
         {
-            if (settings.flagSelectedPlanet == false)
+            //if (settings.flagSelectedPlanet == false)
+            if (PP.flagIsSelected == false)
             {
                 settingsResearches.sButtonResearchSelect.SetActive(true);
                 settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";

@@ -28,7 +28,7 @@ public class ItemOnClick : MonoBehaviour
     }
 
     // Method to be called from the inspector
-    private static void sOnMouseDown()
+    private void sOnMouseDown()
     {
         // if previous and current planets aren't the same
         if (sPreviousPlanet != sPlanet) 
@@ -44,7 +44,7 @@ public class ItemOnClick : MonoBehaviour
     }
 
     // reaction to the "OnMouseDown" event for table
-    public static void ItemSelect(GameObject instance)
+    public void ItemSelect(GameObject instance)
     {
         // illustrate the ItemImage changeing 
         if (colorDeselected == colorSelected)
@@ -63,6 +63,9 @@ public class ItemOnClick : MonoBehaviour
         // PP includes all information about particular planet
         PP = getItems.sPlanetProperty[nCurrentPlanet];
         panelInform.ResetPlanet(PP);
+
+        // if this planet've been selected, make ButtonResearch not active
+
 
         sPreviousPlanet = instance;
     }

@@ -11,22 +11,21 @@ public class crawlLine : MonoBehaviour
     public float stepSize = 0.05f;
     // moving gameObject
     public RectTransform moveingGameObject;
+    // stable gameObject
+    public RectTransform stableGameObject;
+    // text massage
+    public GameObject TextMessage;
+
+    public static bool flagCrawlBusy = false; 
 
     public void Show(string message)
     {
-        //GameObject instance = Instantiate(settingsResearches.sPrefabCrawnLine);
-        //instance.transform.SetParent(settingsResearches.sPanelCrawlLine.transform);
-        //instance.transform.position = settingsResearches.sAnchor.transform.position;
-
-
-        StartCoroutine(CrawlLine(message));
-
-
-        //imageCrawnLine.transform.position = new Vector3(imageCrawnLine.rect.width/2,0,0);
-        //print(imageCrawnLine.rect.width / 2);
-        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        //StartCoroutine(StepCrawlLine());
-
+        if (!flagCrawlBusy)
+        {
+            flagCrawlBusy = true;
+            StartCoroutine(CrawlLine(message));
+            flagCrawlBusy = false;
+        }
     }
 
     IEnumerator CrawlLine(string message)
@@ -41,18 +40,22 @@ public class crawlLine : MonoBehaviour
         settingsResearches.sTitle.GetComponent<Text>().fontStyle = FontStyle.Bold;
         yield return new WaitForSeconds(timePulse);
         settingsResearches.sTitle.SetActive(false);
+        settingsResearches.sTitle.GetComponent<Text>().fontStyle = FontStyle.Normal;
 
-        // crawl line moveing
-        moveingGameObject.transform.GetComponent<Text>().text = message;
-        float width = moveingGameObject.rect.width;
-        float initPosX = moveingGameObject.transform.position.x;
-        print(initPosX);
-        print(width);
-        while ((-moveingGameObject.transform.position.x) < (width + initPosX))
+        // crawl line moving
+        TextMessage.transform.GetComponent<Text>().text = message;
+        moveingGameObject.gameObject.SetActive(true);
+        Vector3 initPos = moveingGameObject.transform.position;
+        float initPosX = initPos.x;
+
+        while ((-moveingGameObject.transform.position.x) < initPosX)
         {
             yield return new WaitForSeconds(movementSpeed);
             moveingGameObject.transform.position = moveingGameObject.transform.position + new Vector3(-stepSize, 0, 0);
-            print(-moveingGameObject.transform.position.x);
         }
+        settingsResearches.sTitle.SetActive(true);
+
+        moveingGameObject.gameObject.SetActive(false);
+        moveingGameObject.transform.position = initPos;
     }
 }

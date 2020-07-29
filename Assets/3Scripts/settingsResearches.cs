@@ -59,18 +59,10 @@ public class settingsResearches: MonoBehaviour
     // key - number of resource
     public static Dictionary<int, List<AcceptRes>> Storage = new Dictionary<int, List<AcceptRes>>();
 
-
-    //public GameObject prefabCrawnLine;
-
     // image with script
     public RectTransform ImageCrawlLine;
-    public GameObject anchor;
-    public static GameObject sPrefabCrawnLine;
-    //public static RectTransform sImageCrawlLine;
-    public static GameObject sAnchor;
     public GameObject title; 
     public static GameObject sTitle;
-
 
     void Start()
     {
@@ -96,48 +88,20 @@ public class settingsResearches: MonoBehaviour
         textDays.GetComponent<Text>().color = buttons.sColorCurrent;
 
         sTextProbes = textProbes;
+        sTextSC = textSC;
         sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
+        sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
 
         // craw line 
-        //sImageCrawlLine = ImageCrawlLine;
         crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
         sTitle = title;
         cl.Show("Water was successfully transported from your native planet!");
-        //sPrefabCrawnLine = prefabCrawnLine;
-        //sPanelCrawlLine = panelCrawlLine; 
-        //sAnchor = anchor;
-        //crawlLine.Show("Water was successfully transported from your native planet!");
-
-        sTextSC = textSC;
-        sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
 
         // fill information about planets
         OnReceivedModels(settings.sSetPlanets);
 
         sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
     }
-
-   /* private void MoveCrawlLine()
-    {
-        //Vector2 sizeContent = imageCrawnLine.transform.GetComponent<SpriteRenderer>().sprite.rect.size;
-        //Vector2 sz = imageCrawnLine.transform.GetComponent<SpriteRenderer>().sprite.rect.size;
-        float width = imageCrawnLine.rect.width;
-        float dist = 0;
-        while (dist < width)
-        //for (int i = 0; i < 5; i++)
-        {
-            StartCoroutine(StepCrawlLine());
-            //yield return new WaitForSeconds(movementSpeed);
-            imageCrawnLine.transform.position = textCrawnLine.transform.position + new Vector3(-stepSize, 0, 0);
-            dist += stepSize;
-            print(dist);
-        }
-    }
-
-    IEnumerator StepCrawlLine()
-    {
-        yield return new WaitForSeconds(movementSpeed);
-    }*/
 
     // fill information about planets
     void OnReceivedModels(settings.TestItemModel[] setPlanets)
@@ -158,7 +122,10 @@ public class settingsResearches: MonoBehaviour
                 ChosenPlanet = instance;
                 sPlanet = planet;
                 ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();
-                ItemOnClick.ItemSelect(instance);
+
+                // item select
+                ItemOnClick click = GameObject.Find("SettingsResearches").GetComponent<ItemOnClick>();
+                click.ItemSelect(instance);
             }
             nPlanet++;
         }

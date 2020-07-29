@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class SunRotate : MonoBehaviour
 {
-    float y_rotate;
+    public float x_rotate = 0;
+    public float y_rotate = 0.15f;
+    public float z_rotate = 0;
 
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         y_rotate = 0.15f;
-    }
+    }*/
 
     // Update is called once per frame
     void Update()
     {
         // вращение вокруг своей оси
         this.transform.rotation = Quaternion.Euler(
-            transform.rotation.eulerAngles.x, 
+            transform.rotation.eulerAngles.x + x_rotate,
             transform.rotation.eulerAngles.y + y_rotate, 
-            transform.rotation.eulerAngles.z
+            transform.rotation.eulerAngles.z + z_rotate
             );
     }
 }

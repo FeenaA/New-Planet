@@ -75,7 +75,7 @@ public class settings : MonoBehaviour
     // !!! 
     public static int sNProbes = 20;
     public static int sNSpacecraft = 20;
-    public static int sNEither = 3;
+    public static int sNEther = 3;
     public static int sNBlueCoin = 2;
 
     // !!! download
