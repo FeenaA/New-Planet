@@ -12,10 +12,22 @@ public class getItems : MonoBehaviour
 
     private static System.Random rnd;
 
-    // nesessary resources // download
-    public static Dictionary<int, string> ResNess;
-    // extra resources // download
-    public static Dictionary<int, string> ResourceAdd;
+    public class ResourceInformation
+    {
+        public string name;
+        public int cost;
+        public ResourceInformation(string Name, int Cost)
+        {
+            name = Name;
+            cost = Cost;
+        }
+    }
+
+    // nesessary resources
+    //public static Dictionary<int, string> ResNess;
+    public static Dictionary<int, ResourceInformation> ResNess;
+    // extra resources
+    public static Dictionary<int, ResourceInformation> ResourceAdd;
     // introduction
     public static Dictionary<int, string> sIntroduction;
 

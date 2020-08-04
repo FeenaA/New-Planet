@@ -28,6 +28,8 @@ public class settingsResearches: MonoBehaviour
     public static GameObject sTextIntro;
     public GameObject buttonResearchSelect;
     public static GameObject sButtonResearchSelect;
+    public GameObject panelInformation;
+    public static GameObject sPanelInformation;
 
     // nesessary resources
     public Transform ResWater, ResAir, ResSoil;
@@ -35,15 +37,17 @@ public class settingsResearches: MonoBehaviour
 
     // extraordinary resources
     public Transform ResAdd1, ResAdd2, ResAdd3;
-    public static Transform r1, r2, r3;
+    public static Transform[] r;//1, r2, r3;
 
     // amount of probes
     public GameObject textProbes;
     public static GameObject sTextProbes;
-
     // amount of spacecrafts
     public GameObject textSC;
     public static GameObject sTextSC;
+    // amount of Ether
+    public GameObject textEth;
+    public static GameObject sTextEth;
 
     // text for requested resources
     public GameObject TextRequestedResources;
@@ -71,14 +75,16 @@ public class settingsResearches: MonoBehaviour
         sNamePlanet = NamePlanet;
         sTextIntro = textIntro;
         sTextRequestedResources = TextRequestedResources;
+        sPanelInformation = panelInformation;
 
         rWater = ResWater;
         rAir = ResAir;
         rSoil = ResSoil;
 
-        r1 = ResAdd1;
+        /*r1 = ResAdd1;
         r2 = ResAdd2;
-        r3 = ResAdd3;
+        r3 = ResAdd3;*/
+        r = new Transform[3] { ResAdd1, ResAdd2, ResAdd3};
 
         // button to Research or Select planet
         sButtonResearchSelect = buttonResearchSelect;
@@ -89,8 +95,10 @@ public class settingsResearches: MonoBehaviour
 
         sTextProbes = textProbes;
         sTextSC = textSC;
+        sTextEth = textEth;
         sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
         sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
+        sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.sNEther);
 
         // craw line 
         crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
@@ -100,7 +108,9 @@ public class settingsResearches: MonoBehaviour
         // fill information about planets
         OnReceivedModels(settings.sSetPlanets);
 
-        sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
+        //sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
+        ShowProgress SP = panelInformation.GetComponent<ShowProgress>();
+        sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.reqRes);
     }
 
     // fill information about planets

@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 
 
-public class showProgress : MonoBehaviour
+public class ShowProgress : MonoBehaviour
 {
-    public static string Show( Dictionary<int, int> reqRes)
+    public string Show(Dictionary<int, int> reqRes)
     {
         string s = "";
         foreach (var resource in reqRes)
@@ -15,12 +15,12 @@ public class showProgress : MonoBehaviour
             if (resource.Key>0)
             {
                 // extraordinary resources
-                s += getItems.ResourceAdd[resource.Key] + ": " + resource.Value + "/10\n";
+                s += getItems.ResourceAdd[resource.Key].name + ": " + resource.Value + "/10\n";
             }
             else
             {
                 // nessessary resources
-                s += getItems.ResNess[resource.Key] + ": " + resource.Value + "/10\n";
+                s += getItems.ResNess[resource.Key].name + ": " + resource.Value + "/10\n";
             }
         }
         return(s);

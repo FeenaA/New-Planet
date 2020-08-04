@@ -7,11 +7,10 @@ using UnityEngine.UI;
 public class settings : MonoBehaviour
 {
     public GameObject PauseRectangle;
-    public static GameObject sPrefabPauseRectangle;
+    public static GameObject sPauseRectangle;
     
     /*public static AllGameObjects GO;
-    
-    public GameObject PauseRectangle;*/
+    */
 
 
 
@@ -33,10 +32,6 @@ public class settings : MonoBehaviour
     public GameObject PanelResources;
     public static GameObject sPanelPeople;
     public static GameObject sPanelResources;
-    // colors of "textCoins" and "textDays"
-    /*public static Color sColorProcess = new Color(255, 255, 255); //white
-    public static Color sColorPause = new Color(221, 84, 0);//orange
-    public static Color sColorCurrent;*/
     // canvas for buildings
     public GameObject canvasBuildings;
     public static GameObject sCanvasBuildings;
@@ -73,7 +68,7 @@ public class settings : MonoBehaviour
     public static Material[] sMaterials;
 
     // !!! 
-    public static int sNProbes = 20;
+    public static int sNProbes = 10;
     public static int sNSpacecraft = 20;
     public static int sNEther = 3;
     public static int sNBlueCoin = 2;
@@ -90,7 +85,7 @@ public class settings : MonoBehaviour
 
     void Start()
     {
-        sPrefabPauseRectangle = PauseRectangle;
+        sPauseRectangle = PauseRectangle;
 
         // read all informationf from *.xml
         if (flagFirstTime == true)
@@ -131,12 +126,14 @@ public class settings : MonoBehaviour
 
         sPanelResources = PanelResources;
         Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
-        TextReqs.GetComponent<Text>().text = showProgress.Show(reqRes);
+        //TextReqs.GetComponent<Text>().text = showProgress.Show(reqRes);
+
+        ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
+        TextReqs.GetComponent<Text>().text = SP.Show(reqRes);
 
         sTextCoins = textCoins;
         sTextDays = textDays;
         sStringTextDays = sTextDays.GetComponent<Text>().text;
-        //sColorCurrent = sColorProcess;
         sPauseImage = pauseImage;
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
@@ -145,10 +142,10 @@ public class settings : MonoBehaviour
         sPrefabTest = prefabTest;
         sCanvas = Canvas;
 
-
         if (flagPauseBeforePrefab) { buttons.sPausePressed(); }
     }
 
+    // general set of GOs
     public class AllGameObjects
     {
         public GameObject pauseRectangle;

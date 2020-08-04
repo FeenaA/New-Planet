@@ -16,15 +16,15 @@ public class DateChangeing : MonoBehaviour
     private static int nDay = 1;
     private static int nDayPF = 0;
     private static int nDaySC = 0;
-    // account of coins
-    public static int sCoins = 99999;
+    // amount of coins
+    public static int sCoins = 50000;
     // account of everyday coins
     public static int stepCoins = 2;
     // reference
     public GameObject textCoinsObject;
     public static GameObject sTextCoinsObject;
 
-    private int MaxCoins = 99999;
+    private readonly int MaxCoins = 99999;
 
     void Start()
     {
@@ -44,16 +44,8 @@ public class DateChangeing : MonoBehaviour
             settings.sStringTextDays = "day " + nDay;
             GetComponent<Text>().text = settings.sStringTextDays;
 
-            // coins increment
-            if (sCoins + stepCoins > MaxCoins)
-            {
-                sCoins = MaxCoins;
-            }
-            else
-            {
-                sCoins += stepCoins;
-            }
-            
+            // increase and show amount of coins
+            sCoins = AddCoins(stepCoins);
             sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
 
             // probes increment
@@ -80,6 +72,14 @@ public class DateChangeing : MonoBehaviour
 
             nDay++;
         }
+    }
+
+    public int AddCoins(int N)
+    {
+        int currentCoins = sCoins;
+        if (currentCoins + N > MaxCoins)    { currentCoins = MaxCoins;  }
+        else                                { currentCoins += N;}
+        return currentCoins;
     }
 }
 

@@ -8,7 +8,9 @@ public class ItemOnClick : MonoBehaviour
     // chosen planet
     public GameObject Planet;
     private static GameObject sPlanet;
+    // previous chosen planet
     private static GameObject sPreviousPlanet;
+    // button on the table
     public Button buttonName;
     public static Button sButtonName;
 
@@ -62,10 +64,9 @@ public class ItemOnClick : MonoBehaviour
         
         // PP includes all information about particular planet
         PP = getItems.sPlanetProperty[nCurrentPlanet];
-        panelInform.ResetPlanet(PP);
-
-        // if this planet've been selected, make ButtonResearch not active
-
+        
+        panelInform PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();
+        PI.ResetPlanet(PP);
 
         sPreviousPlanet = instance;
     }

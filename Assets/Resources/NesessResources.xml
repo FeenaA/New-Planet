@@ -1,18 +1,12 @@
 <NesessRecources>
 	<Recource language="Russian">
-        <Res name="Воздух" number="-3">
-        </Res>
-        <Res name="Вода" number="-2">
-        </Res>
-        <Res name="Почва" number="-1">
-        </Res>
+        <resource name="Воздух" cost="20"  number="-3"></resource>
+        <resource name="Вода"   cost="50"  number="-2"></resource>
+        <resource name="Почва"  cost="10"  number="-1"></resource>
     </Recource>
     <Recource language="English">
-        <Res name="Air" number="-3">
-        </Res>
-        <Res name="Water" number="-2">
-        </Res>
-        <Res name="Soil" number="-1">
-        </Res>
+        <resource name="Air"    cost="20"  number="-3"></resource>
+        <resource name="Water"  cost="50"  number="-2"></resource>
+        <resource name="Soil"   cost="10"  number="-1"></resource>
     </Recource>
 </NesessRecources>

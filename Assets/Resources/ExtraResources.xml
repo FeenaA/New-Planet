@@ -1,32 +1,32 @@
 <ExtraRecources>
 	<Recource language="Russian">
-        <resource>Нефть</resource>
-        <resource>Газ</resource>
-        <resource>Торф</resource>
-        <resource>Уголь</resource>
-        <resource>Руда</resource>
-        <resource>Песок</resource>
-        <resource>Глина</resource>
-        <resource>Гранит</resource>
-        <resource>Агат</resource>
-        <resource>Оникс</resource>
-        <resource>Рубин</resource>
-        <resource>Апатит</resource>
-        <resource>Барит</resource>
+        <resource name="Нефть"  cost="550"  number="1"></resource>
+        <resource name="Газ"    cost="400"  number="2"></resource>
+        <resource name="Торф"   cost="200"  number="3"></resource>
+        <resource name="Уголь"  cost="150"  number="4"></resource>
+        <resource name="Руда"   cost="200"  number="5"></resource>
+        <resource name="Песок"  cost="100"  number="6"></resource>
+        <resource name="Глина"  cost="100"  number="7"></resource>
+        <resource name="Гранит" cost="450"  number="8"></resource>
+        <resource name="Агат"   cost="600"  number="9"></resource>
+        <resource name="Оникс"  cost="700"  number="10"></resource>
+        <resource name="Рубин"  cost="800"  number="11"></resource>
+        <resource name="Апатит" cost="500"  number="12"></resource>
+        <resource name="Барит"  cost="300"  number="13"></resource>
     </Recource>
     <Recource language="English">
-        <resource>Oil</resource>
-        <resource>Gas</resource>
-        <resource>Peat</resource>
-        <resource>Coal</resource>
-        <resource>Ore</resource>
-        <resource>Sand</resource>
-        <resource>Clay</resource>
-        <resource>Granite</resource>
-        <resource>Agate</resource>
-        <resource>Onyx</resource>
-        <resource>Ruby</resource>
-        <resource>Apatite</resource>
-        <resource>Barite</resource>
+        <resource name="Oil"    cost="550"  number="1"></resource>
+        <resource name="Gas"    cost="400"  number="2"></resource>
+        <resource name="Peat"   cost="200"  number="3"></resource>
+        <resource name="Coal"   cost="150"  number="4"></resource>
+        <resource name="Ore"    cost="200"  number="5"></resource>
+        <resource name="Sand"   cost="100"  number="6"></resource>
+        <resource name="Clay"   cost="100"  number="7"></resource>
+        <resource name="Granite" cost="450" number="8"></resource>
+        <resource name="Agate"  cost="600"  number="9"></resource>
+        <resource name="Onyx"   cost="700"  number="10"></resource>
+        <resource name="Ruby"   cost="800"  number="11"></resource>
+        <resource name="Apatite" cost="5200" number="12"></resource>
+        <resource name="Barite" cost="300"  number="13"></resource>
     </Recource>
 </ExtraRecources>

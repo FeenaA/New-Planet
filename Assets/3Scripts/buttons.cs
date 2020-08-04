@@ -36,7 +36,7 @@ public class buttons : MonoBehaviour
     private static bool flagPause = false;
     public static void sPausePressed()
     {
-        if (settings.sPrefabPauseRectangle.activeSelf)
+        if (settings.sPauseRectangle.activeSelf)
         { flagPause = true; }
         else { flagPause = false; }
 
@@ -57,7 +57,7 @@ public class buttons : MonoBehaviour
         flagPause = true;
         settings.sTextDays.GetComponent<Text>().color = Color.green;// sColorPause;
         settings.sTextCoins.GetComponent<Text>().color = sColorPause; 
-        settings.sPrefabPauseRectangle.SetActive(true);
+        settings.sPauseRectangle.SetActive(true);
         DateChangeing.pause = true;
         sColorCurrent = sColorPause;
         settings.sButtonPause.GetComponent<Image>().sprite = settings.sContinueImage;
@@ -67,7 +67,7 @@ public class buttons : MonoBehaviour
         flagPause = false;
         settings.sTextCoins.GetComponent<Text>().color = sColorProcess;//white
         settings.sTextDays.GetComponent<Text>().color = sColorProcess;
-        settings.sPrefabPauseRectangle.SetActive(false);
+        settings.sPauseRectangle.SetActive(false);
         DateChangeing.pause = false;
         sColorCurrent = sColorProcess;
         settings.sButtonPause.GetComponent<Image>().sprite = settings.sPauseImage;
