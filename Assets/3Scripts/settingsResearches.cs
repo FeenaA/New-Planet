@@ -48,6 +48,9 @@ public class settingsResearches: MonoBehaviour
     // amount of Ether
     public GameObject textEth;
     public static GameObject sTextEth;
+    // amount of Ether
+    public GameObject textBC;
+    public static GameObject sTextBC;
 
     // text for requested resources
     public GameObject TextRequestedResources;
@@ -63,7 +66,7 @@ public class settingsResearches: MonoBehaviour
     // key - number of resource
     public static Dictionary<int, List<AcceptRes>> Storage = new Dictionary<int, List<AcceptRes>>();
 
-    // image with script
+    // crawl line
     public RectTransform ImageCrawlLine;
     public GameObject title; 
     public static GameObject sTitle;
@@ -81,9 +84,6 @@ public class settingsResearches: MonoBehaviour
         rAir = ResAir;
         rSoil = ResSoil;
 
-        /*r1 = ResAdd1;
-        r2 = ResAdd2;
-        r3 = ResAdd3;*/
         r = new Transform[3] { ResAdd1, ResAdd2, ResAdd3};
 
         // button to Research or Select planet
@@ -96,9 +96,11 @@ public class settingsResearches: MonoBehaviour
         sTextProbes = textProbes;
         sTextSC = textSC;
         sTextEth = textEth;
+        sTextBC = textBC;
         sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
         sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
         sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.sNEther);
+        sTextBC.GetComponent<Text>().text = System.Convert.ToString(settings.sNBlueCoin);
 
         // craw line 
         crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();

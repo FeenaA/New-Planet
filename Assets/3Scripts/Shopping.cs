@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +18,11 @@ public class Shopping : MonoBehaviour
     public GameObject textResource;
     // cost of resource to sell it
     public GameObject textCostResource;
+    private static GameObject sTextCostResource;
 
     public GameObject TransportButton;
     private static GameObject sTransportButton;
-    public GameObject BuyButton;
+    public GameObject BuyButton; 
     private static GameObject sBuyButton;
     public GameObject EtherButton;
     private static GameObject sEtherButton;
@@ -41,6 +43,10 @@ public class Shopping : MonoBehaviour
     private static panelInform PI;
     private static ShowProgress SP;
 
+    private static int NRes = 0; // = GetNRes;
+    private List<int> ListToFillEmpty = new List<int>();
+    private static int numClick = 0;
+
     void Start()
     {        
         sPanelShopping = PanelShopping;
@@ -53,6 +59,7 @@ public class Shopping : MonoBehaviour
         sSellButton = SellButton;
 
         sTextStorage = TextStorage;
+        sTextCostResource = textCostResource;
     }
 
     // choose a resource to buy/sell/transport it
@@ -61,36 +68,37 @@ public class Shopping : MonoBehaviour
         SP = settingsResearches.sPanelInformation.GetComponent<ShowProgress>();
         PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();
 
+        // get amount of the resource on the selected planet
+        numButtonResource = n;
+        NRes = GetNRes();
+        numClick = 0;
+
         // to operate with only SelectedPlanet
         if (ItemOnClick.PP.flagIsSelected == false)
         { return; }
-
-        numButtonResource = n;
-
-        // flag - if the resource exists in the storage
-        bool flagTtravelWell = false;
 
         if (numButtonResource > 0)// extraordinary resource
         {
             // show name 
             numRes = ItemOnClick.PP.ResAdd[numButtonResource - 1];
-            textResource.GetComponent<Text>().text = getItems.ResourceAdd[numRes].name;
-            // show cost 
-            cost = getItems.ResourceAdd[numRes].cost;
-            textCostResource.GetComponent<Text>().text = System.Convert.ToString( cost );
-            // show (or not) EtherButton
-            if (settings.sNEther>0) {sEtherButton.SetActive(true);}
 
-            // show (or not) amount of resource in the storage
-            int amountInStorage = PI.GetAmountInStorage(numRes);
-            if (amountInStorage > 0)    
+            // dealing with an empty slot
+            if (NRes == 0) 
             {
-                flagTtravelWell = true;
-                sTextStorage.GetComponent<Text>().text = amountInStorage + " at storage";
+                ResetShoppingPanel();
+                // show PanelShopping and disable PanelPlanets
+                sPanelShopping.SetActive(true);
+                sPanelPlanets.SetActive(false);
+                sTextTitle.SetActive(false);
+                return;
             }
-            else { sTextStorage.GetComponent<Text>().text = "No resources"; }
+            // not empty slot
+            else 
+            {
+                ShowShopping();
+            }
         }
-        else// nesessary resource
+        else // nesessary resource
         {
             // show name 
             numRes = numButtonResource;
@@ -102,7 +110,6 @@ public class Shopping : MonoBehaviour
             sTextStorage.GetComponent<Text>().text = "Unlimited resource";
             // using Ether is impossible
             sEtherButton.SetActive(false);
-            flagTtravelWell = true;
         }
 
         // show PanelShopping and disable PanelPlanets
@@ -110,84 +117,52 @@ public class Shopping : MonoBehaviour
         sPanelPlanets.SetActive(false);
         sTextTitle.SetActive(false);
 
-        // get amount of the resource on the selected planet
-        int AmountOfRes = GetNRes();
-
         // settings: may be buttons clicked or not 
-        sTransportButton.GetComponent<Button>().interactable = flagTtravelWell;
-        sBuyButton.GetComponent<Button>().interactable = true;
-        sSellButton.GetComponent<Button>().interactable = true;
-        if (AmountOfRes == 10)
-        {
-            sTransportButton.GetComponent<Button>().interactable = false;
-            sBuyButton.GetComponent<Button>().interactable = false;
-            sEtherButton.SetActive(false);
-        }
-        else
-        {
-            if (AmountOfRes == 0) {sSellButton.GetComponent<Button>().interactable = false;}
-
-            if (settings.sNSpacecraft == 0) 
-            {
-                sTransportButton.GetComponent<Button>().interactable = false;
-                sTextStorage.GetComponent<Text>().text = "No spacesraft";
-            }
-            if (settings.sNEther == 0)      {sEtherButton.SetActive(false);}
-            if (settings.sNBlueCoin == 0)   {sBuyButton.GetComponent<Button>().interactable = false;}
-        }
+        ResetButtons();
     }
 
     // transport resource to the selected planet using SpaseCraft
     public void TransportPressed()
     {
-        // amount of the Resource at the selected planet
-        int NRes = GetNRes();
-        // amount of resource may be changed during this function 
-        if (NRes < 10)
+        // amount of Spacecrafts
+        if (settings.sNSpacecraft == 0) { return; }
+                
+        // the slot was empty
+        if( numButtonResource > 0 &&  NRes == 0 )
         {
-            // amount of Spacecrafts may be changed during this function 
-            if (settings.sNSpacecraft > 0)
-            {
-                bool flagTtravelWell = false;
-                // necessary (unlimited) or extraordinary resource
-                if (numButtonResource > 0)  
-                { flagTtravelWell = settingsResearches.Storage.ContainsKey(numRes);  }
-                else                
-                { flagTtravelWell = true; }
-
-                if (flagTtravelWell == true)
-                {
-                    AddResourceToPanet( ++NRes );
-
-                    // show amount of spacecrafts
-                    settings.sNSpacecraft--;
-                    if (settings.sNSpacecraft == 0)
-                    {
-                        TransportButton.GetComponent<Button>().interactable = false;
-                        sTextStorage.GetComponent<Text>().text = "No spacesraft";
-                    }
-                    settingsResearches.sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
-
-                    // checking: if no more this resource at the Storage (requirement for transportation)
-                    if (numButtonResource > 0)  
-                    {
-                        int amountInStorage = PI.GetAmountInStorage(numRes);
-                        if (amountInStorage == 0)
-                        {   
-                            TransportButton.GetComponent<Button>().interactable = false;
-                            sTextStorage.GetComponent<Text>().text = "No resources";//"resource is off"; 
-                        }
-                        else
-                        {
-                            sTextStorage.GetComponent<Text>().text = amountInStorage + " at storage";
-                        }
-                    }
-                }
-            }
+            // set number of resource for this slot and amount = 0
+            ItemOnClick.PP.ResAdd[numButtonResource - 1] = numRes;
+            ItemOnClick.PP.ResNess_Amount[numButtonResource - 1] = 0;
         }
+
+        bool flagTtravelWell = true;
+        // necessary (unlimited) or extraordinary resource
+        if (numButtonResource > 0)  
+        { flagTtravelWell = settingsResearches.Storage.ContainsKey(numRes);  }
+
+        if (flagTtravelWell == true)
+        {
+            // increase amount of the Resource at the selected planet
+            AddResourceToPanet( ++NRes );
+
+            // move 1 resource from storage
+            if (numButtonResource > 0) { PI.TakeAwayResourceFromStorage(numRes); }
+
+            // show amount of spacecrafts
+            settings.sNSpacecraft--;
+            settingsResearches.sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
+            if (settings.sNSpacecraft == 0){sTextStorage.GetComponent<Text>().text = "No spacesraft";}
+
+            // show information
+            ShowShopping();
+            // reset interactivity of buttons
+            ResetButtons();
+        }
+
+        if (NRes == 10) { sTextStorage.GetComponent<Text>().text = "That's enough!"; return; }
     }
 
-    // transport resource to the selected planet using Ether
+    // add resource to the storage using Ether
     public void EtherPressed()
     {
         // amount of the Resource at the selected planet
@@ -220,32 +195,121 @@ public class Shopping : MonoBehaviour
     public void SellPressed()
     {
         // amount of the Resource at the selected planet
-        int NRes = GetNRes();
         if (NRes == 0) { return; }
 
-        // change amount of your coins
+        // change an amount of coins
         DateChangeing DC = TextDate.GetComponent<DateChangeing>();
         DateChangeing.sCoins = DC.AddCoins(cost);
-        // show amount of your coins
+        // show an amount of coins
         TextCoins.GetComponent<Text>().text = System.Convert.ToString(DateChangeing.sCoins);
 
         // take away the sold resource
-        TakeAwayResource(--NRes);
+        NRes--;
+        TakeAwayResource();
+    }
+
+    // transport resource to the selected planet using BlueCoin
+    public void BuyPressed()
+    {
+        if (settings.sNBlueCoin > 0)
+        {
+            settings.sNBlueCoin--;
+            settingsResearches.sTextBC.GetComponent<Text>().text = System.Convert.ToString(settings.sNBlueCoin);
+
+            // increase amount of the Resource at the selected planet
+            AddResourceToPanet(++NRes);
+        }
+        else
+        {
+            // suppose to watch a short advert to get 1 BlueCoin
+
+        }
+
+        // show information
+        ShowShopping();
+        // reset interactivity of buttons
+        ResetButtons();
+
+        if (NRes == 10) { sTextStorage.GetComponent<Text>().text = "That's enough!"; return; }
+    }
+
+    // dealing with an empty slot
+    public void ChangeResourcePressed()
+    {
+        if (numButtonResource<0){ return; }
+        if (NRes>0)             { return; }
+        
+        // only showing
+        if (numClick < ListToFillEmpty.Count)
+        {
+            numRes = ListToFillEmpty[numClick];
+            // show information
+            ShowShopping();
+            // reset interactivity of buttons
+            ResetButtons();
+            // numClick increment
+            numClick++;
+        }
+        else { numClick = 0;}
+    }
+
+    // show the name, the cost and amount of resource at the storage
+    private void ShowShopping()
+    {
+        // show the name of resource
+        textResource.GetComponent<Text>().text = getItems.ResourceAdd[numRes].name;
+        // show cost 
+        cost = getItems.ResourceAdd[numRes].cost;
+        textCostResource.GetComponent<Text>().text = System.Convert.ToString(cost);
+        // show (or not) EtherButton
+        //if (settings.sNEther > 0) { sEtherButton.SetActive(true); }
+
+        // show (or not) amount of resource in the storage
+        int amountInStorage = PI.GetAmountInStorage(numRes);
+        if (amountInStorage > 0)
+        {
+            sTextStorage.GetComponent<Text>().text = amountInStorage + " at storage";
+        }
+        else { sTextStorage.GetComponent<Text>().text = "No resources"; }
+    }
+    
+
+    private void GenerateListForEmptySlot()
+    {
+        ListToFillEmpty.Clear();
+
+        // 1 - requested resources that aren't on the planet
+        int N = getItems.ResourceAdd.Count;
+        for (int numRes = 1; numRes <= N; numRes++)
+        {
+            if (settings.reqRes.ContainsKey(numRes) && !ItemOnClick.PP.ResAdd.Contains(numRes))
+            { ListToFillEmpty.Add(numRes); }
+        }
+        // 2 - resources that are avaliable to be transported
+        for (int numRes = 1; numRes <= N; numRes++)
+        {
+            if (settingsResearches.Storage.ContainsKey(numRes) &&
+                !ItemOnClick.PP.ResAdd.Contains(numRes) &&
+                !ListToFillEmpty.Contains(numRes))
+            { ListToFillEmpty.Add(numRes); }
+        }
+        // 3 - the last resources that aren't on the planet
+        for (int numRes = 1; numRes <= N; numRes++)
+        {
+            if (!ItemOnClick.PP.ResAdd.Contains(numRes) && 
+                !ListToFillEmpty.Contains(numRes))
+            { ListToFillEmpty.Add(numRes); }
+        }
     }
 
     private void AddResourceToPanet(int NRes)
     {
+        // add resource
         if (numButtonResource > 0)
-        {
-            // add extraordinary resource
-            ItemOnClick.PP.ResAddAmount[numButtonResource - 1]++;
-            PI.TakeAwayResourceFromStorage(numRes);
-        }
+        { ItemOnClick.PP.ResAddAmount[numButtonResource - 1]++; }
         else
-        {
-            // add nesessary resource
-            ItemOnClick.PP.ResNess_Amount[numButtonResource + 3]++;
-        }
+        { ItemOnClick.PP.ResNess_Amount[numButtonResource + 3]++; }
+
         // show changes on the panelInform
         PI.ResetPlanet(ItemOnClick.PP);
 
@@ -272,7 +336,7 @@ public class Shopping : MonoBehaviour
         }
     }
 
-    private void TakeAwayResource(int NRes)
+    private void TakeAwayResource()
     {
         if (numButtonResource > 0)
         {
@@ -290,18 +354,67 @@ public class Shopping : MonoBehaviour
         // show changes on the requirement resources's panel  
         if (settings.reqRes.ContainsKey(numRes))
         {
-            settings.reqRes[numRes]--;
+            settings.reqRes[numRes]--; // it must be nonnegative
             settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.reqRes);
         }
 
-        if (NRes == 0)
+        ResetShoppingPanel();
+    }
+
+    // reset interactabilities of buttons
+    private void ResetShoppingPanel()
+    {
+        if (NRes == 0) // dealing with an empty slot
         {
-            // dealing with an empty slot
+            // show name, introduction, cost
+            textResource.GetComponent<Text>().text = "Resource";
+            sTextStorage.GetComponent<Text>().text = "Press on the title to choose resource";
+            sTextCostResource.GetComponent<Text>().text = " 0";
+            // make all buttons not interactable 
+            sTransportButton.GetComponent<Button>().interactable = false;
+            sBuyButton.GetComponent<Button>().interactable = false;
             sSellButton.GetComponent<Button>().interactable = false;
+            sEtherButton.SetActive(false);
+
+            GenerateListForEmptySlot();
         }
-        if (settings.sNEther > 0)       { sEtherButton.SetActive(true); }
-        if (settings.sNSpacecraft > 0)  { sTransportButton.GetComponent<Button>().interactable = true;  }
-        if (settings.sNBlueCoin > 0)    { sBuyButton.GetComponent<Button>().interactable = true; }
+        else
+        {
+            ResetButtons();
+        }
+    }
+
+    // settings: may be buttons clicked or not 
+    private void ResetButtons()
+    {
+        if (NRes == 10)
+        {
+            // transport
+            sTransportButton.GetComponent<Button>().interactable = false;
+            // ether
+            sEtherButton.SetActive(false);
+            // blue coins
+            sBuyButton.GetComponent<Button>().interactable = false;
+            // sell 
+            sSellButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            // transport
+            sTransportButton.GetComponent<Button>().interactable = false;
+            if (settings.sNSpacecraft > 0)
+            {
+                if (((numButtonResource > 0) && (PI.GetAmountInStorage(numRes) > 0))
+                    || (numButtonResource < 0))
+                { sTransportButton.GetComponent<Button>().interactable = true; }
+            }
+            // ether
+            sEtherButton.SetActive(settings.sNEther > 0);
+            // blue coins
+            sBuyButton.GetComponent<Button>().interactable = (settings.sNBlueCoin > 0);
+            // sell 
+            sSellButton.GetComponent<Button>().interactable = (NRes > 0);
+        }
     }
 
     // amount of the Resource at the selected planet
@@ -322,4 +435,5 @@ public class Shopping : MonoBehaviour
         sTextTitle.SetActive(true);
         sPanelShopping.SetActive(false);
     }
+
 }

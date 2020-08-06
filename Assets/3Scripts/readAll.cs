@@ -70,39 +70,6 @@ public class readAll : MonoBehaviour
         return result;
     }
 
-    // with detector of languages and keys
-    /*public static Dictionary<int, string> GetTextFromXML2(string path)
-    {
-        Dictionary<int, string> result = new Dictionary<int, string>();
-        string language = "";
-        if (settings.nLanguage == 0) { language = "Russian"; }
-        if (settings.nLanguage == 1) { language = "English"; }
-
-
-        TextAsset xmlData = Resources.Load(path) as TextAsset;
-        XmlDocument xDoc = new XmlDocument();
-        xDoc.LoadXml(xmlData.text);
-        XmlElement xRoot = xDoc.DocumentElement;
-        foreach (XmlNode xnode in xRoot)
-        {
-            if (xnode.Attributes.Count > 0)
-            {
-                XmlNode attr = xnode.Attributes.GetNamedItem("language");
-
-                if (attr.Value == language)
-                {
-                    foreach (XmlNode childnode in xnode.ChildNodes)
-                    {
-                        XmlNode attrNum = childnode.Attributes.GetNamedItem("number");
-                        XmlNode attrName = childnode.Attributes.GetNamedItem("name");
-                        result[System.Convert.ToInt32( attrNum.Value )] = attrName.Value;
-                    }
-                }
-            }
-        }
-        return result;
-    }*/
-
     // with detector of languages and keys (numbers)
     public static Dictionary<int, getItems.ResourceInformation> GetTextFromXML3(string path)
     {

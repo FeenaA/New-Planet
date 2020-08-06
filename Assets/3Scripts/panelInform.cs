@@ -7,7 +7,7 @@ public class panelInform : MonoBehaviour
 {
     public GameObject TextProbes;
 
-    // reset and show currently planet's properties
+    // reset and show currently planet's properties on the PanelInformation
     public void ResetPlanet(getItems.PlanetProperty PP)
     {
         settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
@@ -34,24 +34,14 @@ public class panelInform : MonoBehaviour
         }
         else
         {
+            // dealing with Research/Select Button
             if (settings.flagSelectedPlanet == false)
             //if (PP.flagIsSelected == false)
             {
                 settingsResearches.sButtonResearchSelect.SetActive(true);
                 settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
             }
-            else
-            {
-                settingsResearches.sButtonResearchSelect.SetActive(false);
-            }
-
-            //show extraordinary resources
-            /*settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[PP.ResAdd[0]].name +
-            " = " + PP.ResAddAmount[0];
-            settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[PP.ResAdd[1]].name +
-            " = " + PP.ResAddAmount[1];
-            settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[PP.ResAdd[2]].name +
-            " = " + PP.ResAddAmount[2];*/
+            else    {settingsResearches.sButtonResearchSelect.SetActive(false);}
 
             for (int i = 0; i < 3; i++)
             {
@@ -64,11 +54,10 @@ public class panelInform : MonoBehaviour
                 else
                 {
                     settingsResearches.r[i].GetComponentInChildren<Text>().text = "-";
+                    // let free current resource slot 
                     PP.ResAdd[i] = 0;
                 }
-
             }
-
         }
     }
 

@@ -83,6 +83,7 @@ public class settings : MonoBehaviour
 
     public static Dictionary<int, int> reqRes;
 
+
     void Start()
     {
         sPauseRectangle = PauseRectangle;
