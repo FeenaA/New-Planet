@@ -100,7 +100,7 @@ public class settingsResearches: MonoBehaviour
         sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
         sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
         sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.sNEther);
-        sTextBC.GetComponent<Text>().text = System.Convert.ToString(settings.sNBlueCoin);
+        sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
         // craw line 
         crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();

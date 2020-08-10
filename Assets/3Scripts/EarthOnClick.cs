@@ -15,7 +15,7 @@ public class EarthOnClick : MonoBehaviour
     void OnMouseDown()
     {
         // flag - was the game paused before OnMouseDown?
-        settings.flagPauseBeforePrefab = DateChangeing.pause;
+//        settings.flagPauseBeforePrefab = DateChangeing.pause;
 
         if (!flagBuildings) 
         {
@@ -25,11 +25,11 @@ public class EarthOnClick : MonoBehaviour
             settings.sPanelPeople.SetActive(false);
             settings.sPanelResources.SetActive(false);
 
-            // make a DateCounter to be paused
+ /*           // make a DateCounter to be paused
             if (!settings.flagPauseBeforePrefab)
             {
                 buttons.sPausePressed();
             }
-        }
+*/        }
     }
 }

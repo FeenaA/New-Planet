@@ -34,7 +34,7 @@ public class Shopping : MonoBehaviour
     // date
     public GameObject TextDate;
     // coins
-    public GameObject TextCoins; 
+    public GameObject TextCoins;
 
     private static int numRes;
     private static int numButtonResource;
@@ -211,18 +211,13 @@ public class Shopping : MonoBehaviour
     // transport resource to the selected planet using BlueCoin
     public void BuyPressed()
     {
-        if (settings.sNBlueCoin > 0)
+        if (BlueCoin.sNBlueCoin > 0)
         {
-            settings.sNBlueCoin--;
-            settingsResearches.sTextBC.GetComponent<Text>().text = System.Convert.ToString(settings.sNBlueCoin);
+            BlueCoin.sNBlueCoin--;
+            settingsResearches.sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
             // increase amount of the Resource at the selected planet
             AddResourceToPanet(++NRes);
-        }
-        else
-        {
-            // suppose to watch a short advert to get 1 BlueCoin
-
         }
 
         // show information
@@ -273,7 +268,6 @@ public class Shopping : MonoBehaviour
         else { sTextStorage.GetComponent<Text>().text = "No resources"; }
     }
     
-
     private void GenerateListForEmptySlot()
     {
         ListToFillEmpty.Clear();
@@ -411,7 +405,7 @@ public class Shopping : MonoBehaviour
             // ether
             sEtherButton.SetActive(settings.sNEther > 0);
             // blue coins
-            sBuyButton.GetComponent<Button>().interactable = (settings.sNBlueCoin > 0);
+            sBuyButton.GetComponent<Button>().interactable = (BlueCoin.sNBlueCoin > 0);
             // sell 
             sSellButton.GetComponent<Button>().interactable = (NRes > 0);
         }

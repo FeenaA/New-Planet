@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class panelInform : MonoBehaviour
 {
     public GameObject TextProbes;
+    public static bool flagSelectedPlanet = false;
 
     // reset and show currently planet's properties on the PanelInformation
     public void ResetPlanet(getItems.PlanetProperty PP)
@@ -35,7 +36,7 @@ public class panelInform : MonoBehaviour
         else
         {
             // dealing with Research/Select Button
-            if (settings.flagSelectedPlanet == false)
+            if (flagSelectedPlanet == false)
             //if (PP.flagIsSelected == false)
             {
                 settingsResearches.sButtonResearchSelect.SetActive(true);
@@ -72,7 +73,7 @@ public class panelInform : MonoBehaviour
                 settings.sNProbes--;
                 TextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
 
-                if (settings.flagSelectedPlanet == false)
+                if (flagSelectedPlanet == false)
                 {
                     settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
                 }
@@ -102,7 +103,7 @@ public class panelInform : MonoBehaviour
             }
             else
             {
-                // ask to make order to a probe factory OR to get a probe free by Advert 
+                // ask to make order to a probe factory OR to get a probe free by BlueCoin
 
             }
         }
@@ -117,7 +118,7 @@ public class panelInform : MonoBehaviour
     {
         ItemOnClick.PP.flagIsSelected = true;
 
-        settings.flagSelectedPlanet = true;
+        flagSelectedPlanet = true;
         settings.SelectedPlanet = ItemOnClick.PP;
         settingsResearches.sButtonResearchSelect.SetActive(false);
 

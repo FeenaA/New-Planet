@@ -71,17 +71,18 @@ public class settings : MonoBehaviour
     public static int sNProbes = 10;
     public static int sNSpacecraft = 20;
     public static int sNEther = 3;
-    public static int sNBlueCoin = 2;
+    //public static int sNBlueCoin = 2;
 
     // !!! download
     public static int nLanguage = 0; // 0 - Russian, 1 - English
 
-    public static bool flagSelectedPlanet = false;
+    //public static bool flagSelectedPlanet = false;
     public static getItems.PlanetProperty SelectedPlanet;
 
     private static bool flagFirstTime = true;
 
     public static Dictionary<int, int> reqRes;
+
 
 
     void Start()
@@ -127,7 +128,6 @@ public class settings : MonoBehaviour
 
         sPanelResources = PanelResources;
         Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
-        //TextReqs.GetComponent<Text>().text = showProgress.Show(reqRes);
 
         ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
         TextReqs.GetComponent<Text>().text = SP.Show(reqRes);

@@ -121,6 +121,25 @@ public class buttons : MonoBehaviour
         }
     }
 
+    // prefab to ask about advertisement
+    public GameObject questionBox;
+    public Button BlueCoin;
+    public static Button sBlueCoin;
+    public void BlueCoinPressed() 
+    {
+        sBlueCoin = BlueCoin;
+
+        // to prevent reclick on the button
+        sBlueCoin.interactable = false;
+        var instance = Instantiate(questionBox);
+
+        // suppose to watch a short advert to get 1 BlueCoin
+        //var instance = Instantiate(questionBox.gameObject) as GameObject;
+
+        instance.transform.SetParent(gameObject.transform, false);
+    }
+
+
     // Нажата кнопка "Выход из игры"
     public void ExitPressed()
     {
@@ -128,12 +147,12 @@ public class buttons : MonoBehaviour
         Debug.Log("Exit pressed!");
     }
 
-    private bool IsPointerOverUIObject()
+    /*private bool IsPointerOverUIObject()
     {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
-    }
+    }*/
 }
