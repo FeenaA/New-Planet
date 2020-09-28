@@ -1,8 +1,8 @@
 <NesessRecources>
 	<Recource language="Russian">
-        <resource name="Воздух" cost="20"  number="-3"></resource>
-        <resource name="Вода"   cost="50"  number="-2"></resource>
-        <resource name="Почва"  cost="10"  number="-1"></resource>
+        <resource name="ВОЗДУХ" cost="20"  number="-3"></resource>
+        <resource name="ВОДА"   cost="50"  number="-2"></resource>
+        <resource name="ПОЧВА"  cost="10"  number="-1"></resource>
     </Recource>
     <Recource language="English">
         <resource name="Air"    cost="20"  number="-3"></resource>

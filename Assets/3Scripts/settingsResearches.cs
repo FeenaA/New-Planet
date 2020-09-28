@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,6 @@ public class settingsResearches: MonoBehaviour
     public static int nChoosenPlanet = 0;
     // chosen planet
     public static GameObject ChosenPlanet = null;
-    public static settings.TestItemModel sPlanet = null;
 
     // gameobjects to fill PanelInformation
     public GameObject Sphere;
@@ -37,7 +37,7 @@ public class settingsResearches: MonoBehaviour
 
     // extraordinary resources
     public Transform ResAdd1, ResAdd2, ResAdd3;
-    public static Transform[] r;//1, r2, r3;
+    public static Transform[] r;
 
     // amount of probes
     public GameObject textProbes;
@@ -56,6 +56,8 @@ public class settingsResearches: MonoBehaviour
     public GameObject TextRequestedResources;
     public static GameObject sTextRequestedResources;
 
+    public Text TextPlanet;
+
     public class AcceptRes
     {
         // amount of resource
@@ -63,8 +65,6 @@ public class settingsResearches: MonoBehaviour
         // number of source planet
         public string NamePlanet;
     }
-    // key - number of resource
-    public static Dictionary<int, List<AcceptRes>> Storage = new Dictionary<int, List<AcceptRes>>();
 
     // crawl line
     public RectTransform ImageCrawlLine;
@@ -84,44 +84,48 @@ public class settingsResearches: MonoBehaviour
         rAir = ResAir;
         rSoil = ResSoil;
 
+        if (PersonalSettings.language == LanguageSettings.Language.English)
+        { TextPlanet.GetComponent<Text>().text = "Planet"; }
+        else { if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+            { TextPlanet.GetComponent<Text>().text = "ПЛАНЕТА"; }}
+
         r = new Transform[3] { ResAdd1, ResAdd2, ResAdd3};
 
         // button to Research or Select planet
         sButtonResearchSelect = buttonResearchSelect;
 
-        // upload settings
-        textDays.GetComponent<Text>().text = settings.sStringTextDays;
-        textDays.GetComponent<Text>().color = buttons.sColorCurrent;
-
+        // panel for different items
         sTextProbes = textProbes;
         sTextSC = textSC;
         sTextEth = textEth;
         sTextBC = textBC;
-        sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.sNProbes);
-        sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.sNSpacecraft);
-        sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.sNEther);
+        sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NProbe);
+        sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NSpasecraft);
+        sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NEther);
         sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
         // craw line 
         crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
-        sTitle = title;
+        settings.sTitleCrawlLine = title;
         cl.Show("Water was successfully transported from your native planet!");
 
         // fill information about planets
-        OnReceivedModels(settings.sSetPlanets);
+        OnReceivedModels();
 
-        //sTextRequestedResources.GetComponent<Text>().text = showProgress.Show(settings.reqRes);
         ShowProgress SP = panelInformation.GetComponent<ShowProgress>();
-        sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.reqRes);
+        sTextRequestedResources.GetComponent<Text>().text = 
+            SP.Show(settings.gameSettings.RequestedResources);
     }
 
-    // fill information about planets
-    void OnReceivedModels(settings.TestItemModel[] setPlanets)
+    /// <summary>
+    /// fill information about planets
+    /// </summary>
+    void OnReceivedModels()
     {
         // by default the Planet0 is chosen
         int nPlanet = 0;
         // add new items with data
-        foreach (var planet in setPlanets)
+        foreach (var planet in settings.gameSettings.SetPlanets)
         {
             var instance = Instantiate(prefabPlanet.gameObject) as GameObject;
             instance.transform.SetParent(content, false);
@@ -132,7 +136,7 @@ public class settingsResearches: MonoBehaviour
             if (nChoosenPlanet == nPlanet)
             {
                 ChosenPlanet = instance;
-                sPlanet = planet;
+                //sPlanet = planet;
                 ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();
 
                 // item select
@@ -143,12 +147,16 @@ public class settingsResearches: MonoBehaviour
         }
     }
 
-    // connection between UI and script 
-    void InitializeItemView(Transform viewGameObject, settings.TestItemModel planet)
+    /// <summary>
+    /// connection between UI and script 
+    /// </summary>
+    /// <param name="viewGameObject">Поле таблицы</param>
+    /// <param name="planet">Информация о планете</param>
+    void InitializeItemView(Transform viewGameObject, KeyValuePair<int, getItems.PlanetProperty> planet)
     {
         TestItemView view = new TestItemView(viewGameObject);
 
-        getItems.PlanetProperty PP = getItems.sPlanetProperty[planet.numPlanet];
+        getItems.PlanetProperty PP = settings.gameSettings.SetPlanets[planet.Key];
         if (PP.flagIsResearched)
         {
             viewGameObject.GetComponent<Image>().color = Color.black;
@@ -161,16 +169,17 @@ public class settingsResearches: MonoBehaviour
             viewGameObject.GetComponent<Outline>().enabled = true;
             viewGameObject.GetComponent<Outline>().effectColor = buttons.sColorPause;
         }
-        view.textNumber.text = System.Convert.ToString(planet.numPlanet);
+        view.textNumber.text = System.Convert.ToString(planet.Key);
         view.buttonName.GetComponentInChildren<Text>().text = PP.textName;
-        view.textTI.text = System.Convert.ToString(planet.textTI);
+        view.textTI.text = System.Convert.ToString(planet.Value.textTI);
     }
 
-    // UI: data for one planet (Planets)
+    /// <summary>
+    /// UI: data for one planet (Planets)
+    /// </summary>
     public class TestItemView
     {
         public Text textNumber;
-        //public Text textName;
         public Button buttonName;
         public Text textTI;
 

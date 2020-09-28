@@ -3,24 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // это важно
+using UnityEngine.UI;
 
-// Колесо Сансары дало оборот
+/// <summary>
+/// Колесо Сансары дало оборот
+/// </summary>
 public class DateChangeing : MonoBehaviour
 {
-    // флаг для отслеживания паузы
-    public static bool pause;
+    // the main pause flag
+    public static bool pause = false;
     // number of seconds between days counter increment
-    public int nSecondsStep;
+    public int nSecondsStep = 2;
     public string result;
+    public GameObject PauseRectangle;
 
-    private static int nDay = 1;
     private static int nDayPF = 0;
     private static int nDaySC = 0;
-    // amount of coins
-    public static int sCoins = 50000;
-    // account of everyday coins
-    public static int stepCoins = 2;
     // Coins
     public GameObject textCoinsObject;
     public static GameObject sTextCoinsObject;
@@ -28,132 +26,243 @@ public class DateChangeing : MonoBehaviour
     public GameObject peopleOnNative;
     public GameObject peopleOnNew;
     public GameObject peopleDied;
-    
-    /*public static GameObject sPeopleOnNative;
-    public static GameObject sPeopleOnNew;
-    public static GameObject sPeopleDied;*/
+    // button to transport people
+    public GameObject ButtonSendPeople;
+    // probes
+    public GameObject NProbes; 
+    // SpaceCraft
+    public GameObject NSpaceCraft; 
 
-    //private readonly int PeopleStart = 1000000;
     private readonly int DaysWithoutDeth = 10;
     public static int DayDeth = 0;
     public readonly static float koefPeopleStart = 0.1f;
     private static int DiedToday = 1;
-    public static float koefToday = 0.1f;
-    // initial amount of people
-    private static int NPeopleOnNative = 1000000;
-    private static int NPeopleOnNew = 0;
-    private static int NPeopleDied = 0;
 
-    private readonly int MaxCoins = 99999;
-    private readonly int MaxNProbes = 99;
-    private readonly int MaxNSpacecraft = 99;
+    public static readonly int MaxCoins = 99999;
+    public static readonly int MaxN = 99;
 
     private string SceneName;
-    
+
+    private static string strOn = "";
+    private static string strDied = "";
+    private static string strNew = "";
+    private static string strDay = "";
+
     void Start()
     {
-        pause = false;
+        if (pause)
+        {
+            gameObject.GetComponent<Text>().color = buttons.sColorPause;
+            textCoinsObject.GetComponent<Text>().color = buttons.sColorPause;
+            PauseRectangle.SetActive(true);
+        }
+        else
+        {
+            gameObject.GetComponent<Text>().color = buttons.sColorProcess;
+            textCoinsObject.GetComponent<Text>().color = buttons.sColorProcess;
+            PauseRectangle.SetActive(false);
+        }
+
         sTextCoinsObject = textCoinsObject;
         GetComponent<Text>().text = settings.sStringTextDays;
-        sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
+        sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NCoins);
+
+        if (SceneName == "Research")
+        {
+            NProbes.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NProbe);
+            NSpaceCraft.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NSpasecraft);
+        }
 
         // the name of the current scene
         SceneName = SceneManager.GetActiveScene().name;
         if (SceneName == "Game")
         {
+            // people on the native planet
+            if (!String.IsNullOrEmpty(settings.gameSettings.NameNative))
+            {
+                peopleOnNative.GetComponent<Text>().text = strOn + settings.gameSettings.NameNative + ": " +
+                    Convert.ToString(settings.gameSettings.NPeopleOnNative);
+            }
             // Does the selected planet exist?
-            if (panelInform.flagSelectedPlanet == true) { peopleOnNew.SetActive(true); }
+            if (settings.gameSettings.flagSelectedPlanet == true) { peopleOnNew.SetActive(true); }
         }
 
-        InvokeRepeating("changeData", 0, nSecondsStep);
+        CorrectLanguage();
+        //if (!pause) { 
+            InvokeRepeating(nameof(ChangeData), 0, nSecondsStep); 
+        //}
     }
 
-    void changeData()
+    private void CorrectLanguage()
+    {
+        if (PersonalSettings.language == LanguageSettings.Language.English)
+        {
+            strDay = "Day ";
+            strOn = "On ";
+            strDied = "Died: ";
+            strNew = " (new): ";
+        }
+        else
+        {
+            if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+            {
+                strDay = "ДЕНЬ ";
+                strOn = "НА ";
+                strDied = "ПОГИБЛО: ";
+                strNew = " (НОВАЯ): ";
+            }
+        }
+    }
+
+    /// <summary>
+    /// update daily information
+    /// </summary>
+    private void ChangeData()
     {
         if (!pause)
         {
             // days counter increment 
-            settings.sStringTextDays = "day " + nDay;
+            settings.sStringTextDays = strDay + settings.gameSettings.NDays;
             GetComponent<Text>().text = settings.sStringTextDays;
 
             // increase and show amount of coins
-            sCoins = AddCoins(stepCoins);
-            sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(sCoins);
+            settings.gameSettings.NCoins = AddCoins(settings.gameSettings.stepCoins);
+            sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NCoins);
 
-            // people
-            //GetPeopleAmount();
-            if (SceneName == "Game" )
+            // if people've started to die
+            if (settings.gameSettings.NDays > DaysWithoutDeth) { GetPeopleAmount(); }
+
+            if (SceneName == "Game")
             {
-                // first several days amout of people is constant
-                if (nDay > DaysWithoutDeth)
+                // died people
+                if (settings.gameSettings.NDays > DaysWithoutDeth)
                 {
-                    // people've started to die
                     peopleDied.SetActive(true);
-                    GetPeopleAmount();
+                    peopleDied.GetComponent<Text>().text = strDied + Convert.ToString(settings.gameSettings.NPeopleDied);
                 }
-                if (!String.IsNullOrEmpty(settings.sNameNativePlanet))
+                // people on the native planet
+                if (!String.IsNullOrEmpty(settings.gameSettings.NameNative))
                 {
-                    peopleOnNative.GetComponent<Text>().text = "On " + settings.sNameNativePlanet + " (native): " + 
-                        Convert.ToString(NPeopleOnNative);
+                    peopleOnNative.GetComponent<Text>().text = strOn + settings.gameSettings.NameNative + ": " +
+                        Convert.ToString(settings.gameSettings.NPeopleOnNative);
                 }
-                if( NPeopleDied > 0 )
-                { peopleDied.GetComponent<Text>().text = "Died: " + Convert.ToString(NPeopleDied); }
-                if( panelInform.flagSelectedPlanet == true )
-                { 
-                    peopleOnNew.GetComponent<Text>().text = "On " + settings.SelectedPlanet.textName + " (new): " + 
-                        Convert.ToString(NPeopleOnNew); 
+                // people on new planet
+                if (settings.gameSettings.flagSelectedPlanet == true)
+                {
+                    peopleOnNew.GetComponent<Text>().text = strOn + settings.gameSettings.NameNew + strNew +
+                        Convert.ToString(settings.gameSettings.NPeopleOnNew);
+                }
+                // buildings
+                if (EarthOnClick.flagBuildings == true)
+                {
+                    BuildingsOperations BO = settings.sCanvasBuildings.GetComponent<BuildingsOperations>();
+                    BO.ReloadButtons();
                 }
             }
 
-
-
             // probes increment
-            if ((BuildingsOperations.ProbeFactory.N > 0 ) && (settings.sNProbes < MaxNProbes))
+            if ((settings.gameSettings.ProbeFactory.N > 0) && (settings.gameSettings.NProbe < MaxN))
             {
                 nDayPF++;
-                if (nDayPF == BuildingsOperations.ProbeFactory.Time)
+                if (nDayPF == settings.gameSettings.ProbeFactory.Time)
                 {
-                    settings.sNProbes++;
+                    settings.gameSettings.NProbe++;
+                    if (SceneName == "Research")
+                    { 
+                        StartCoroutine(AddShow(NProbes, Convert.ToString(settings.gameSettings.NProbe)));
+                        // if sButtonResearchSelect exists and is not interactable, make it interactable
+                        if (settingsResearches.sButtonResearchSelect.activeSelf &&
+                            !settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable)
+                        { settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable = true; } 
+                    }
                     nDayPF = 0;
                 }
             }
 
             // spacecrafts increment
-            if ((BuildingsOperations.SCfactory.N > 0) && (settings.sNProbes < MaxNSpacecraft))
+            if ((settings.gameSettings.SCfactory.N > 0) && (settings.gameSettings.NSpasecraft < MaxN))
             {
                 nDaySC++;
-                if (nDaySC == BuildingsOperations.ProbeFactory.Time) 
+                if (nDaySC == settings.gameSettings.SCfactory.Time)
                 {
-                    settings.sNSpacecraft++;
+                    settings.gameSettings.NSpasecraft++;
+                    if (SceneName == "Research")
+                    { 
+                        StartCoroutine(AddShow(NSpaceCraft, Convert.ToString(settings.gameSettings.NSpasecraft)));
+                        // operate with Shopping
+                        if ((Shopping.sPanelShopping.activeSelf) && (Shopping.NRes < 10) )
+                        {
+                            // make buttonTransport active
+                            Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
+                            Transform ButtonTransport = PanelButtons.Find("ButtonTransport");
+                            ButtonTransport.GetComponent<Button>().interactable = true;
+                        }
+                    }
+                    else if (SceneName == "Game")
+                    {
+                        if (settings.gameSettings.flagPeopleTransport)
+                        {
+                            ButtonSendPeople.GetComponent<Button>().interactable = true;
+                        }
+                    }
                     nDaySC = 0;
                 }
             }
 
-            nDay++;
+            // save new daily params 
+            LoadGame.SetDailyData();
+
+            // day increment
+            settings.gameSettings.NDays++;
         }
     }
 
-    // get NPeopleDied, NPeopleOnNative and make actual GOs active
-    private void GetPeopleAmount()
+    public void AddSC(GameObject NSpaceCraft)
     {
-        //print(koefToday + " " + DiedToday);
-
-        //int day = nDay - DaysWithoutDeth;
-        DayDeth++;
-        koefToday += 0.112f;
-        //DiedToday = day * System.Convert.ToInt32(koefToday);
-        DiedToday = DayDeth * System.Convert.ToInt32(koefToday);
-        NPeopleDied += DiedToday;
-        NPeopleOnNative -= DiedToday;
+        if (SceneName == "Research") 
+        { StartCoroutine(AddShow(NSpaceCraft, Convert.ToString(settings.gameSettings.NSpasecraft)));}
     }
 
-    // clever coins increment
+    /// <summary>
+    /// show updated amount of probes or spacsecrafts
+    /// </summary>
+    /// <param name="GO">GameObject with a text to be changed</param>
+    /// <param name="strN">string to renew GO's text</param>
+    /// <returns></returns>
+    private IEnumerator AddShow(GameObject GO, string strN)
+    {
+        // periodical spiking of the title
+        float timePulse = 0.5f;
+        GO.GetComponent<Text>().fontStyle = FontStyle.Bold;
+        yield return new WaitForSeconds(timePulse);
+        GO.GetComponent<Text>().text = strN;
+        yield return new WaitForSeconds(timePulse);
+        GO.GetComponent<Text>().fontStyle = FontStyle.Normal;
+    }
+
+    /// <summary>
+    /// get NPeopleDied, NPeopleOnNative and make actual GOs active
+    /// </summary>
+    private void GetPeopleAmount()
+    {
+        DayDeth++;
+        settings.gameSettings.koefToday += 0.112f;
+        DiedToday = DayDeth * System.Convert.ToInt32(settings.gameSettings.koefToday);
+        settings.gameSettings.NPeopleDied += DiedToday;
+        settings.gameSettings.NPeopleOnNative -= DiedToday;
+    }
+
+    /// <summary>
+    /// clever coins increment
+    /// </summary>
+    /// <param name="N">amount of additional coins</param>
+    /// <returns></returns>
     public int AddCoins(int N)
     {
-        int currentCoins = sCoins;
-        if (currentCoins + N > MaxCoins)    { currentCoins = MaxCoins;  }
-        else                                { currentCoins += N;}
-        return currentCoins;
+        int res = settings.gameSettings.NCoins;
+        if (res + N > MaxCoins) { res = MaxCoins;  }
+        else                    { res += N;}
+        return res;
     }
 }
 

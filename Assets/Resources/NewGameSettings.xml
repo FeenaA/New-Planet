@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<NewGameSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NameNative></NameNative>
+  <NEarthMaterial>0</NEarthMaterial>
+  <NMoonMaterial>0</NMoonMaterial>
+  <RequestedResources></RequestedResources>
+  <SetPlanets></SetPlanets>
+  <NDays>0</NDays>
+  <NCoins>10000</NCoins>
+  <NPeopleOnNative>1000000</NPeopleOnNative>
+  <NPeopleDied>0</NPeopleDied>
+  <stepCoins>0</stepCoins>
+  <flagSelectedPlanet>false</flagSelectedPlanet>
+  <NameNew></NameNew>
+  <ProbeFactory Cost="300" N="0" Time="160"></ProbeFactory>
+  <Hospital Cost="100" N="0"></Hospital>
+  <Mine Cost="200" N="0" stepCoins="0"></Mine>
+  <SCfactory Cost="500" N="0" Time="200"></SCfactory>
+  <koefToday>0,100</koefToday>
+  <NEther>0</NEther>
+  <NProbe>0</NProbe>
+  <Storage></Storage>
+  <flagPeopleTransport>false</flagPeopleTransport>
+  <flagPeopleVeBeenSent>false</flagPeopleVeBeenSent>
+  <NSpasecraft>0</NSpasecraft>
+  <NBuildingsPF>0</NBuildingsPF>
+  <NBuildingsHSP>0</NBuildingsHSP>
+  <NBuildingsMN>0</NBuildingsMN>
+  <NBuildingsSC>0</NBuildingsSC>
+  <NPeopleOnNew>0</NPeopleOnNew>
+</NewGameSettings>

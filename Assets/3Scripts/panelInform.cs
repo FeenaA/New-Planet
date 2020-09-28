@@ -6,7 +6,18 @@ using UnityEngine.UI;
 public class panelInform : MonoBehaviour
 {
     public GameObject TextProbes;
-    public static bool flagSelectedPlanet = false;
+    public GameObject TextDate;
+    private readonly int presentedCoins = 1000;
+    public GameObject MessageBox;
+    public Canvas MainCanvas;
+    public static string strResearch = "Research";
+    public static string strSelect = "Select";
+
+
+    void Start()
+    {
+        CorrectLanguage();
+    }
 
     // reset and show currently planet's properties on the PanelInformation
     public void ResetPlanet(getItems.PlanetProperty PP)
@@ -16,18 +27,22 @@ public class panelInform : MonoBehaviour
         settingsResearches.sTextIntro.GetComponent<Text>().text = getItems.sIntroduction[PP.numIntro];
 
         //show nesessary resources
-        settingsResearches.rAir.GetComponentInChildren<Text>().text = 
+        settingsResearches.rAir.GetComponentInChildren<Text>().text =
             getItems.ResNess[-3].name + " = " + PP.ResNess_Amount[0];
-        settingsResearches.rWater.GetComponentInChildren<Text>().text = 
+        settingsResearches.rWater.GetComponentInChildren<Text>().text =
             getItems.ResNess[-2].name + " = " + PP.ResNess_Amount[1];
-        settingsResearches.rSoil.GetComponentInChildren<Text>().text = 
+        settingsResearches.rSoil.GetComponentInChildren<Text>().text =
             getItems.ResNess[-1].name + " = " + PP.ResNess_Amount[2];
 
         // extraordinary resources
         if (PP.flagIsResearched == false)
         {
             settingsResearches.sButtonResearchSelect.SetActive(true);
-            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Research";
+            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = strResearch;
+
+            if (settings.gameSettings.NProbe == 0)
+            { settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable = false; }
+
             foreach (var resource in settingsResearches.r)
             {
                 resource.GetComponentInChildren<Text>().text = "-";
@@ -36,20 +51,20 @@ public class panelInform : MonoBehaviour
         else
         {
             // dealing with Research/Select Button
-            if (flagSelectedPlanet == false)
-            //if (PP.flagIsSelected == false)
+            if (settings.gameSettings.flagSelectedPlanet == false)
             {
                 settingsResearches.sButtonResearchSelect.SetActive(true);
-                settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
+                settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable = true;
+                settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect;
             }
-            else    {settingsResearches.sButtonResearchSelect.SetActive(false);}
+            else { settingsResearches.sButtonResearchSelect.SetActive(false); }
 
             for (int i = 0; i < 3; i++)
             {
                 int amount = PP.ResAddAmount[i];
                 if (amount > 0)
                 {
-                    settingsResearches.r[i].GetComponentInChildren<Text>().text = 
+                    settingsResearches.r[i].GetComponentInChildren<Text>().text =
                         getItems.ResourceAdd[PP.ResAdd[i]].name + " = " + PP.ResAddAmount[i];
                 }
                 else
@@ -68,38 +83,65 @@ public class panelInform : MonoBehaviour
         // if researching is avaliable
         if (!ItemOnClick.PP.flagIsResearched)
         {
-            if (settings.sNProbes > 0)
+            if (settings.gameSettings.NProbe > 0)
             {
-                settings.sNProbes--;
-                TextProbes.GetComponent<Text>().text = settings.sNProbes + " probes";
+                settings.gameSettings.NProbe--;
+                TextProbes.GetComponent<Text>().text = 
+                    System.Convert.ToString(settings.gameSettings.NProbe);
 
-                if (flagSelectedPlanet == false)
-                {
-                    settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = "Select";
-                }
+                if (settings.gameSettings.flagSelectedPlanet == false)
+                { settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect; }
                 else
-                {
-                    settingsResearches.sButtonResearchSelect.SetActive(false);
-                }
+                { settingsResearches.sButtonResearchSelect.SetActive(false); }
 
                 ItemOnClick.PP.flagIsResearched = true;
 
                 // show resources
-                /*settingsResearches.r1.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                    ItemOnClick.PP.ResAdd[0]].name + " = " + ItemOnClick.PP.ResAddAmount[0];
-                settingsResearches.r2.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                    ItemOnClick.PP.ResAdd[1]].name + " = " + ItemOnClick.PP.ResAddAmount[1];
-                settingsResearches.r3.GetComponentInChildren<Text>().text = getItems.ResourceAdd[
-                    ItemOnClick.PP.ResAdd[2]].name + " = " + ItemOnClick.PP.ResAddAmount[2];*/
-
                 for (int i = 0; i < 3; i++)
                 {
-                    settingsResearches.r[i].GetComponentInChildren<Text>().text = 
+                    settingsResearches.r[i].GetComponentInChildren<Text>().text =
                         getItems.ResourceAdd[ItemOnClick.PP.ResAdd[i]].name + " = " + ItemOnClick.PP.ResAddAmount[i];
+                }
+
+                // deal with Ether
+                if (ItemOnClick.PP.flagEther)
+                {
+                    if (settings.gameSettings.NEther + 1 <= DateChangeing.MaxN)
+                    {
+                        settings.gameSettings.NEther++;
+                        // show changes
+                        settingsResearches.sTextEth.GetComponent<Text>().text =
+                            System.Convert.ToString(settings.gameSettings.NEther);
+
+                        // show Congratulations
+                        var instance = Instantiate(MessageBox);
+                        instance.SendMessage("TheStart", false);
+                        instance.transform.SetParent(MainCanvas.transform, false);
+
+                        bool LoadStorage = false;
+                        LoadGame.SetEther(LoadStorage);
+                    }
+
+                }
+
+                // deal with Coins
+                if (ItemOnClick.PP.flagCoins)
+                {
+                    DateChangeing DC = TextDate.GetComponent<DateChangeing>();
+                    settings.gameSettings.NCoins = DC.AddCoins(presentedCoins);
+                    // show changes
+                    DateChangeing.sTextCoinsObject.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NCoins);
+
+                    // show Congratulations
+                    var instance = Instantiate(MessageBox);
+                    instance.SendMessage("TheStart", true);
+                    instance.transform.SetParent(MainCanvas.transform, false);
                 }
 
                 // update resources at storage
                 AddToStorage();
+                // set flagResearched=true, --probes, resources at storage
+                LoadGame.SetResearched(ItemOnClick.PP.textName);
             }
             else
             {
@@ -118,8 +160,9 @@ public class panelInform : MonoBehaviour
     {
         ItemOnClick.PP.flagIsSelected = true;
 
-        flagSelectedPlanet = true;
-        settings.SelectedPlanet = ItemOnClick.PP;
+        settings.gameSettings.flagSelectedPlanet = true;
+        settings.gameSettings.NameNew = ItemOnClick.PP.textName;
+        //settings.SelectedPlanet = ItemOnClick.PP;
         settingsResearches.sButtonResearchSelect.SetActive(false);
 
         settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = buttons.sColorPause;
@@ -128,24 +171,29 @@ public class panelInform : MonoBehaviour
         // change requested resources
         // nesessary
         for (int i = 0; i < 3; i++)
-        { settings.reqRes[i - 3] = ItemOnClick.PP.ResNess_Amount[i]; }
+        { settings.gameSettings.RequestedResources[i - 3] = ItemOnClick.PP.ResNess_Amount[i]; }
         // extraordinary 
         for (int i = 0; i < 3; i++)
         {
             int n = ItemOnClick.PP.ResAdd[i];
-            if (settings.reqRes.ContainsKey(n))
+            if (settings.gameSettings.RequestedResources.ContainsKey(n))
             {
-                settings.reqRes[n] = ItemOnClick.PP.ResAddAmount[i];
+                settings.gameSettings.RequestedResources[n] = ItemOnClick.PP.ResAddAmount[i];
             }
 
             // remove selected planet from storage
             RemoveFromStorage();
         }
         ShowProgress SP = GetComponent<ShowProgress>();
-        settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.reqRes);
+        settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.gameSettings.RequestedResources);
+
+        // save data about selected planet
+        LoadGame.SetSelected();
     }
 
-    // add new resources to be transportable
+    /// <summary>
+    /// add new resources to be transportable
+    /// </summary>
     private void AddToStorage()
     {
         for (int i = 0; i < 3; i++)
@@ -158,27 +206,19 @@ public class panelInform : MonoBehaviour
             };
             Input(key, PlanetAmount);
         }
-
-        /*foreach (var item in settingsResearches.Storage)
-        {
-            foreach (var value in item.Value)
-            {
-                print(getItems.ResourceAdd[item.Key] + ": " + value.NamePlanet + ", " + value.amount);
-            }
-        }*/
     }
 
     // add new resource to storage by: num of resource, name of planet, amount of new resource
     public void Input(int key, settingsResearches.AcceptRes PlanetAmount)
     {
-        if (settingsResearches.Storage.ContainsKey(key))
+        if (settings.gameSettings.Storage.ContainsKey(key))
         {
-            settingsResearches.Storage[key].Add(PlanetAmount);
+            settings.gameSettings.Storage[key].Add(PlanetAmount);
         }
         else
         {
             List<settingsResearches.AcceptRes> value = new List<settingsResearches.AcceptRes> { PlanetAmount };
-            settingsResearches.Storage.Add(key, value);
+            settings.gameSettings.Storage.Add(key, value);
         }
     }
 
@@ -188,7 +228,7 @@ public class panelInform : MonoBehaviour
         var keysForRemove = new List<int>();
 
         // remove information from Values
-        foreach (var item in settingsResearches.Storage)
+        foreach (var item in settings.gameSettings.Storage)
         {
             int j = 0, Size = item.Value.Count;
             bool flagFound = false;
@@ -212,7 +252,7 @@ public class panelInform : MonoBehaviour
         // Remove empty resource from the storage
         foreach (var key in keysForRemove)
         {
-            settingsResearches.Storage.Remove(key);
+            settings.gameSettings.Storage.Remove(key);
         }
     }
 
@@ -220,9 +260,9 @@ public class panelInform : MonoBehaviour
     public int GetAmountInStorage(int key)
     {
         int res = 0;
-        if (settingsResearches.Storage.ContainsKey(key))
+        if (settings.gameSettings.Storage.ContainsKey(key))
         {
-            var content = settingsResearches.Storage[key];
+            var content = settings.gameSettings.Storage[key];
             foreach (var item in content)
             {
                 res += item.amount;
@@ -235,33 +275,54 @@ public class panelInform : MonoBehaviour
     public void TakeAwayResourceFromStorage(int numRes)
     {
         // change amount of resource at the storage
-        --settingsResearches.Storage[numRes][0].amount;
+        --settings.gameSettings.Storage[numRes][0].amount;
 
         // change amount of resource at the planet
         int key = 1;
         int Size = settings.sNPlanets;
         bool flagPlanetFound = false;
-        string NamePlanet = settingsResearches.Storage[numRes][0].NamePlanet;
+        string NamePlanet = settings.gameSettings.Storage[numRes][0].NamePlanet;
         while ((!flagPlanetFound) && (key < Size))
         {
-            if (getItems.sPlanetProperty[key].textName == NamePlanet)
+            //if (getItems.sPlanetProperty[key].textName == NamePlanet)
+            if (settings.gameSettings.SetPlanets[key].textName == NamePlanet)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (getItems.sPlanetProperty[key].ResAdd[j] == numRes)
-                    { getItems.sPlanetProperty[key].ResAddAmount[j]--; }
+                    if (settings.gameSettings.SetPlanets[key].ResAdd[j] == numRes)
+                    { settings.gameSettings.SetPlanets[key].ResAddAmount[j]--; }
                 }
                 flagPlanetFound = true;
             }
             key++;
         }
 
-        if (settingsResearches.Storage[numRes][0].amount == 0)
+        if (settings.gameSettings.Storage[numRes][0].amount == 0)
         {
-            settingsResearches.Storage[numRes].Remove(settingsResearches.Storage[numRes][0]);
+            settings.gameSettings.Storage[numRes].Remove(settings.gameSettings.Storage[numRes][0]);
             // remove empty resource from the storage
-            if (settingsResearches.Storage[numRes].Count == 0)
-            { settingsResearches.Storage.Remove(numRes); }
+            if (settings.gameSettings.Storage[numRes].Count == 0)
+            { settings.gameSettings.Storage.Remove(numRes); }
+        }
+    }
+
+    /// <summary>
+    /// to correct all strings on the scene
+    /// </summary>
+    private void CorrectLanguage()
+    {
+        if (PersonalSettings.language == LanguageSettings.Language.English)
+        {
+            strResearch = "Research";
+            strSelect = "Select";
+        }
+        else
+        {
+            if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+            {
+                strResearch = "ИЗУЧИТЬ";
+                strSelect = "ВЫБРАТЬ";
+            }
         }
     }
 }

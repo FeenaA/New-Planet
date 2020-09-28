@@ -61,10 +61,11 @@ public class ItemOnClick : MonoBehaviour
         // dealing with the PanelInformation
         string textNumber = instance.transform.Find("TextNumber").GetComponent<Text>().text;
         nCurrentPlanet = System.Convert.ToInt32(textNumber);
-        
+
         // PP includes all information about particular planet
-        PP = getItems.sPlanetProperty[nCurrentPlanet];
-        
+        //PP = getItems.sPlanetProperty[nCurrentPlanet];
+        PP = settings.gameSettings.SetPlanets[nCurrentPlanet];
+
         panelInform PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();
         PI.ResetPlanet(PP);
 
@@ -74,7 +75,7 @@ public class ItemOnClick : MonoBehaviour
     // reaction to the "OnMouseDown" event for table
     private static void ItemDeselect(GameObject instance)
     {
-        getItems.PlanetProperty PP = getItems.sPlanetProperty[nCurrentPlanet];
+        getItems.PlanetProperty PP = settings.gameSettings.SetPlanets[nCurrentPlanet];
         Button buttonName = instance.transform.Find("ButtonName").GetComponent<Button>();
 
         if (!PP.flagIsResearched)

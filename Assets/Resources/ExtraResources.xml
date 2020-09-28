@@ -1,18 +1,18 @@
 <ExtraRecources>
 	<Recource language="Russian">
-        <resource name="Нефть"  cost="550"  number="1"></resource>
-        <resource name="Газ"    cost="400"  number="2"></resource>
-        <resource name="Торф"   cost="200"  number="3"></resource>
-        <resource name="Уголь"  cost="150"  number="4"></resource>
-        <resource name="Руда"   cost="200"  number="5"></resource>
-        <resource name="Песок"  cost="100"  number="6"></resource>
-        <resource name="Глина"  cost="100"  number="7"></resource>
-        <resource name="Гранит" cost="450"  number="8"></resource>
-        <resource name="Агат"   cost="600"  number="9"></resource>
-        <resource name="Оникс"  cost="700"  number="10"></resource>
-        <resource name="Рубин"  cost="800"  number="11"></resource>
-        <resource name="Апатит" cost="500"  number="12"></resource>
-        <resource name="Барит"  cost="300"  number="13"></resource>
+        <resource name="НЕФТЬ"  cost="550"  number="1"></resource>
+        <resource name="ГАЗ"    cost="400"  number="2"></resource>
+        <resource name="ТОРФ"   cost="200"  number="3"></resource>
+        <resource name="УГОЛЬ"  cost="150"  number="4"></resource>
+        <resource name="РУДА"   cost="200"  number="5"></resource>
+        <resource name="ПЕСОК"  cost="100"  number="6"></resource>
+        <resource name="ГЛИНА"  cost="100"  number="7"></resource>
+        <resource name="ГРАНИТ" cost="450"  number="8"></resource>
+        <resource name="АГАТ"   cost="600"  number="9"></resource>
+        <resource name="ОНИКС"  cost="700"  number="10"></resource>
+        <resource name="РУБИН"  cost="800"  number="11"></resource>
+        <resource name="АПАТИТ" cost="500"  number="12"></resource>
+        <resource name="БАРИТ"  cost="300"  number="13"></resource>
     </Recource>
     <Recource language="English">
         <resource name="Oil"    cost="550"  number="1"></resource>

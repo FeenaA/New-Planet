@@ -15,8 +15,18 @@ public class crawlLine : MonoBehaviour
     public RectTransform stableGameObject;
     // text massage
     public GameObject TextMessage;
+    // text title
+    public GameObject TextTitile; 
 
-    public static bool flagCrawlBusy = false; 
+    public static bool flagCrawlBusy = false;
+
+    private void Start()
+    { 
+        string strTitle = "";
+        if (PersonalSettings.language == LanguageSettings.Language.English) { strTitle = "Spot news"; }
+        else { if ((PersonalSettings.language == LanguageSettings.Language.Russian)) { strTitle = "НОВОСТИ"; } }
+        TextTitile.GetComponent<Text>().text = strTitle;
+    }
 
     public void Show(string message)
     {
@@ -33,14 +43,14 @@ public class crawlLine : MonoBehaviour
         // periodical spiking of the title
         float timePulse = 0.5f;
         yield return new WaitForSeconds(timePulse);
-        settingsResearches.sTitle.GetComponent<Text>().fontStyle = FontStyle.Bold;
+        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Bold;
         yield return new WaitForSeconds(timePulse);
-        settingsResearches.sTitle.GetComponent<Text>().fontStyle = FontStyle.Normal;
+        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Normal;
         yield return new WaitForSeconds(timePulse);
-        settingsResearches.sTitle.GetComponent<Text>().fontStyle = FontStyle.Bold;
+        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Bold;
         yield return new WaitForSeconds(timePulse);
-        settingsResearches.sTitle.SetActive(false);
-        settingsResearches.sTitle.GetComponent<Text>().fontStyle = FontStyle.Normal;
+        settings.sTitleCrawlLine.SetActive(false);
+        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Normal;
 
         // crawl line moving
         TextMessage.transform.GetComponent<Text>().text = message;
@@ -53,7 +63,7 @@ public class crawlLine : MonoBehaviour
             yield return new WaitForSeconds(movementSpeed);
             moveingGameObject.transform.position = moveingGameObject.transform.position + new Vector3(-stepSize, 0, 0);
         }
-        settingsResearches.sTitle.SetActive(true);
+        settings.sTitleCrawlLine.SetActive(true);
 
         moveingGameObject.gameObject.SetActive(false);
         moveingGameObject.transform.position = initPos;

@@ -11,6 +11,7 @@ public class getItems : MonoBehaviour
     private static int NPlanets;
 
     private static System.Random rnd;
+    private static int value_Numb;
 
     public class ResourceInformation
     {
@@ -33,24 +34,24 @@ public class getItems : MonoBehaviour
 
     public class PlanetProperty
     {
-        public int numMaterial;
         public string textName;
+        public int textTI;
+        public int numMaterial;
         public int numIntro;
-        //public Vector3 ResNess_Amount;
         public int[] ResNess_Amount = new int[3];
-        //public Vector3 ResAdd;// numbers of resources
         public int[] ResAdd = new int[3];// numbers of resources
-        //public Vector3 ResAddAmount;// amounts of resources
-        public int[] ResAddAmount = new int[3];// amounts of resources
+        public int[] ResAddAmount = new int[3];// amount of resources
         public bool flagIsResearched = false;
         public bool flagIsSelected = false;
+        public bool flagEther = false;
+        public bool flagCoins = false;
     }
 
-    // the Dictionary containing all information about all planets
-    public static Dictionary<int, PlanetProperty> sPlanetProperty;
-
-    // requirements to the SelectedPlanet (number of resources and amount)
-    public static Dictionary<int, int> setReqs()
+    /// <summary>
+    /// requirements to the SelectedPlanet (number of resources and amount)
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, int> SetReqs()
     {
         Dictionary<int, int> res = new Dictionary<int, int>();
 
@@ -67,16 +68,14 @@ public class getItems : MonoBehaviour
         return res;
     }
 
-    // getting information about other planets
-    public static settings.TestItemModel[] GetItems()
+    /// <summary>
+    /// getting set of planets with information about them
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, PlanetProperty>  GetItems()
     {
         NPlanets = settings.sNPlanets;
         NSymbols = sGreekAlph.Count;
-
-        int L = settings.sMaterials.Length - 1;
-
-        // set of planets
-        settings.TestItemModel[] results = new settings.TestItemModel[NPlanets];
 
         string[] Name = SetNameGenerate(NPlanets);
         Dictionary<int, int[]> resources = new Dictionary<int, int[]>();
@@ -91,7 +90,6 @@ public class getItems : MonoBehaviour
         // key - number of planet, value - number of an additional resource
         Dictionary<int, int[]> resAdd = new Dictionary<int, int[]>();
         int NResAdd = ResourceAdd.Count;
-        //rnd = new System.Random();
         for (int i = 0; i < NPlanets; i++)
         {
             // generate a set of unique numbers
@@ -99,24 +97,18 @@ public class getItems : MonoBehaviour
             resAdd.Add(i, arr3);
         }
 
-        sPlanetProperty = new Dictionary<int, PlanetProperty>();
+        Dictionary<int, PlanetProperty> result = new Dictionary<int, PlanetProperty>();
+
         int minRes = 3, maxRes = 10;
 
+        // trigger to change coins or ether
+        bool trigger = false;
         for (int i = 0; i < NPlanets; i++)
         {
-            results[i] = new settings.TestItemModel
-            {
-                numPlanet = i + 1,
-                textName = Name[i],
-                textTI = TI[i],
-
-                flagActive = false,
-                flagResearched = false
-            };
-
             PlanetProperty PP = new PlanetProperty
             {
                 textName = Name[i],
+                textTI = TI[i],
                 numMaterial = rnd.Next(0, NMat),
                 numIntro = rnd.Next(1, NIntro),
                 // nesessary resources
@@ -124,16 +116,43 @@ public class getItems : MonoBehaviour
                 // numbers of resources
                 ResAdd = resAdd[i],
                 // amounts of extraordinary resources
-                ResAddAmount = new int[] { rnd.Next(minRes, maxRes), 
-                    rnd.Next(minRes, maxRes), rnd.Next(minRes, maxRes) }
+                ResAddAmount = new int[] { rnd.Next(minRes, maxRes),
+                rnd.Next(minRes, maxRes), rnd.Next(minRes, maxRes) }
             };
 
-            sPlanetProperty.Add((i + 1), PP);
+            PP.flagCoins = Treasure(TI[i]);
+            PP.flagEther = Treasure(TI[i]);
+            if (PP.flagCoins && PP.flagEther)
+            {
+                if (trigger) PP.flagCoins = false;
+                else PP.flagEther = false;
+                trigger = !trigger;
+            }
+
+            //if (/*PP.flagCoins && */PP.flagEther)
+            //    print(i + " Ether!");
+
+            result.Add((i + 1), PP);
         }
+        return result;
+    }
 
-        results[settings.nActivePlanet].flagActive = true;
+    /// <summary>
+    /// does the planet have a treasure on its surface?
+    /// </summary>
+    /// <param name="terraIndex">terraIndex of the current planeet</param>
+    /// <returns></returns>
+    private bool Treasure(int terraIndex)
+    {
+        int N = 0;
+             if (terraIndex <= 20) { N = 3; }
+        else if ((terraIndex > 20) && (terraIndex <= 40)) { N = 6; }
+        else if ((terraIndex > 40) && (terraIndex <= 60)) { N = 10; }
+        else if ((terraIndex > 60) && (terraIndex <= 80)) { N = 20; }
+        else if (terraIndex > 80) { N = 40; }
 
-        return results;
+        if (rnd.Next(N-1) == 0) { return true; }
+        return false;
     }
 
     // generator: set of probable Names
@@ -195,7 +214,7 @@ public class getItems : MonoBehaviour
     {
         int[] array = new int[len];
         // number of native planet
-        int value_Numb = settings.sValNativePlanet;
+        //int value_Numb = settings.sValNativePlanet;
 
         for (int i = 0; i < len; i++)
         {
@@ -220,7 +239,9 @@ public class getItems : MonoBehaviour
     }
 
     // Name for Native Planet
-    public static string NameGenerate(out int value_Numb)
+    //public static string NameGenerate(out int value_Numb)
+    //public static string NameGenerate()
+    public string NameGenerate()
     {
         // choise particular name
         System.Random rnd = new System.Random();

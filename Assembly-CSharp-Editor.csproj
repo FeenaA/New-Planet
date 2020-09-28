@@ -348,6 +348,21 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="GitHub.Api.45">
+      <HintPath>C:/PROJECTS/New Planet/Assets/Plugins/GitHub/Editor/GitHub.Api.45.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Logging">
+      <HintPath>C:/PROJECTS/New Planet/Assets/Plugins/GitHub/Editor/GitHub.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Unity.45">
+      <HintPath>C:/PROJECTS/New Planet/Assets/Plugins/GitHub/Editor/GitHub.Unity.45.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.UnityShim">
+      <HintPath>C:/PROJECTS/New Planet/Assets/Plugins/GitHub/Editor/GitHub.UnityShim.dll</HintPath>
+    </Reference>
+    <Reference Include="sfw.net">
+      <HintPath>C:/PROJECTS/New Planet/Assets/Plugins/GitHub/Editor/sfw.net.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>C:/PROJECTS/New Planet/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
@@ -710,6 +725,10 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{E31BDDBC-F759-3103-C0AA-04DA842949C1}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-Editor-firstpass.csproj">
+      <Project>{D0A1B723-5E51-02FA-C116-A0225DED3291}</Project>
+      <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

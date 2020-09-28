@@ -3,28 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // это важно 
+using UnityEngine.UI; 
 
 
 public class buttons : MonoBehaviour
 {
-    // нажата кнопка МЕНЮ
+    /// <summary>
+    /// Go to the scene "Begin" with main menu
+    /// </summary>
     public void MenuPressed()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Begin");
     }
 
-    // home is pressed
+    /// <summary>
+    /// Go to the scene "Game"
+    /// </summary>
     public void BackPressed()
     {
         SceneManager.LoadScene("Game");
     }
 
-    // Pause is pressed
+    /// <summary>
+    /// Pause is pressed 
+    /// </summary>
     public static GameObject PrefabTest = null;
     public void PausePressed()
     {
-        sPausePressed();
+        if (DateChangeing.pause)
+                { flagPause = true; }
+        else    { flagPause = false; }
+
+        if (!flagPause) { PauseOn(); }
+        else            { PauseOff(); }
     }
 
     public void OKPressed()
@@ -32,30 +43,22 @@ public class buttons : MonoBehaviour
         Destroy(PrefabTest);
     }
 
-    // нажата кнопка Pause
-    private static bool flagPause = false;
-    public static void sPausePressed()
-    {
-        if (settings.sPauseRectangle.activeSelf)
-        { flagPause = true; }
-        else { flagPause = false; }
 
-        if (!flagPause) { PauseOn(); }
-        else { PauseOff(); }
-    }
-
-    // change pause status
-    // instantiate or destroy prefab PauseRectangle
-    // stop or resume days counter increment
-    // change texts' color
-    // change ButtonPause's sprite
+    /// <summary>
+    /// change pause status,
+    /// instantiate or destroy prefab PauseRectangle,
+    /// stop or resume days counter increment,
+    /// change texts' color,
+    /// change ButtonPause's sprite
+    /// </summary>
     public static Color sColorProcess = new Color(255, 255, 255); //white
     public static Color sColorPause = new Color(221, 84, 0);//orange
     public static Color sColorCurrent;
-    private static void PauseOn()
+    private static bool flagPause = false;
+    public void PauseOn()
     {
         flagPause = true;
-        settings.sTextDays.GetComponent<Text>().color = Color.green;// sColorPause;
+        settings.sTextDays.GetComponent<Text>().color = sColorPause;
         settings.sTextCoins.GetComponent<Text>().color = sColorPause; 
         settings.sPauseRectangle.SetActive(true);
         DateChangeing.pause = true;
@@ -74,28 +77,29 @@ public class buttons : MonoBehaviour
 
     }
 
-    // нажата кнопка Research
+    /// <summary>
+    /// Go to the scene "Research"
+    /// </summary>
     public void ResearchPressed()
     {
-        bool pause = DateChangeing.pause;
-        settings.flagPauseBeforePrefab = pause;
-        // if the game isn't paused, pause
-        if (!pause)
-        {
-            //DateChangeing.pause = true;
-            sPausePressed();
-        }
         SceneManager.LoadScene("Research");
     }
 
-    // нажата кнопка Монета
     public GameObject TextCoins;
-    public void NCoinPressed(GameObject prefab)
+    /// <summary>
+    /// Coin Pressed -> Show NCoins a day
+    /// </summary>
+    /// <param name="prefab"></param>
+    public void NCoinPressed()
     {
         if (!TextCoins.activeSelf)
         {
             TextCoins.SetActive(true);
-            TextCoins.GetComponent<Text>().text = DateChangeing.stepCoins + " per day";
+            if (PersonalSettings.language == LanguageSettings.Language.English)
+            { TextCoins.GetComponent<Text>().text = settings.gameSettings.stepCoins + " per day"; }
+            else {
+                if (PersonalSettings.language == LanguageSettings.Language.Russian)
+                { TextCoins.GetComponent<Text>().text = settings.gameSettings.stepCoins + " В ДЕНЬ"; }}
             StartCoroutine(MakeSleepObject());
         }
     }
@@ -109,22 +113,13 @@ public class buttons : MonoBehaviour
         }
     }
 
-    // "cross at prefab" is pressed
-    public void ExitPrefabPressed1(GameObject prefab)
-    {
-        EarthOnClick.flagBuildings = false;
-        GameObject instancePrefab = prefab;
-        Destroy(instancePrefab);
-        if (!settings.flagPauseBeforePrefab)
-        {
-            sPausePressed();
-        }
-    }
 
-    // prefab to ask about advertisement
     public GameObject questionBox;
     public Button BlueCoin;
     public static Button sBlueCoin;
+    /// <summary>
+    /// prefab to ask about advertisement
+    /// </summary>
     public void BlueCoinPressed() 
     {
         sBlueCoin = BlueCoin;
@@ -132,13 +127,8 @@ public class buttons : MonoBehaviour
         // to prevent reclick on the button
         sBlueCoin.interactable = false;
         var instance = Instantiate(questionBox);
-
-        // suppose to watch a short advert to get 1 BlueCoin
-        //var instance = Instantiate(questionBox.gameObject) as GameObject;
-
         instance.transform.SetParent(gameObject.transform, false);
     }
-
 
     // Нажата кнопка "Выход из игры"
     public void ExitPressed()
@@ -146,13 +136,4 @@ public class buttons : MonoBehaviour
         Application.Quit();
         Debug.Log("Exit pressed!");
     }
-
-    /*private bool IsPointerOverUIObject()
-    {
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
-    }*/
 }

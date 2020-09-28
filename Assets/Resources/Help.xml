@@ -1,0 +1,48 @@
+<Help>
+	<Russian>
+        <General name="Общее"> - Босс, неизвестный и неизлечимый вирус уничтожает твой народ.
+ - Выход есть - найти новую планету и переселить всех здоровых жителей. Выбирай планету с умом.
+ - Ресурсы можно доставлять только на выбранную планету.
+ - Заселять новую планету можно только после заполнения до 10 жизненноважных ресурсов (Вода, воздух, почва). 
+ - Если привезете на новую планету все особые ресурсы, спасенные жители вас щедро отблагодарят.</General>
+        <Buildings name="Строения"> - Нажмите на вашу родную планету, чтобы узнать, какие строения на ней есть.
+ - Строений каждого типа может быть построено не более 5.
+ - Стройте рудники, чтобы получать больше монет.
+ - Стройте больницы, чтобы жители дольше оставались живы.
+ - Стройте фабрики зондов, чтобы получать зонды для исследования планет.
+ - Стройте космопорты, чтобы получать космические корабли для транспортировки ресурсов или людей.</Buildings>
+        <Researches name="Исследования"> - В список возможных планет входят планеты с подходящей температурой, размером, гравитацией и свойствами звезды, к системе которой они относятся.
+ - На планетах с низким терраиндексом можно найти сокровище (золотую жилу или эфир).
+ - Эфир - сокровище, которое можно превратить в любой ресурс.
+ - На каждой планете есть особые ресурсы, которые можно узнать, изучив планету. Для этого нужен зонд.</Researches>
+    	<Resources name="Ресурсы"> - Чтобы транспортировать ресурс, нажмите на него и выберете "Перевезти". Для этого нужен космический корабль.
+ - Ресурсы жизнеобеспечения можно неограниченно транспортировать с родной планеты.
+ - Особые ресурсы для каждой миссии свои.
+ - Вы не можете транспортировать ресурс, пока не изучите планету, с которой его можно привезти.
+ - Нажмите на лишние ресурсы, чтобы продать их и освободить слот. Чтобы выбрать ресурс для пустого слота планеты, нажимайте на заголовок "Ресурс".</Resources>
+    </Russian>
+    <English> 
+        <General name="General"> - Chief, the unknown and incurable virus eliminates your people.
+ - The decision is to find a new planet and to move there all healthy people. 
+ - One can make a choice of the planet only one time. 
+ - One can move resources to the selected planet only.
+ - Fill up the necessary resources (air, water, soil) on the new planet to start its populating. 
+ - If you bring all specific resources to the new planet, saved people'll pay you a reward.</General>
+        <Buildings name="Buildings"> - Tap your native planet to learn about different buildings located on the planet.
+ - Maximal amount of buildings of each type is 5.
+ - Build mines to get more coins.
+ - Build hospitals to make people stay alive longer.
+ - Build probe factories to get probes for planet researches.
+ - Build spaceports to get spacecrafts to transport resources and people.</Buildings>
+        <Researches name="Researches"> - The list of planets consists of the planets with an appropriate temperature, size, gravitation and properties of the star, whose system they belong to.
+ - One can find a treasure (coins or an ether) on a planet with low terraindex.
+ - The ether is a treasure that you can turn into any resource.
+ - There are specific resources on each planet, which may be discovered by researching the planet. You need a probe do to it.</Researches>
+    	<Resources name="Resources"> - To transport resource, tap it and chose "Transport". It requires a spacecraft.
+ - The necessary resources may be transported from the native planet unlimitedly.
+ - The specific resources are unique for each mission.
+ - You cannot transport resource if you don't research a planet, from whom you can transport it.
+ - Press an extra resource to sell it and to empty a slot.
+ - To choose the resource for the empty slot of the planet tap the title "Resource".</Resources>
+    </English>
+</Help>

@@ -6,32 +6,36 @@ using UnityEngine.UI;
 
 public class settings : MonoBehaviour
 {
+    public Button ButtonResearch;
+    public GameObject PeopleTextTitle;
+    public GameObject ReqResTitle; 
+
     public GameObject PauseRectangle;
     public static GameObject sPauseRectangle;
-    
-    /*public static AllGameObjects GO;
-    */
-
-
-
-
 
     public GameObject prefabTest;
     public static GameObject sPrefabTest;
+    // the main canvas
     public GameObject Canvas;
     public static GameObject sCanvas;
+    // MessageBox about the transportation of people
+    public GameObject MessageBox;
+
     // text - amount of coins
     public GameObject textCoins;
-    public static GameObject sTextCoins;
+    public static GameObject sTextCoins; 
+
     // text - amount of intervened days
     public GameObject textDays;
     public static GameObject sTextDays;
     public static string sStringTextDays;
+
     // panels - People and resources
     public GameObject PanelPeople;
     public GameObject PanelResources;
     public static GameObject sPanelPeople;
     public static GameObject sPanelResources;
+
     // canvas for buildings
     public GameObject canvasBuildings;
     public static GameObject sCanvasBuildings;
@@ -41,97 +45,73 @@ public class settings : MonoBehaviour
     public Sprite continueImage;
     public static Sprite sPauseImage;
     public static Sprite sContinueImage;
-
     public Button buttonPause;
     public static Button sButtonPause;
     // flag - was the game paused before the instance of prefab instanciated?
-    public static bool flagPauseBeforePrefab = false;
+    //public static bool flagPauseBeforePrefab = false;
 
+    // GOs for random materials
     public GameObject Earth;
     public GameObject Moon;
 
-    // name of the native planet
-    public static string sNameNativePlanet = null;
-    public static int sValNativePlanet;
-    private static int NMaterialEarth = 0;
-    private static int NMaterialMoon = 0;
-
     // amount of planets
     public static int sNPlanets = 50;
-    // information about planets
-    public static TestItemModel[] sSetPlanets;
-    //public static TestItemModel sItemPlanet;
-    public static int nActivePlanet = 0;
 
     // materials for planets
     public Material[] materials;
     public static Material[] sMaterials;
 
-    // !!! 
-    public static int sNProbes = 10;
-    public static int sNSpacecraft = 20;
-    public static int sNEther = 3;
-    //public static int sNBlueCoin = 2;
-
     // !!! download
     public static int nLanguage = 0; // 0 - Russian, 1 - English
 
-    //public static bool flagSelectedPlanet = false;
-    public static getItems.PlanetProperty SelectedPlanet;
+    // Are people sent cycled or not? 
+    public static bool flagCycledSent = false;
 
-    private static bool flagFirstTime = true;
+    // have we just started the application?
+    private static bool flagBeginNewSession = true;
 
-    public static Dictionary<int, int> reqRes;
+    // crawl line
+    public RectTransform ImageCrawlLine;
+    public GameObject title;
+    public static GameObject sTitleCrawlLine;
 
+    //public static bool flagPeopleTransport = false;
+    // flag to show MessageBox with Congratulations
+    public static bool flagShowMessageTransport = false;
+
+    public class GameSettings 
+    {
+        public string NameNative;//+ 
+        public int NEarthMaterial; //+
+        public int NMoonMaterial;//+
+        public Dictionary<int, int> RequestedResources;//+
+        public Dictionary<int, getItems.PlanetProperty> SetPlanets;//+
+        public int NDays;//+
+        public int NCoins;//+
+        public int NPeopleOnNative;//+
+        public int NPeopleDied;//+
+        public int stepCoins;//+
+        public bool flagSelectedPlanet;//+
+        public string NameNew;//+
+        public int NPeopleOnNew;//+
+        public BuildingsOperations.BuildingTime ProbeFactory;//+
+        public BuildingsOperations.BuildingHospital Hospital;
+        public BuildingsOperations.BuildingMine Mine;//+
+        public BuildingsOperations.BuildingTime SCfactory;//+
+        public float koefToday;//+
+        public int NProbe;//+
+        public Dictionary<int, List<settingsResearches.AcceptRes>> Storage;
+        public int NSpasecraft;
+        public bool flagPeopleTransport = false;//+
+        public bool flagPeopleVeBeenSent = false;
+        public int NEther; 
+    }
+    public static GameSettings gameSettings;
+    private getItems GI;
 
 
     void Start()
     {
-        sPauseRectangle = PauseRectangle;
-
-        // read all informationf from *.xml
-        if (flagFirstTime == true)
-        {
-            flagFirstTime = false;
-
-            readAll.GetAll();
-            
-            /*AllGameObjects GO = new AllGameObjects
-            {
-                pauseRectangle = PauseRectangle
-            };*/
-
-            // set of materials for planets
-            sMaterials = new Material[materials.Length];
-            int L = materials.Length;
-            for (int i = 0; i < L; i++)
-            { sMaterials[i] = materials[i]; }
-
-            // materials for Earth and Moon
-            System.Random rnd = new System.Random();
-            NMaterialEarth = rnd.Next(0, L - 1);
-            NMaterialMoon = rnd.Next(0, L - 1);
-
-            // information about planets
-            if (String.IsNullOrEmpty(sNameNativePlanet))
-            {
-                sNameNativePlanet = getItems.NameGenerate(out sValNativePlanet);
-                sSetPlanets = getItems.GetItems();
-            }
-
-            // set requested resources
-            reqRes = getItems.setReqs();
-        }
-
-        Earth.GetComponent<Renderer>().material = settings.sMaterials[NMaterialEarth];
-        Moon.GetComponent<Renderer>().material = settings.sMaterials[NMaterialMoon];
-
-        sPanelResources = PanelResources;
-        Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
-
-        ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
-        TextReqs.GetComponent<Text>().text = SP.Show(reqRes);
-
         sTextCoins = textCoins;
         sTextDays = textDays;
         sStringTextDays = sTextDays.GetComponent<Text>().text;
@@ -142,25 +122,103 @@ public class settings : MonoBehaviour
         sPanelPeople = PanelPeople;
         sPrefabTest = prefabTest;
         sCanvas = Canvas;
+        sPauseRectangle = PauseRectangle;
+        buttons BUT = sCanvas.GetComponent<buttons>();
 
-        if (flagPauseBeforePrefab) { buttons.sPausePressed(); }
+        if (DateChangeing.pause) { BUT.PauseOn(); }
+        CorrectTextOnScene(); 
+
+        GI = gameObject.GetComponent<getItems>();
+        int L = materials.Length;
+
+        // general objects which are valid whether it's the new session or not 
+        if (flagBeginNewSession == true)
+        {
+            flagBeginNewSession = false;
+            
+
+            // set of materials for planets
+            sMaterials = new Material[materials.Length];
+            for (int i = 0; i < L; i++)
+            { sMaterials[i] = materials[i]; }
+        }
+
+        // start of a new session - use all from GameSettings
+        if (String.IsNullOrEmpty(gameSettings.NameNative))
+        {
+            gameSettings.NameNative = GI.NameGenerate();
+
+            // set of all planets with their properties
+            //gameSettings.SetPlanets = getItems.GetItems();
+            gameSettings.SetPlanets = GI.GetItems();
+
+            // materials for Earth and Moon
+            System.Random rnd = new System.Random();
+            gameSettings.NEarthMaterial = rnd.Next(0, L - 1);
+            gameSettings.NMoonMaterial = rnd.Next(0, L - 1);
+
+            gameSettings.RequestedResources = GI.SetReqs();
+
+            // craw line 
+            crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
+            sTitleCrawlLine = title;
+            cl.Show(CrawLineText());
+
+            // save all new params
+            LoadGame.SetAll();
+        }
+
+        Earth.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NEarthMaterial];
+        Moon.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NMoonMaterial];
+
+        sPanelResources = PanelResources;
+        Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
+
+        ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
+        TextReqs.GetComponent<Text>().text = SP.Show(gameSettings.RequestedResources);
+
+        
+        if ( flagShowMessageTransport )
+        {
+            // show MessageBox: people may be transported
+            var instance = Instantiate(MessageBox);
+            instance.transform.SetParent(sCanvas.transform, false);
+
+            flagShowMessageTransport = false;
+        }
     }
 
-    // general set of GOs
-    public class AllGameObjects
+    private string CrawLineText()
     {
-        public GameObject pauseRectangle;
+        string StrCrawLine = "";
+
+        // correct text on the ButtonLanguage
+        if (PersonalSettings.language == LanguageSettings.Language.English)
+        { StrCrawLine = "Welcome to the planet " + gameSettings.NameNative + "!"; }
+        else
+        {
+            if (PersonalSettings.language == LanguageSettings.Language.Russian)
+            { StrCrawLine = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!"; }
+        }
+        return StrCrawLine;
     }
 
-    // data for one planet 
-    public class TestItemModel
+    private void CorrectTextOnScene()
     {
-        public int numPlanet;
-        public string textName;
-        public int textTI; // terraindex
-        public int numMaterial;
-
-        public bool flagActive; // 0 - not active, 1 - active
-        public bool flagResearched; // 0 - not researched, 1 - researched
+        if (PersonalSettings.language == LanguageSettings.Language.English)
+        {
+            ButtonResearch.GetComponentInChildren<Text>().text = "Research";
+            PeopleTextTitle.transform.GetComponent<Text>().text = "People";
+            ReqResTitle.transform.GetComponent<Text>().text = "Requested resources";
+        }
+        else
+        {
+            if (PersonalSettings.language == LanguageSettings.Language.Russian)
+            {
+                ButtonResearch.GetComponentInChildren<Text>().text = "ПОИСК";
+                PeopleTextTitle.transform.GetComponent<Text>().text = "ЛЮДИ";
+                ReqResTitle.transform.GetComponent<Text>().text = "ТРЕБУЕМЫЕ РЕСУРСЫ";
+            }
+        }
     }
 }
