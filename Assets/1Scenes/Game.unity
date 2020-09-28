@@ -3330,7 +3330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1248997628
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3818,6 +3818,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ButtonSendPeople: {fileID: 1632650483}
   ButtonCycle: {fileID: 1248997627}
+  peopleOnNative: {fileID: 0}
+  peopleOnNew: {fileID: 0}
   CycleImage: {fileID: 21300000, guid: 514b2496b4092dd4eb0dbe18949a65ea, type: 3}
   NotCycleImage: {fileID: 21300000, guid: 6bf16149aa08e624fbf9bcb1571ed31a, type: 3}
 --- !u!1 &1358044492 stripped
@@ -4413,7 +4415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1632650484
 RectTransform:
   m_ObjectHideFlags: 0

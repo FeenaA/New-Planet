@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// class to report user about possibility to transport people
+/// </summary>
 public class StartTransportPeople : MonoBehaviour
 {
     public Button ButtonTitle;

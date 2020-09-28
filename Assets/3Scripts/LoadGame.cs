@@ -207,6 +207,7 @@ public class LoadGame : MonoBehaviour
             }
 
             else if (xnode.Name == "flagPeopleTransport") { res.flagPeopleTransport = System.Convert.ToBoolean(xnode.InnerText); }
+            else if (xnode.Name == "flagPeopleVeBeenSent") { res.flagPeopleVeBeenSent = System.Convert.ToBoolean(xnode.InnerText); }
             else if (xnode.Name == "NSpasecraft") { res.NSpasecraft = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleOnNative") { res.NPeopleOnNative = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleOnNew") { res.NPeopleOnNew = System.Convert.ToInt32(xnode.InnerText); }
@@ -498,7 +499,7 @@ public class LoadGame : MonoBehaviour
     }
 
     /// <summary>
-    /// Save flagPeopleTransport
+    /// Save flagPeopleTransport when ResNess is collected
     /// </summary>
     public static void SetFlagPeople()
     {
@@ -518,7 +519,7 @@ public class LoadGame : MonoBehaviour
     }
 
     /// <summary>
-    /// Save NSpacecraft
+    /// Save NSpacecraft and amount of people on native and new planets
     /// </summary>
     public static void SetPeopleTransport()
     {
@@ -537,6 +538,9 @@ public class LoadGame : MonoBehaviour
         File.WriteAllText(fullPath, sw.ToString());
     }
 
+    /// <summary>
+    /// Save all current information about buildings
+    /// </summary>
     public static void SetBuildings()
     {
         XmlElement xRoot = xDoc.DocumentElement;
@@ -633,7 +637,7 @@ public class LoadGame : MonoBehaviour
     }
 
     /// <summary>
-    /// change  NEther, Storage
+    /// Save NEther, Storage
     /// </summary>
     /// <param name="LoadStorage">flag - to reload storage or not</param>
     public static void SetEther(bool LoadStorage)
@@ -655,7 +659,7 @@ public class LoadGame : MonoBehaviour
     }
 
     /// <summary>
-    /// save an information about the selected planet's resources and coins
+    /// Save the selected planet's resources and coins
     /// </summary>
     public static void SetSell()
     {

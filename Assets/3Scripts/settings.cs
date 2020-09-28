@@ -102,8 +102,8 @@ public class settings : MonoBehaviour
         public int NProbe;//+
         public Dictionary<int, List<settingsResearches.AcceptRes>> Storage;
         public int NSpasecraft;
-        public bool flagPeopleTransport = false;//+
-        public bool flagPeopleVeBeenSent = false;
+        public bool flagPeopleTransport = false; // flag - people may be transported
+        public bool flagPeopleVeBeenSent = false; // flag - at leat one group of people was sent
         public int NEther; 
     }
     public static GameSettings gameSettings;
