@@ -177,7 +177,7 @@ public class settings : MonoBehaviour
         ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
         TextReqs.GetComponent<Text>().text = SP.Show(gameSettings.RequestedResources);
 
-        
+        //delete this comment
         if ( flagShowMessageTransport )
         {
             // show MessageBox: people may be transported
