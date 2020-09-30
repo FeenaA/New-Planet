@@ -528,6 +528,10 @@ public class LoadGame : MonoBehaviour
         {
             if (xelem.Name == "NSpasecraft")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NSpasecraft); }
+            else if (xelem.Name == "NPeopleOnNative")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NPeopleOnNative); }
+            else if (xelem.Name == "NPeopleOnNew")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NPeopleOnNew); }
         }
 
         StringWriter sw = new StringWriter();

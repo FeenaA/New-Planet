@@ -82,7 +82,7 @@
     <Compile Include="Assets\3Scripts\ItemOnClick.cs" />
     <Compile Include="Assets\3Scripts\LanguageSettings.cs" />
     <Compile Include="Assets\3Scripts\LoadGame.cs" />
-    <Compile Include="Assets\3Scripts\MessageBox.cs" />
+    <Compile Include="Assets\3Scripts\MessageTreasure.cs" />
     <Compile Include="Assets\3Scripts\People.cs" />
     <Compile Include="Assets\3Scripts\PersonalSettings.cs" />
     <Compile Include="Assets\3Scripts\Preprocessing.cs" />
