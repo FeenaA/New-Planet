@@ -109,6 +109,8 @@ public class settings : MonoBehaviour
     public static GameSettings gameSettings;
     private getItems GI;
 
+    private string StrWelcome = ""; 
+    private string StrAuto = "";
 
     void Start()
     {
@@ -160,9 +162,9 @@ public class settings : MonoBehaviour
             gameSettings.RequestedResources = GI.SetReqs();
 
             // craw line 
-            crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
+            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
             sTitleCrawlLine = title;
-            cl.Show(CrawLineText());
+            CL.Show(StrWelcome);
 
             // save all new params
             LoadGame.SetAll();
@@ -184,11 +186,16 @@ public class settings : MonoBehaviour
             var instance = Instantiate(MessageBox);
             instance.transform.SetParent(sCanvas.transform, false);
 
+            // craw line 
+            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+            sTitleCrawlLine = title;
+            CL.Show(StrAuto);
+
             flagShowMessageTransport = false;
         }
     }
 
-    private string CrawLineText()
+    /*private string CrawLineText()
     {
         string StrCrawLine = "";
 
@@ -201,7 +208,7 @@ public class settings : MonoBehaviour
             { StrCrawLine = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!"; }
         }
         return StrCrawLine;
-    }
+    }*/
 
     private void CorrectTextOnScene()
     {
@@ -210,6 +217,8 @@ public class settings : MonoBehaviour
             ButtonResearch.GetComponentInChildren<Text>().text = "Research";
             PeopleTextTitle.transform.GetComponent<Text>().text = "People";
             ReqResTitle.transform.GetComponent<Text>().text = "Requested resources";
+            StrWelcome = "Welcome to the planet " + gameSettings.NameNative + "!";
+            StrAuto = "You can send spacecraft with people automatically.";
         }
         else
         {
@@ -218,6 +227,8 @@ public class settings : MonoBehaviour
                 ButtonResearch.GetComponentInChildren<Text>().text = "ПОИСК";
                 PeopleTextTitle.transform.GetComponent<Text>().text = "ЛЮДИ";
                 ReqResTitle.transform.GetComponent<Text>().text = "ТРЕБУЕМЫЕ РЕСУРСЫ";
+                StrWelcome = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!";
+                StrAuto = "ТЫ МОЖЕШЬ ПОСЫЛАТЬ КОСМОЛЕТЫ С ЖИТЕЛЯМИ АВТОМАТИЧЕСКИ.";
             }
         }
     }

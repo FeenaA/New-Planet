@@ -353,8 +353,8 @@ public class Shopping : MonoBehaviour
         {
             // set and save flag to make transportation of people avaliable
             settings.gameSettings.flagPeopleTransport = true;
-            LoadGame.SetFlagPeople();
-
+            //LoadGame.SetfPeopleNSC();
+             
             // flag to show message on the scene "Game"
             settings.flagShowMessageTransport = true;
 
@@ -415,6 +415,10 @@ public class Shopping : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// increment amount of resource
+    /// </summary>
+    /// <param name="NRes"></param>
     private void AddResourceToPanet(int NRes)
     {
         // add resource
@@ -430,7 +434,8 @@ public class Shopping : MonoBehaviour
         if (settings.gameSettings.RequestedResources.ContainsKey(numRes))
         {
             settings.gameSettings.RequestedResources[numRes]++;
-            settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.gameSettings.RequestedResources);
+            settingsResearches.sTextRequestedResources.GetComponent<Text>().text = 
+                SP.Show(settings.gameSettings.RequestedResources);
         }
 
         // reset buttons

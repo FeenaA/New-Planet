@@ -499,16 +499,17 @@ public class LoadGame : MonoBehaviour
     }
 
     /// <summary>
-    /// Save flagPeopleTransport when ResNess is collected
+    /// // Save flag people and NSpasecraft when ResNess is collected
     /// </summary>
-    public static void SetFlagPeople()
+    public static void SetfPeopleNSC() 
     {
         XmlElement xRoot = xDoc.DocumentElement;
-        string namePlanet = System.Convert.ToString(settings.gameSettings.NameNew);
         foreach (XmlElement xelem in xRoot)
         {
             if (xelem.Name == "flagPeopleTransport")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.flagPeopleTransport); }
+            else if (xelem.Name == "NSpasecraft")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NSpasecraft); }
         }
         StringWriter sw = new StringWriter();
         XmlTextWriter xw = new XmlTextWriter(sw);

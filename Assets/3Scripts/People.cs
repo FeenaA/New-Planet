@@ -54,8 +54,6 @@ public class People : MonoBehaviour
         {
             strOn = "On ";
             strNew = " (new): ";
-            //strMoved = " shifted";
-
         }
         else
         {
@@ -63,7 +61,6 @@ public class People : MonoBehaviour
             {
                 strOn = "НА ";
                 strNew = " (НОВАЯ): ";
-                //strMoved = " ПЕРЕЕХАЛИ";
             }
         }
     }

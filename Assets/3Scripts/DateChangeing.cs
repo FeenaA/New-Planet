@@ -125,13 +125,15 @@ public class DateChangeing : MonoBehaviour
     {
         if (!pause)
         {
-            // days counter increment 
+            #region  days increment 
             settings.sStringTextDays = strDay + settings.gameSettings.NDays;
             GetComponent<Text>().text = settings.sStringTextDays;
+            #endregion
 
-            // increase and show amount of coins
+            #region coins increment
             settings.gameSettings.NCoins = AddCoins(settings.gameSettings.stepCoins);
             sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NCoins);
+            #endregion
 
             // if people've started to die
             if (settings.gameSettings.NDays > DaysWithoutDeth) { GetPeopleAmount(); }
@@ -164,7 +166,7 @@ public class DateChangeing : MonoBehaviour
                 }
             }
 
-            // probes increment
+            #region probes increment
             if ((settings.gameSettings.ProbeFactory.N > 0) && (settings.gameSettings.NProbe < MaxN))
             {
                 nDayPF++;
@@ -182,6 +184,9 @@ public class DateChangeing : MonoBehaviour
                     nDayPF = 0;
                 }
             }
+            #endregion
+
+            #region spacecrafts increment
 
             // spacecrafts increment
             if ((settings.gameSettings.SCfactory.N > 0) && (settings.gameSettings.NSpasecraft < MaxN))
@@ -226,6 +231,7 @@ public class DateChangeing : MonoBehaviour
                     nDaySC = 0;
                 }
             }
+            #endregion
 
             // save new daily params 
             LoadGame.SetDailyData();
@@ -262,7 +268,7 @@ public class DateChangeing : MonoBehaviour
         settings.gameSettings.NPeopleOnNew += NTransportedPeople;
 
         // Save NSpasecraft, amount of people on new and native planets
-        //LoadGame.SetPeopleTransport();
+        LoadGame.SetPeopleTransport();
 
         // pop-up line
         ShowPopUpLine(NTransportedPeople);
