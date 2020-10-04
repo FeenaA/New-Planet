@@ -201,7 +201,7 @@ public class Shopping : MonoBehaviour
         {
             // set number of resource for this slot and amount = 0
             ItemOnClick.PP.ResAdd[numButtonResource - 1] = numRes;
-            ItemOnClick.PP.ResNess_Amount[numButtonResource - 1] = 0;
+            ItemOnClick.PP.ResAddAmount[numButtonResource - 1] = 0;
         }
 
         // necessary (unlimited) or extraordinary resource
@@ -389,13 +389,15 @@ public class Shopping : MonoBehaviour
     
     private void GenerateListForEmptySlot()
     {
+        // list consists of resources, wich are prioritized
         ListToFillEmpty.Clear();
 
         // 1 - requested resources that aren't on the planet
         int N = getItems.ResourceAdd.Count;
         for (int numRes = 1; numRes <= N; numRes++)
         {
-            if (settings.gameSettings.RequestedResources.ContainsKey(numRes) && !ItemOnClick.PP.ResAdd.Contains(numRes))
+            if (settings.gameSettings.RequestedResources.ContainsKey(numRes) && 
+                !ItemOnClick.PP.ResAdd.Contains(numRes))
             { ListToFillEmpty.Add(numRes); }
         }
         // 2 - resources that are avaliable to be transported
@@ -454,6 +456,9 @@ public class Shopping : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// take away 1 resource and show changes
+    /// </summary>
     private void TakeAwayResource()
     {
         // resource decrement
@@ -476,7 +481,8 @@ public class Shopping : MonoBehaviour
         if (settings.gameSettings.RequestedResources.ContainsKey(numRes))
         {
             settings.gameSettings.RequestedResources[numRes]--; // it must be nonnegative
-            settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.gameSettings.RequestedResources);
+            settingsResearches.sTextRequestedResources.GetComponent<Text>().text = 
+                SP.Show(settings.gameSettings.RequestedResources);
         }
 
         // make all buttons active or inactive

@@ -8,6 +8,8 @@ public class settingsResearches: MonoBehaviour
 {
     // text - amount of intervened days
     public GameObject textDays;
+    // 
+    public Scrollbar scrollBar;
     // prefab item
     public RectTransform prefabPlanet;
     // parent
@@ -124,6 +126,8 @@ public class settingsResearches: MonoBehaviour
     {
         // by default the Planet0 is chosen
         int nPlanet = 0;
+        // make scrollBar be at the highest position
+        scrollBar.value = 0;
         // add new items with data
         foreach (var planet in settings.gameSettings.SetPlanets)
         {
@@ -132,7 +136,6 @@ public class settingsResearches: MonoBehaviour
             InitializeItemView(instance.transform, planet);
 
             // name of an object in inspector
-            instance.transform.name = "Planet" + nPlanet;
             if (nChoosenPlanet == nPlanet)
             {
                 ChosenPlanet = instance;
@@ -142,6 +145,9 @@ public class settingsResearches: MonoBehaviour
                 // item select
                 ItemOnClick click = GameObject.Find("SettingsResearches").GetComponent<ItemOnClick>();
                 click.ItemSelect(instance);
+
+                // make scrollBar be about the planet nPlanet
+                
             }
             nPlanet++;
         }

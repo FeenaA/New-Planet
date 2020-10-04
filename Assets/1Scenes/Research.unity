@@ -833,8 +833,8 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 813594642}
   m_HandleRect: {fileID: 813594641}
-  m_Direction: 3
-  m_Value: 1
+  m_Direction: 2
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1465,6 +1465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textDays: {fileID: 538435815}
+  scrollBar: {fileID: 142456352}
   prefabPlanet: {fileID: 1515924314823488695, guid: b665b6e8bb4378145827ce761a737f06,
     type: 3}
   content: {fileID: 225867095}
@@ -2599,10 +2600,12 @@ MonoBehaviour:
   nSecondsStep: 2
   result: 2
   PauseRectangle: {fileID: 462644282}
+  PopUpLine: {fileID: 0}
   textCoinsObject: {fileID: 1199631245}
   peopleOnNative: {fileID: 0}
   peopleOnNew: {fileID: 0}
   peopleDied: {fileID: 0}
+  ButtonSendPeople: {fileID: 0}
   NProbes: {fileID: 2063788488}
   NSpaceCraft: {fileID: 1126424097}
 --- !u!114 &538435818
