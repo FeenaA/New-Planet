@@ -128,6 +128,8 @@ public class settings : MonoBehaviour
         buttons BUT = sCanvas.GetComponent<buttons>();
 
         if (DateChangeing.pause) { BUT.PauseOn(); }
+
+
         CorrectTextOnScene(); 
 
         GI = gameObject.GetComponent<getItems>();
@@ -170,6 +172,7 @@ public class settings : MonoBehaviour
             LoadGame.SetAll();
         }
 
+        EarthOnClick.flagBuildings = false;
         Earth.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NEarthMaterial];
         Moon.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NMoonMaterial];
 

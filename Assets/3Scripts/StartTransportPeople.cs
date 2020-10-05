@@ -38,8 +38,6 @@ public class StartTransportPeople : MonoBehaviour
         } 
         TextMessageBox.GetComponent<Text>().text = strMessage;
         ButtonTitle.GetComponentInChildren<Text>().text = strTitle;
-
-        print(settings.gameSettings.NSpasecraft);
     }
 
     /// <summary>
@@ -71,12 +69,12 @@ public class StartTransportPeople : MonoBehaviour
     /// </summary>
     public void ClosePressed()
     {
-        // NSpasecraft increment
-        settings.gameSettings.NSpasecraft++;
-
         string SceneName = SceneManager.GetActiveScene().name;
         if (SceneName == "Research") 
         {
+            // NSpasecraft increment
+            settings.gameSettings.NSpasecraft++;
+
             // Save flag people and NSpasecraft
             LoadGame.SetfPeopleNSC();
             SceneManager.LoadScene("Game"); 

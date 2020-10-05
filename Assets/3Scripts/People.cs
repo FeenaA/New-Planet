@@ -81,38 +81,7 @@ public class People : MonoBehaviour
         if (settings.gameSettings.NSpasecraft == 0)
         { ButtonSendPeople.GetComponent<Button>().interactable = false; }
     }
-
-    /*
-    /// <summary>
-    /// Send NSpacecraft SC
-    /// </summary>
-    /// <param name="NSpacecraft"></param>
-    public void SendPeople(int NSpacecraft)
-    {
-        // NSpacecraft - amount of avaliable SCs
-        if (settings.gameSettings.NSpasecraft < NSpacecraft)
-        { NSpacecraft = settings.gameSettings.NSpasecraft; }
-        if (NSpacecraft == 0) return;
-
-        // NTransportedPeople - amount of avaliable people
-        int NTransportedPeople = NPeopleInSC * NSpacecraft;
-        if (settings.gameSettings.NPeopleOnNative < NTransportedPeople)
-        { NTransportedPeople = settings.gameSettings.NPeopleOnNative; }
-        NSpacecraft = NTransportedPeople / NPeopleInSC;
-        if (NSpacecraft * NPeopleInSC < NTransportedPeople) NSpacecraft++;
-
-        // change amount of people on new and native planets
-        settings.gameSettings.NSpasecraft -= NSpacecraft;
-        settings.gameSettings.NPeopleOnNative -= NTransportedPeople;
-        settings.gameSettings.NPeopleOnNew += NTransportedPeople;
-
-        // Save NSpasecraft, amount of people on new and native planets
-        LoadGame.SetPeopleTransport();
-
-        // pop-up line
-        ShowPopUpLine(NTransportedPeople);
-    }*/
-
+    
     /// <summary>
     /// show amount of people
     /// </summary>
@@ -123,29 +92,6 @@ public class People : MonoBehaviour
         peopleOnNew.GetComponent<Text>().text = strOn + settings.gameSettings.NameNew + strNew +
             System.Convert.ToString(settings.gameSettings.NPeopleOnNew);
     }
-
-   /* /// <summary>
-    /// Show pop-up line
-    /// </summary>
-    /// <param name="NTransportedPeople">Amount ot transported people</param>
-    private void ShowPopUpLine(int NTransportedPeople)
-    {
-        if (!PopUpLine.activeSelf)
-        {
-            PopUpLine.GetComponent<Text>().text = System.Convert.ToString(NTransportedPeople) + strMoved;
-            PopUpLine.SetActive(true);
-            StartCoroutine(MakeSleepObject());
-        }
-    }
-
-    IEnumerator MakeSleepObject()
-    {
-        yield return new WaitForSeconds(2.0f);
-        if (PopUpLine.activeSelf)
-        {
-            PopUpLine.SetActive(false);
-        }
-    }*/
 
     /// <summary>
     /// keeping track of producing new SC to send them with people to the new planet

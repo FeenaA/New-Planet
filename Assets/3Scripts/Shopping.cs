@@ -175,8 +175,6 @@ public class Shopping : MonoBehaviour
             { sTextStorage.GetComponent<Text>().text = strMaximum; }
             else 
             { sTextStorage.GetComponent<Text>().text = strUnlimited;}
-            // using Ether is impossible
-            sEtherButton.SetActive(false);
         }
 
         // show PanelShopping and disable PanelPlanets
@@ -297,6 +295,7 @@ public class Shopping : MonoBehaviour
     {
         if (BlueCoin.sNBlueCoin == 0) { return; }
 
+        // BlueCoin decrement
         BC.SubstractBlueCoins(1);
         settingsResearches.sTextBC.GetComponent<Text>().text = 
         System.Convert.ToString(BlueCoin.sNBlueCoin);
@@ -369,24 +368,61 @@ public class Shopping : MonoBehaviour
     /// </summary>
     private void ShowShopping()
     {
-        // show the name of resource
-        textResource.GetComponent<Text>().text = getItems.ResourceAdd[numRes].name;
-        // show cost 
-        cost = getItems.ResourceAdd[numRes].cost;
-        textCostResource.GetComponent<Text>().text = System.Convert.ToString(cost);
+        print(numRes);
+        
+        if (numRes < 0) { ShowShoppingNecessary(); } // necessary
+        else { ShowShoppingExtra(); } // extraordinary
 
-        // show (or not) amount of resource in the storage
-        int amountInStorage = PI.GetAmountInStorage(numRes);
-        if (amountInStorage > 0)
+    }
+
+    /// <summary>
+    /// show the name, the cost and amount of Necessary resource at the storage
+    /// </summary>
+    private void ShowShoppingNecessary()
+    {
+        if (numRes < 0)
         {
+            // show name 
+            numRes = numButtonResource;
+            textResource.GetComponent<Text>().text = getItems.ResNess[numButtonResource].name;
+            // show cost
+            cost = getItems.ResNess[numButtonResource].cost;
+            textCostResource.GetComponent<Text>().text = System.Convert.ToString(cost);
+            // show sTextStorage
             if (NRes == 10)
             { sTextStorage.GetComponent<Text>().text = strMaximum; }
             else
-            { sTextStorage.GetComponent<Text>().text = amountInStorage + strAtStorage; }
+            { sTextStorage.GetComponent<Text>().text = strUnlimited; }
         }
-        else { sTextStorage.GetComponent<Text>().text = strNoResources; }
+        else return;
     }
-    
+
+    /// <summary>
+    /// show the name, the cost and amount of Extra resource at the storage
+    /// </summary>
+    private void ShowShoppingExtra()
+    {
+        //if (numRes >= 0)
+        {
+            // show the name of resource
+            textResource.GetComponent<Text>().text = getItems.ResourceAdd[numRes].name;
+            // show cost 
+            cost = getItems.ResourceAdd[numRes].cost;
+            textCostResource.GetComponent<Text>().text = System.Convert.ToString(cost);
+
+            // show (or not) amount of resource in the storage
+            int amountInStorage = PI.GetAmountInStorage(numRes);
+            if (amountInStorage > 0)
+            {
+                if (NRes == 10)
+                { sTextStorage.GetComponent<Text>().text = strMaximum; }
+                else
+                { sTextStorage.GetComponent<Text>().text = amountInStorage + strAtStorage; }
+            }
+            else { sTextStorage.GetComponent<Text>().text = strNoResources; }
+        }
+    }
+
     private void GenerateListForEmptySlot()
     {
         // list consists of resources, wich are prioritized
@@ -480,7 +516,7 @@ public class Shopping : MonoBehaviour
         // show changes on the requirement resources's panel  
         if (settings.gameSettings.RequestedResources.ContainsKey(numRes))
         {
-            settings.gameSettings.RequestedResources[numRes]--; // it must be nonnegative
+            settings.gameSettings.RequestedResources[numRes]--; // it is nonnegative
             settingsResearches.sTextRequestedResources.GetComponent<Text>().text = 
                 SP.Show(settings.gameSettings.RequestedResources);
         }
@@ -494,7 +530,14 @@ public class Shopping : MonoBehaviour
     /// </summary>
     private void ResetShoppingPanel()
     {
-        if (NRes == 0) // dealing with an empty slot
+        if (NRes!=0 || NRes==0 && numButtonResource<0)
+        {
+            // TextStorage
+            ResetStorageText();
+            // make all buttons interactable or uninteractable 
+            ResetButtons();
+        }
+        else // empty extraordinary resource
         {
             // show name, introduction, cost
             sTextResource.GetComponent<Text>().text = strResource;
@@ -507,13 +550,6 @@ public class Shopping : MonoBehaviour
             sEtherButton.SetActive(false);
 
             GenerateListForEmptySlot();
-        }
-        else
-        {
-            // TextStorage
-            ResetStorageText();
-            // make all buttons interactable or uninteractable 
-            ResetButtons();
         }
     }
 
@@ -538,6 +574,7 @@ public class Shopping : MonoBehaviour
     /// </summary>
     private void ResetButtons()
     {
+        // Maximum
         if (NRes == 10)
         {
             // transport
@@ -560,7 +597,8 @@ public class Shopping : MonoBehaviour
                 { sTransportButton.GetComponent<Button>().interactable = true; }
             }
             // ether
-            sEtherButton.SetActive(settings.gameSettings.NEther > 0);
+            if ( numButtonResource < 0 ) { sEtherButton.SetActive(false); } // necessary
+            else { sEtherButton.SetActive(settings.gameSettings.NEther > 0); } // extra
             // blue coins
             sBuyButton.GetComponent<Button>().interactable = (BlueCoin.sNBlueCoin > 0);
             // sell 

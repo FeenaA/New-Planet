@@ -19,7 +19,10 @@ public class panelInform : MonoBehaviour
         CorrectLanguage();
     }
 
-    // reset and show currently planet's properties on the PanelInformation
+    /// <summary>
+    /// reset and show currently planet's properties on the PanelInformation
+    /// </summary>
+    /// <param name="PP"></param>
     public void ResetPlanet(getItems.PlanetProperty PP)
     {
         settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
@@ -256,7 +259,11 @@ public class panelInform : MonoBehaviour
         }
     }
 
-    // get amount of resourse "numRes" in the storage
+    /// <summary>
+    /// get amount of resourse "numRes" in the storage
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public int GetAmountInStorage(int key)
     {
         int res = 0;

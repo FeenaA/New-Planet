@@ -126,8 +126,6 @@ public class settingsResearches: MonoBehaviour
     {
         // by default the Planet0 is chosen
         int nPlanet = 0;
-        // make scrollBar be at the highest position
-        scrollBar.value = 0;
         // add new items with data
         foreach (var planet in settings.gameSettings.SetPlanets)
         {
@@ -145,12 +143,11 @@ public class settingsResearches: MonoBehaviour
                 // item select
                 ItemOnClick click = GameObject.Find("SettingsResearches").GetComponent<ItemOnClick>();
                 click.ItemSelect(instance);
-
-                // make scrollBar be about the planet nPlanet
-                
             }
             nPlanet++;
         }
+        // make scrollBar be at the highest position
+        scrollBar.value = 1;
     }
 
     /// <summary>

@@ -204,7 +204,7 @@ public class BuildingsOperations : MonoBehaviour
         }
     }
 
-    public void CheckMax()
+    private void CheckMax()
     {
         // ProbeFactory
         if (ProbeFactory.N == NMaxBuildings)
@@ -439,5 +439,4 @@ public class BuildingsOperations : MonoBehaviour
         settings.sPanelPeople.SetActive(true);
         settings.sPanelResources.SetActive(true);
     }
-
 }
