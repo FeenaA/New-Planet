@@ -63,8 +63,22 @@ public class ItemOnClick : MonoBehaviour
         nCurrentPlanet = System.Convert.ToInt32(textNumber);
 
         // PP includes all information about particular planet
-        //PP = getItems.sPlanetProperty[nCurrentPlanet];
         PP = settings.gameSettings.SetPlanets[nCurrentPlanet];
+
+        // correct an ability to deal with necessary resources 
+        //after the first group of people was moved to NEW
+        if (settings.gameSettings.flagPeopleVeBeenSent && PP.flagIsSelected)
+        {
+            settingsResearches.rWater.gameObject.GetComponent<Outline>().enabled = true;
+            settingsResearches.rAir.gameObject.GetComponent<Outline>().enabled = true;
+            settingsResearches.rSoil.gameObject.GetComponent<Outline>().enabled = true;
+        }
+        else
+        {
+            settingsResearches.rWater.gameObject.GetComponent<Outline>().enabled = false;
+            settingsResearches.rAir.gameObject.GetComponent<Outline>().enabled = false;
+            settingsResearches.rSoil.gameObject.GetComponent<Outline>().enabled = false;
+        }
 
         panelInform PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();
         PI.ResetPlanet(PP);

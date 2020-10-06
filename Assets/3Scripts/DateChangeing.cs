@@ -140,6 +140,7 @@ public class DateChangeing : MonoBehaviour
 
             if (SceneName == "Game")
             {
+                #region show people
                 // died people
                 if (settings.gameSettings.NDays > DaysWithoutDeth)
                 {
@@ -158,12 +159,15 @@ public class DateChangeing : MonoBehaviour
                     peopleOnNew.GetComponent<Text>().text = strOn + settings.gameSettings.NameNew + strNew +
                         Convert.ToString(settings.gameSettings.NPeopleOnNew);
                 }
-                // buildings
+                #endregion
+
+                #region show buildings 
                 if (EarthOnClick.flagBuildings == true)
                 {
                     BuildingsOperations BO = settings.sCanvasBuildings.GetComponent<BuildingsOperations>();
                     BO.ReloadButtons();
                 }
+                #endregion
             }
 
             #region probes increment
@@ -247,6 +251,8 @@ public class DateChangeing : MonoBehaviour
     /// <param name="NSpacecraft"></param>
     public void SendPeople(int NSpacecraft)
     {
+        if (settings.gameSettings.NPeopleOnNative == 0) return;
+
         People PEP = settings.sCanvas.GetComponent<People>();
         int NPeopleInSC = PEP.NPeopleInSC;
 
@@ -254,6 +260,13 @@ public class DateChangeing : MonoBehaviour
         if (settings.gameSettings.NSpasecraft < NSpacecraft)
         { NSpacecraft = settings.gameSettings.NSpasecraft; }
         if (NSpacecraft == 0) return;
+
+        
+        if (!settings.gameSettings.flagPeopleVeBeenSent)
+        {
+            settings.gameSettings.flagPeopleVeBeenSent = true;
+            LoadGame.SetPeopleVeBeenSent();
+        }
 
         // NTransportedPeople - amount of avaliable people
         int NTransportedPeople = NPeopleInSC * NSpacecraft;

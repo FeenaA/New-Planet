@@ -129,8 +129,12 @@ public class Shopping : MonoBehaviour
         if (ItemOnClick.PP.flagIsSelected == false) { return; }
 
         // not to open Shopping panel for ResNecess if the first part of people is on new planet
-        if (numButtonResource < 0)
-        { }
+        if ((n < 0) && (settings.gameSettings.flagPeopleVeBeenSent)) 
+        {
+            // CrawlLine: "You can do nothing with necessary resources after the first group of people was sent to the new planet."
+            CloseShopPressed();
+            return; 
+        }
 
         SP = settingsResearches.sPanelInformation.GetComponent<ShowProgress>();
         PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();

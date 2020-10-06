@@ -543,6 +543,23 @@ public class LoadGame : MonoBehaviour
         File.WriteAllText(fullPath, sw.ToString());
     }
 
+    public static void SetPeopleVeBeenSent()
+    {
+        XmlElement xRoot = xDoc.DocumentElement;
+        foreach (XmlElement xelem in xRoot)
+        {
+            if (xelem.Name == "flagPeopleVeBeenSent")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.flagPeopleVeBeenSent); }
+        }
+
+        StringWriter sw = new StringWriter();
+        XmlTextWriter xw = new XmlTextWriter(sw);
+        xDoc.WriteTo(xw);
+
+        fullPath = Application.persistentDataPath + "/ContinueGame.xml";
+        File.WriteAllText(fullPath, sw.ToString());
+    }
+
     /// <summary>
     /// Save all current information about buildings
     /// </summary>

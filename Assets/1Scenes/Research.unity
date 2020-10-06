@@ -544,6 +544,7 @@ GameObject:
   - component: {fileID: 102161793}
   - component: {fileID: 102161792}
   - component: {fileID: 102161791}
+  - component: {fileID: 102161794}
   m_Layer: 5
   m_Name: ButtonAir
   m_TagString: Untagged
@@ -661,6 +662,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102161789}
   m_CullTransparentMesh: 0
+--- !u!114 &102161794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102161789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &132534323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,6 +2194,7 @@ GameObject:
   - component: {fileID: 481815455}
   - component: {fileID: 481815454}
   - component: {fileID: 481815453}
+  - component: {fileID: 481815456}
   m_Layer: 5
   m_Name: ButtonSoil
   m_TagString: Untagged
@@ -2295,6 +2312,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481815451}
   m_CullTransparentMesh: 0
+--- !u!114 &481815456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481815451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &512656284
 GameObject:
   m_ObjectHideFlags: 0
@@ -4504,6 +4536,7 @@ GameObject:
   - component: {fileID: 1385123182}
   - component: {fileID: 1385123181}
   - component: {fileID: 1385123180}
+  - component: {fileID: 1385123183}
   m_Layer: 5
   m_Name: ButtonWater
   m_TagString: Untagged
@@ -4621,6 +4654,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385123178}
   m_CullTransparentMesh: 0
+--- !u!114 &1385123183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385123178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1386518390
 GameObject:
   m_ObjectHideFlags: 0
