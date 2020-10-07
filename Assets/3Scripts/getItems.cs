@@ -5,7 +5,6 @@ using UnityEngine;
 public class getItems : MonoBehaviour
 {
     public static List<string> sGreekAlph;
-    //public static List<string> sIntroduction;
     public static List<string> sAdditionalResources;
     private static int NSymbols;
     private static int NPlanets;
@@ -129,8 +128,8 @@ public class getItems : MonoBehaviour
                 trigger = !trigger;
             }
 
-            //if (/*PP.flagCoins && */PP.flagEther)
-            //    print(i + " Ether!");
+            //if (PP.flagEther) print("Ether!");
+            //if (PP.flagCoins) print("Coins!");
 
             result.Add((i + 1), PP);
         }
@@ -145,10 +144,10 @@ public class getItems : MonoBehaviour
     private bool Treasure(int terraIndex)
     {
         int N = 0;
-             if (terraIndex <= 20) { N = 3; }
+             if (terraIndex <= 20) { N = 4; }
         else if ((terraIndex > 20) && (terraIndex <= 40)) { N = 6; }
         else if ((terraIndex > 40) && (terraIndex <= 60)) { N = 10; }
-        else if ((terraIndex > 60) && (terraIndex <= 80)) { N = 20; }
+        else if ((terraIndex > 60) && (terraIndex <= 80)) { N = 30; }
         else if (terraIndex > 80) { N = 40; }
 
         if (rnd.Next(N-1) == 0) { return true; }

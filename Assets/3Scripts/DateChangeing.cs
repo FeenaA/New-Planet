@@ -343,6 +343,21 @@ public class DateChangeing : MonoBehaviour
         DiedToday = DayDeth * System.Convert.ToInt32(settings.gameSettings.koefToday);
         settings.gameSettings.NPeopleDied += DiedToday;
         settings.gameSettings.NPeopleOnNative -= DiedToday;
+
+        // game over
+        if ( settings.gameSettings.NPeopleOnNative == 0 )
+        {
+            // failure
+            if (settings.gameSettings.NPeopleOnNew == 0)
+            {
+
+            }
+            else // winning
+            {
+
+            }
+        }
+
     }
 
     /// <summary>

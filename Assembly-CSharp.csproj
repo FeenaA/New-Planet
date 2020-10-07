@@ -78,6 +78,7 @@
     <Compile Include="Assets\3Scripts\BuildingsOperations.cs" />
     <Compile Include="Assets\3Scripts\DateChangeing.cs" />
     <Compile Include="Assets\3Scripts\EarthOnClick.cs" />
+    <Compile Include="Assets\3Scripts\GameOver.cs" />
     <Compile Include="Assets\3Scripts\Help.cs" />
     <Compile Include="Assets\3Scripts\ItemOnClick.cs" />
     <Compile Include="Assets\3Scripts\LanguageSettings.cs" />
