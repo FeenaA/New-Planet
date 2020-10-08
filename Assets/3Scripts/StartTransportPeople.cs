@@ -33,7 +33,7 @@ public class StartTransportPeople : MonoBehaviour
         else if (SceneName == "Game") 
         { 
             strMessage = strGame;
-            Destroy(TextPrise.transform.GetChild(0).gameObject);
+            //Destroy(TextPrise.transform.GetChild(0).gameObject);
             Object.Destroy(TextPrise); 
         } 
         TextMessageBox.GetComponent<Text>().text = strMessage;

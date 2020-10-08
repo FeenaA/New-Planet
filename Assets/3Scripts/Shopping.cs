@@ -371,12 +371,9 @@ public class Shopping : MonoBehaviour
     /// show the name, the cost and amount of resource at the storage
     /// </summary>
     private void ShowShopping()
-    {
-        print(numRes);
-        
-        if (numRes < 0) { ShowShoppingNecessary(); } // necessary
+    {        
+        if (numRes < 0) { ShowShoppingNecessary(); } // vital
         else { ShowShoppingExtra(); } // extraordinary
-
     }
 
     /// <summary>

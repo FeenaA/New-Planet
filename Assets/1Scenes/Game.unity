@@ -1440,6 +1440,8 @@ MonoBehaviour:
   ButtonSendPeople: {fileID: 1632650483}
   NProbes: {fileID: 0}
   NSpaceCraft: {fileID: 0}
+  CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
+    type: 3}
 --- !u!114 &538435818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6947,7 +6949,8 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5940785565547719360, guid: 8e954112c66e87345a0d7479e4de373c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e954112c66e87345a0d7479e4de373c, type: 3}
 --- !u!1001 &6585092530126864062
 PrefabInstance:

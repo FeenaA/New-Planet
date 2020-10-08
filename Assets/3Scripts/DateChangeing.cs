@@ -44,6 +44,8 @@ public class DateChangeing : MonoBehaviour
 
     private string SceneName;
 
+    public GameObject CanvasGameOver;
+
     private static string strOn = "";
     private static string strDied = "";
     private static string strNew = "";
@@ -345,19 +347,19 @@ public class DateChangeing : MonoBehaviour
         settings.gameSettings.NPeopleOnNative -= DiedToday;
 
         // game over
-        if ( settings.gameSettings.NPeopleOnNative == 0 )
+        if ( settings.gameSettings.NPeopleOnNative <= 0 )
         {
+            // stop date increment
+            pause = true;
+            // flag - session is finished
+            settings.flagIsFinished = true;
             // failure
-            if (settings.gameSettings.NPeopleOnNew == 0)
-            {
-
-            }
+            if (settings.gameSettings.NPeopleOnNew <= 0)
+            { settings.flagIsWin = false; }
             else // winning
-            {
-
-            }
+            { settings.flagIsWin = true; }
+            GameObject InstGameOver = Instantiate(CanvasGameOver);
         }
-
     }
 
     /// <summary>

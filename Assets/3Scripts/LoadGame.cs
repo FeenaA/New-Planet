@@ -212,6 +212,8 @@ public class LoadGame : MonoBehaviour
             else if (xnode.Name == "NPeopleOnNative") { res.NPeopleOnNative = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleOnNew") { res.NPeopleOnNew = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleDied") { res.NPeopleDied = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "CurrentPerSent") { res.CurrentPerSent = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "CurrentNResUnits") { res.CurrentNResUnits = System.Convert.ToInt32(xnode.InnerText); }
         }
 
         return res;
@@ -533,6 +535,8 @@ public class LoadGame : MonoBehaviour
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NPeopleOnNative); }
             else if (xelem.Name == "NPeopleOnNew")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NPeopleOnNew); }
+            else if (xelem.Name == "CurrentPerSent")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.CurrentPerSent); }
         }
 
         StringWriter sw = new StringWriter();
@@ -648,6 +652,8 @@ public class LoadGame : MonoBehaviour
             else if (xelem.Name == "Storage") { ResetStorage(xelem); }
             else if (xelem.Name == "NSpasecraft")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NSpasecraft); }
+            else if (xelem.Name == "CurrentNResUnits")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.CurrentNResUnits); }
         }
 
         StringWriter sw = new StringWriter();
@@ -699,6 +705,8 @@ public class LoadGame : MonoBehaviour
             else if (xelem.Name == "Storage") { ResetStorage(xelem); }
             else if (xelem.Name == "NCoins")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NCoins); }
+            else if (xelem.Name == "CurrentNResUnits")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.CurrentNResUnits); }
         }
 
         StringWriter sw = new StringWriter();
@@ -727,6 +735,8 @@ public class LoadGame : MonoBehaviour
             }
             else if (xelem.Name == "RequestedResources") { ResetRequested(xelem); }
             else if (xelem.Name == "Storage") { ResetStorage(xelem); }
+            else if (xelem.Name == "CurrentNResUnits")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.CurrentNResUnits); }
         }
 
         StringWriter sw = new StringWriter();

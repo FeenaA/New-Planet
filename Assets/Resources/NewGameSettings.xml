@@ -7,7 +7,7 @@
   <SetPlanets></SetPlanets>
   <NDays>0</NDays>
   <NCoins>10000</NCoins>
-  <NPeopleOnNative>100000</NPeopleOnNative>
+  <NPeopleOnNative>2000</NPeopleOnNative>
   <NPeopleDied>0</NPeopleDied>
   <stepCoins>0</stepCoins>
   <flagSelectedPlanet>false</flagSelectedPlanet>
@@ -28,4 +28,6 @@
   <NBuildingsMN>0</NBuildingsMN>
   <NBuildingsSC>0</NBuildingsSC>
   <NPeopleOnNew>0</NPeopleOnNew>
+  <CurrentPerSent>0</CurrentPerSent>
+  <CurrentNResUnits>0</CurrentNResUnits>
 </NewGameSettings>

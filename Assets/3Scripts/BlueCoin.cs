@@ -29,10 +29,7 @@ public class BlueCoin : MonoBehaviour
         XmlElement xRoot = xDoc.DocumentElement;
         foreach (XmlNode xnode in xRoot)
         {
-            if (xnode.Name == "NBlue")
-            {
-                xnode.InnerText = System.Convert.ToString(sNBlueCoin);
-            }
+            if (xnode.Name == "NBlue") { xnode.InnerText = System.Convert.ToString(sNBlueCoin); }
         }
 
         StringWriter sw = new StringWriter();

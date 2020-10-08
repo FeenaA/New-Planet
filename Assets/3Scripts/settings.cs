@@ -75,6 +75,15 @@ public class settings : MonoBehaviour
     public GameObject title;
     public static GameObject sTitleCrawlLine;
 
+    /// <summary>
+    /// finished(true), in promotionary(false)
+    /// </summary>
+    public static bool flagIsFinished = false;
+    /// <summary>
+    /// winning(true), failure(false)
+    /// </summary>
+    public static bool flagIsWin = false; 
+
     //public static bool flagPeopleTransport = false;
     // flag to show MessageBox with Congratulations
     public static bool flagShowMessageTransport = false;
@@ -104,8 +113,12 @@ public class settings : MonoBehaviour
         public int NSpasecraft;
         public bool flagPeopleTransport = false; // flag - people may be transported
         public bool flagPeopleVeBeenSent = false; // flag - at leat one group of people was sent
-        public int NEther; 
-    }
+        public int NEther;
+        //public int BestPerSent;
+        //public int BestNResUnits;
+        public int CurrentPerSent; 
+        public int CurrentNResUnits;
+    } 
     public static GameSettings gameSettings;
     private getItems GI;
 
@@ -197,21 +210,6 @@ public class settings : MonoBehaviour
             flagShowMessageTransport = false;
         }
     }
-
-    /*private string CrawLineText()
-    {
-        string StrCrawLine = "";
-
-        // correct text on the ButtonLanguage
-        if (PersonalSettings.language == LanguageSettings.Language.English)
-        { StrCrawLine = "Welcome to the planet " + gameSettings.NameNative + "!"; }
-        else
-        {
-            if (PersonalSettings.language == LanguageSettings.Language.Russian)
-            { StrCrawLine = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!"; }
-        }
-        return StrCrawLine;
-    }*/
 
     private void CorrectTextOnScene()
     {
