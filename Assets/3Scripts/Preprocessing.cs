@@ -67,9 +67,9 @@ public class Preprocessing : MonoBehaviour
                 // ask user about language
                 LanguagePressed();
 
-                // The saved game cannot exist before the first session 
+                /*// The saved game cannot exist before the first session 
                 Button buttonContinue = ButtonContinue.GetComponent<Button>();
-                buttonContinue.interactable = false;
+                buttonContinue.interactable = false;*/
             }
             else 
             { 
@@ -81,8 +81,24 @@ public class Preprocessing : MonoBehaviour
         else
         {
             if (settings.flagIsFinished)
-            { Instantiate(CanvasGameOver); }
+            { 
+                Instantiate(CanvasGameOver);
+                settings.flagIsFinished = false;
+                PersonalSettings.flagSavedGame = false;
+                PS.SetFlagSavedGame(PersonalSettings.flagSavedGame);
+                /*// The saved game cannot exist after it was finished
+                Button buttonContinue = ButtonContinue.GetComponent<Button>();
+                buttonContinue.interactable = false;*/
+            }
         }
+
+        // If the saved game doesn't exist, ButtonContinue is uninteractable
+        Button buttonContinue = ButtonContinue.GetComponent<Button>();
+        print("flagSavedGame: " + PersonalSettings.flagSavedGame);
+        if (PersonalSettings.flagSavedGame == false)
+        { buttonContinue.interactable = false; }
+        else
+        { buttonContinue.interactable = true; }
     }
 
     public void GetXML()
@@ -158,6 +174,8 @@ public class Preprocessing : MonoBehaviour
         LG.StartNew();
         // flag - the application is working on the session
         FlagStartGame = false;
+        // flag - the saved game exists
+        PS.SetFlagSavedGame(true);
         // move to scene "Game"
         SceneManager.LoadScene("Game");
     }
@@ -168,6 +186,8 @@ public class Preprocessing : MonoBehaviour
         if (FlagStartGame) { LG.Continue(); }
         // flag - the application is working on the session
         FlagStartGame = false;
+        // flag - the saved game exists
+        PS.SetFlagSavedGame(true);
         // move to scene "Game"
         SceneManager.LoadScene("Game");
     } 

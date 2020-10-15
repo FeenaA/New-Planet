@@ -109,12 +109,12 @@ public class PersonalSettings : MonoBehaviour
         File.WriteAllText(PathPersonalSettings, sw.ToString());
     }
 
-    public void SetFlagSavedGame() 
+    public void SetFlagSavedGame(bool FlagSavedGame) 
     {
         XmlElement xRoot = xDoc.DocumentElement;
         foreach (XmlNode xnode in xRoot)
         {
-            if (xnode.Name == "savedGame") { xnode.InnerText = System.Convert.ToString(flagSavedGame); }
+            if (xnode.Name == "savedGame") { xnode.InnerText = System.Convert.ToString(FlagSavedGame); }
         }
 
         StringWriter sw = new StringWriter();
@@ -122,6 +122,8 @@ public class PersonalSettings : MonoBehaviour
         xDoc.WriteTo(xw);
 
         File.WriteAllText(PathPersonalSettings, sw.ToString());
+
+        flagSavedGame = FlagSavedGame;
     }
 
     public void SetAchievements()

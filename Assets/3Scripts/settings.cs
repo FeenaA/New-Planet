@@ -126,6 +126,7 @@ public class settings : MonoBehaviour
 
     void Start()
     {
+        // general objects which are valid whether it's the new session or not 
         sTextCoins = textCoins;
         sTextDays = textDays;
         sStringTextDays = sTextDays.GetComponent<Text>().text;
@@ -138,19 +139,12 @@ public class settings : MonoBehaviour
         sCanvas = Canvas;
         sPauseRectangle = PauseRectangle;
 
-        print(DateChangeing.pause);
-
-
         buttons BUT = sCanvas.GetComponent<buttons>();
-        /*if (DateChangeing.pause) { BUT.PauseOn(); }
-        else { BUT.PauseOff(); }*/
-
-        CorrectTextOnScene(); 
 
         GI = gameObject.GetComponent<getItems>();
         int L = materials.Length;
 
-        // general objects which are valid whether it's the new session or not 
+        #region materials for the set of planets
         if (flagBeginNewSession == true)
         {
             flagBeginNewSession = false;
@@ -160,8 +154,9 @@ public class settings : MonoBehaviour
             for (int i = 0; i < L; i++)
             { sMaterials[i] = materials[i]; }
         }
+        #endregion
 
-        // start of a new session - use all from GameSettings
+        // start of a new session
         if (String.IsNullOrEmpty(gameSettings.NameNative))
         {
             DateChangeing.pause = false;
@@ -175,26 +170,28 @@ public class settings : MonoBehaviour
             // primary amount of people
             gameSettings.NPeopleOnNative = gameSettings.AllPeople;
 
-            // materials for Earth and Moon
+            #region set materials for Earth and Moon 
             System.Random rnd = new System.Random();
             gameSettings.NEarthMaterial = rnd.Next(0, L - 1);
             gameSettings.NMoonMaterial = rnd.Next(0, L - 1);
+            #endregion
 
             gameSettings.RequestedResources = GI.SetReqs();
 
-            // craw line 
+            // rewrite all strings
+            CorrectTextOnScene();
+ 
+            #region show welcome message (crawl line)
             crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
             sTitleCrawlLine = title;
             CL.Show(StrWelcome);
+            #endregion
 
             // save all new params
             LoadGame.SetAll();
         }
         else
-        {
-            if (DateChangeing.pause) { BUT.PauseOn(); }
-            //else { BUT.PauseOff(); }
-        }
+        { if (DateChangeing.pause) { BUT.PauseOn(); } }
 
         EarthOnClick.flagBuildings = false;
         Earth.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NEarthMaterial];
