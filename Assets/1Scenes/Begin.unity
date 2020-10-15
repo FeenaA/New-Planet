@@ -1337,6 +1337,8 @@ MonoBehaviour:
   ButtonLanguage: {fileID: 387776247}
   ButtonNewGame: {fileID: 1304806156}
   ButtonContinue: {fileID: 1071503275}
+  CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
+    type: 3}
   SpriteSwinchOn: {fileID: 21300000, guid: f5393dbb3ad51b04b807872b51671baa, type: 3}
   SpriteSwinchOff: {fileID: 21300000, guid: 548a95c73648b0a4aa5c0782fe59002c, type: 3}
   ButtonMusic: {fileID: 140377219}

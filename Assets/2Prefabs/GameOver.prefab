@@ -166,7 +166,6 @@ GameObject:
   - component: {fileID: 4400402903288542605}
   - component: {fileID: 4400402903288542606}
   - component: {fileID: 4400402903288542607}
-  - component: {fileID: 8667380500587482131}
   m_Layer: 5
   m_Name: CongratulationsVitalFilled
   m_TagString: Untagged
@@ -248,22 +247,6 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
---- !u!114 &8667380500587482131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4400402903288542641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3e21b3fef059e6428c416bbae20bc64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TextMessage: {fileID: 4400402903302646695}
-  TextPrise: {fileID: 910860159891322262}
-  TextTitle: {fileID: 6006202377954424608}
-  TextMainMenu: {fileID: 7405859383087446129}
 --- !u!1 &4400402903302646697
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +442,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8667380500587482131}
+      - m_Target: {fileID: 8383505645298332958}
         m_MethodName: ClosePressed
         m_Mode: 1
         m_Arguments:
@@ -482,6 +465,7 @@ GameObject:
   - component: {fileID: 5940785565547719367}
   - component: {fileID: 5940785565547719366}
   - component: {fileID: 5940785565547719361}
+  - component: {fileID: 8383505645298332958}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -569,6 +553,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8383505645298332958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5940785565547719363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e21b3fef059e6428c416bbae20bc64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextMessage: {fileID: 4400402903302646695}
+  TextPrise: {fileID: 910860159891322262}
+  TextTitle: {fileID: 6006202377954424608}
+  TextMainMenu: {fileID: 7405859383087446129}
+  prefabGameOver: {fileID: 0}
 --- !u!1 &5940785565803596678
 GameObject:
   m_ObjectHideFlags: 0

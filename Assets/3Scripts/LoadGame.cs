@@ -210,6 +210,7 @@ public class LoadGame : MonoBehaviour
             else if (xnode.Name == "flagPeopleVeBeenSent") { res.flagPeopleVeBeenSent = System.Convert.ToBoolean(xnode.InnerText); }
             else if (xnode.Name == "NSpasecraft") { res.NSpasecraft = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleOnNative") { res.NPeopleOnNative = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "AllPeople") { res.AllPeople = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleOnNew") { res.NPeopleOnNew = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "NPeopleDied") { res.NPeopleDied = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "CurrentPerSent") { res.CurrentPerSent = System.Convert.ToInt32(xnode.InnerText); }
@@ -491,6 +492,8 @@ public class LoadGame : MonoBehaviour
             }
             else if (xelem.Name == "RequestedResources") { ResetRequested(xelem); }
             else if (xelem.Name == "Storage") { ResetStorage(xelem); }
+            else if (xelem.Name == "CurrentNResUnits") 
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.CurrentNResUnits); }
         }
         StringWriter sw = new StringWriter();
         XmlTextWriter xw = new XmlTextWriter(sw);

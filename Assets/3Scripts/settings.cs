@@ -103,6 +103,7 @@ public class settings : MonoBehaviour
         public bool flagSelectedPlanet;//+
         public string NameNew;//+
         public int NPeopleOnNew;//+
+        public int AllPeople;
         public BuildingsOperations.BuildingTime ProbeFactory;//+
         public BuildingsOperations.BuildingHospital Hospital;
         public BuildingsOperations.BuildingMine Mine;//+
@@ -114,8 +115,6 @@ public class settings : MonoBehaviour
         public bool flagPeopleTransport = false; // flag - people may be transported
         public bool flagPeopleVeBeenSent = false; // flag - at leat one group of people was sent
         public int NEther;
-        //public int BestPerSent;
-        //public int BestNResUnits;
         public int CurrentPerSent; 
         public int CurrentNResUnits;
     } 
@@ -138,10 +137,13 @@ public class settings : MonoBehaviour
         sPrefabTest = prefabTest;
         sCanvas = Canvas;
         sPauseRectangle = PauseRectangle;
+
+        print(DateChangeing.pause);
+
+
         buttons BUT = sCanvas.GetComponent<buttons>();
-
-        if (DateChangeing.pause) { BUT.PauseOn(); }
-
+        /*if (DateChangeing.pause) { BUT.PauseOn(); }
+        else { BUT.PauseOff(); }*/
 
         CorrectTextOnScene(); 
 
@@ -152,7 +154,6 @@ public class settings : MonoBehaviour
         if (flagBeginNewSession == true)
         {
             flagBeginNewSession = false;
-            
 
             // set of materials for planets
             sMaterials = new Material[materials.Length];
@@ -163,11 +164,16 @@ public class settings : MonoBehaviour
         // start of a new session - use all from GameSettings
         if (String.IsNullOrEmpty(gameSettings.NameNative))
         {
+            DateChangeing.pause = false;
+            BUT.PauseOff(); 
+
             gameSettings.NameNative = GI.NameGenerate();
 
             // set of all planets with their properties
-            //gameSettings.SetPlanets = getItems.GetItems();
             gameSettings.SetPlanets = GI.GetItems();
+
+            // primary amount of people
+            gameSettings.NPeopleOnNative = gameSettings.AllPeople;
 
             // materials for Earth and Moon
             System.Random rnd = new System.Random();
@@ -183,6 +189,11 @@ public class settings : MonoBehaviour
 
             // save all new params
             LoadGame.SetAll();
+        }
+        else
+        {
+            if (DateChangeing.pause) { BUT.PauseOn(); }
+            //else { BUT.PauseOff(); }
         }
 
         EarthOnClick.flagBuildings = false;

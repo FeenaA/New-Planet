@@ -187,6 +187,12 @@ public class panelInform : MonoBehaviour
             // remove selected planet from storage
             RemoveFromStorage();
         }
+
+        // count CurrentNResUnits
+        settings.gameSettings.CurrentNResUnits = 0;
+        foreach (var item in settings.gameSettings.RequestedResources.Values)
+        { settings.gameSettings.CurrentNResUnits += item; }
+
         ShowProgress SP = GetComponent<ShowProgress>();
         settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.gameSettings.RequestedResources);
 

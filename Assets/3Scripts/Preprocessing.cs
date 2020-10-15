@@ -14,6 +14,7 @@ public class Preprocessing : MonoBehaviour
     public GameObject ButtonLanguage; 
     public GameObject ButtonNewGame;
     public GameObject ButtonContinue;
+    public GameObject CanvasGameOver; // prefab
 
     public static GameObject sGObjectPreproc;
     public static GameObject sCanvasMain;
@@ -75,6 +76,12 @@ public class Preprocessing : MonoBehaviour
                 // read all files
                 GetXML(); 
             } 
+        }
+        // current mission is finished or interrupted
+        else
+        {
+            if (settings.flagIsFinished)
+            { Instantiate(CanvasGameOver); }
         }
     }
 

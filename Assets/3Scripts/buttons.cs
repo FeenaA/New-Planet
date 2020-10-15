@@ -65,7 +65,7 @@ public class buttons : MonoBehaviour
         sColorCurrent = sColorPause;
         settings.sButtonPause.GetComponent<Image>().sprite = settings.sContinueImage;
     }
-    private static void PauseOff()
+    public void PauseOff()
     {
         flagPause = false;
         settings.sTextCoins.GetComponent<Text>().color = sColorProcess;//white

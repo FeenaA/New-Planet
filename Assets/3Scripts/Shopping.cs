@@ -65,9 +65,6 @@ public class Shopping : MonoBehaviour
     private static string strResource = "Resource";
     private static string strPress = "Press on the title to choose resource";
 
- 
-    
-
     /// <summary>
     /// copy GOs to their static analoges and correct language
     /// </summary>
@@ -232,6 +229,9 @@ public class Shopping : MonoBehaviour
 
             // reset interactivity of buttons
             ResetButtons();
+
+            // count CurrentNResUnits
+            settings.gameSettings.CurrentNResUnits = CountNReqRes();
 
             // checking: if people may be transported
             if (numButtonResource < 0) { Check30(); }
@@ -608,9 +608,20 @@ public class Shopping : MonoBehaviour
     }
 
     /// <summary>
-    /// amount of the Resource at the selected planet
+    /// count CurrentNResUnits
     /// </summary>
-    private int GetNRes()
+    private int CountNReqRes()
+    {
+        int res = 0;
+        foreach (var item in settings.gameSettings.RequestedResources.Values)
+        { res += item; }
+        return res;
+    }
+
+/// <summary>
+/// amount of the Resource at the selected planet
+/// </summary>
+private int GetNRes()
     {
         // nesessary resource
         if (numButtonResource < 0)

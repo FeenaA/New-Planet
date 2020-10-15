@@ -281,6 +281,7 @@ public class DateChangeing : MonoBehaviour
         settings.gameSettings.NSpasecraft -= NSpacecraft;
         settings.gameSettings.NPeopleOnNative -= NTransportedPeople;
         settings.gameSettings.NPeopleOnNew += NTransportedPeople;
+        settings.gameSettings.CurrentPerSent = settings.gameSettings.NPeopleOnNew * 100 / settings.gameSettings.AllPeople;
 
         // Save NSpasecraft, amount of people on new and native planets
         LoadGame.SetPeopleTransport();
@@ -343,6 +344,11 @@ public class DateChangeing : MonoBehaviour
         DayDeth++;
         settings.gameSettings.koefToday += 0.112f;
         DiedToday = DayDeth * System.Convert.ToInt32(settings.gameSettings.koefToday);
+
+        // to prevent negative amount of people
+        if (DiedToday > settings.gameSettings.NPeopleOnNative)
+        { DiedToday = settings.gameSettings.NPeopleOnNative; }
+
         settings.gameSettings.NPeopleDied += DiedToday;
         settings.gameSettings.NPeopleOnNative -= DiedToday;
 
@@ -358,7 +364,7 @@ public class DateChangeing : MonoBehaviour
             { settings.flagIsWin = false; }
             else // winning
             { settings.flagIsWin = true; }
-            GameObject InstGameOver = Instantiate(CanvasGameOver);
+            Instantiate(CanvasGameOver);
         }
     }
 
