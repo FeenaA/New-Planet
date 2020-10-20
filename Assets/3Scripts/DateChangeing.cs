@@ -92,9 +92,7 @@ public class DateChangeing : MonoBehaviour
         }
 
         CorrectLanguage();
-        //if (!pause) { 
-            InvokeRepeating(nameof(ChangeData), 0, nSecondsStep); 
-        //}
+        InvokeRepeating(nameof(ChangeData), 0, nSecondsStep); 
     }
 
     private void CorrectLanguage()
@@ -219,7 +217,8 @@ public class DateChangeing : MonoBehaviour
                     { 
                         StartCoroutine(AddShow(NSpaceCraft, Convert.ToString(settings.gameSettings.NSpasecraft)));
                         // operate with Shopping
-                        if ((Shopping.sPanelShopping.activeSelf) && (Shopping.NRes < 10) )
+                        int CurrentAmount = Shopping.NRes;
+                        if ((Shopping.sPanelShopping.activeSelf) && (CurrentAmount < 10) && (CurrentAmount > 0))
                         {
                             // make buttonTransport active
                             Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
@@ -236,6 +235,13 @@ public class DateChangeing : MonoBehaviour
                     }
                     nDaySC = 0;
                 }
+            }
+            // if the selected planet exists and there is al list one SpaceCraft
+            if (SceneName == "Game" &&
+                settings.gameSettings.flagSelectedPlanet == true && 
+                settings.gameSettings.NSpasecraft > 0)
+            {
+                ButtonSendPeople.GetComponent<Button>().interactable = true;
             }
             #endregion
 
@@ -352,7 +358,7 @@ public class DateChangeing : MonoBehaviour
         settings.gameSettings.NPeopleDied += DiedToday;
         settings.gameSettings.NPeopleOnNative -= DiedToday;
 
-        // game over
+        #region realization of "Game over"
         if ( settings.gameSettings.NPeopleOnNative <= 0 )
         {
             // stop date increment
@@ -366,6 +372,7 @@ public class DateChangeing : MonoBehaviour
             { settings.flagIsWin = true; }
             Instantiate(CanvasGameOver);
         }
+        #endregion
     }
 
     /// <summary>

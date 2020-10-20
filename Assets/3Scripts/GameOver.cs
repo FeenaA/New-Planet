@@ -17,63 +17,37 @@ public class GameOver : MonoBehaviour
     public GameOver prefabGameOver;
 
     // texts
-    private string StrTitleWin = "Mission completed";
-    private string StrTitleFail = "Game over";
-    private string StrMessageWin = "You've rescued a lot of people from the native planet!";
-    private string StrMessageFail = "You've lost all people of the native planet. " +
-                  "Try another strategy to rich success.";
-    private string StrMM = "Main menu";
-    private string StrPriseWin = "";
-    private string StrPriseFail = "";
+    private string StrTitleWin;
+    private string StrTitleFail;
+    private string StrMessageWin;
+    private string StrMessageFail;
+                                  
+    private string StrMM;
+    private string StrPriseWin;
+    private string StrPriseFail;
 
     /// <summary>
     /// Correct language and show text
     /// </summary>
     void Start()
     {
-        // the name of the current scene
-        string SceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (SceneName != "Begin")
-        {
-            GetFinished();
+        GetFinished();
 
-            settings.flagIsFinished = true;
-            if (settings.flagIsWin)
-            {
-                TextMessage.transform.GetComponent<Text>().text = StrMessageWin;
-                TextTitle.transform.GetComponent<Text>().text = StrTitleWin;
-                TextPrise.transform.GetComponent<Text>().text = StrPriseWin;
-            }
-            else
-            {
-                TextMessage.transform.GetComponent<Text>().text = StrMessageFail;
-                TextTitle.transform.GetComponent<Text>().text = StrTitleFail;
-                TextPrise.transform.GetComponent<Text>().text = StrPriseFail;
-            }
-            TextMainMenu.transform.GetComponent<Text>().text = StrMM;
+        settings.flagIsFinished = true;
+        if (settings.flagIsWin)
+        {
+            TextMessage.transform.GetComponent<Text>().text = StrMessageWin;
+            TextTitle.transform.GetComponent<Text>().text = StrTitleWin;
+            TextPrise.transform.GetComponent<Text>().text = StrPriseWin;
         }
         else
         {
-            if (settings.flagIsWin)
-            { TextTitle.transform.GetComponent<Text>().text = StrTitleWin; }
-            else { TextTitle.transform.GetComponent<Text>().text = StrTitleFail; }
-            Destroy(TextPrise);
-            TextMessage.transform.GetComponent<Text>().text = TextStatistics();
-            TextMainMenu.transform.GetComponent<Text>().text = "OK";
+            TextMessage.transform.GetComponent<Text>().text = StrMessageFail;
+            TextTitle.transform.GetComponent<Text>().text = StrTitleFail;
+            TextPrise.transform.GetComponent<Text>().text = StrPriseFail;
         }
-
+        TextMainMenu.transform.GetComponent<Text>().text = StrMM;
     }
-
-    /// <summary>
-    /// get the information about general amount of winnings and failures
-    /// </summary>
-    private string TextStatistics()
-    {
-        string res = "Statistics";
-        
-        return res;
-    }
-
 
     /// <summary>
     /// count and get prise
@@ -97,7 +71,19 @@ public class GameOver : MonoBehaviour
     {
         int Prise = GetPrise();
 
-        if (PersonalSettings.language == LanguageSettings.Language.English)
+        if (PersonalSettings.language == LanguageSettings.Language.Russian)
+        {
+            StrTitleWin = "МИССИЯ ВЫПОЛНЕНА";
+            StrMessageWin = "ТЫ СПАС " + settings.gameSettings.CurrentPerSent + 
+                    "% СВОЕГО НАРОДА И СОБРАЛ " + settings.gameSettings.CurrentNResUnits + 
+                    " ЕДИНИЦ РЕСУРСОВ!";
+            StrPriseWin = "НАГРАДА: " + Prise + " СИНИХ ЖЕТОНОВ";
+            StrTitleFail = "ПОРАЖЕНИЕ";
+            StrMessageFail = "ВИРУС ПОГЛОТИЛ ВЕСЬ ТВОЙ НАРОД. ПОПРОБУЙ ДРУГУЮ СТРАТЕГИЮ.";
+            StrPriseFail = "УТЕШИТЕЛЬНЫЙ ПРИЗ: " + Prise + " СИНИЙ ЖЕТОН";
+            StrMM = "ГЛАВНОЕ МЕНЮ";
+        }
+        else
         {
             StrTitleWin = "Mission completed";
             StrMessageWin = "You've rescued " + settings.gameSettings.CurrentPerSent +
@@ -110,26 +96,10 @@ public class GameOver : MonoBehaviour
             StrPriseFail = "Сonsolation prize: " + Prise + " blue token";
             StrMM = "Main menu";
         }
-        else if (PersonalSettings.language == LanguageSettings.Language.Russian)
-        {
-            StrTitleWin = "МИССИЯ ВЫПОЛНЕНА";
-            StrMessageWin = "ТЫ СПАС " + settings.gameSettings.CurrentPerSent + 
-                    "% СВОЕГО НАРОДА И СОБРАЛ " + settings.gameSettings.CurrentNResUnits + 
-                    " ЕДИНИЦ РЕСУРСОВ!";
-            StrPriseWin = "НАГРАДА: " + Prise + " СИНИХ ЖЕТОНОВ";
-            StrTitleFail = "ПОРАЖЕНИЕ";
-            StrMessageFail = "ВИРУС ПОГЛОТИЛ ВЕСЬ ТВОЙ НАРОД. ПОПРОБУЙ ДРУГУЮ СТРАТЕГИЮ.";
-            StrPriseFail = "УТЕШИТЕЛЬНЫЙ ПРИЗ: " + Prise + " СИНИЙ ЖЕТОН";
-            StrMM = "ГЛАВНОЕ МЕНЮ";
-        }
     }
 
     public void ClosePressed()
     {
-        // the name of the current scene
-        string SceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (SceneName != "Begin")
-        { UnityEngine.SceneManagement.SceneManager.LoadScene("Begin"); }
-        else { Destroy(gameObject); }
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Begin");
     } 
 }

@@ -7808,7 +7808,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -197.93661, y: 60}
+  m_SizeDelta: {x: -197.93661, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2381355919237487139
 MonoBehaviour:
@@ -8442,6 +8442,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1353864827}
+    - target: {fileID: 5214554692534330603, guid: 97de18acebda8ac4b9a51577c2d746d8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BlueCoinPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5214554692534330603, guid: 97de18acebda8ac4b9a51577c2d746d8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97de18acebda8ac4b9a51577c2d746d8, type: 3}
 --- !u!1 &5214554691765799780 stripped

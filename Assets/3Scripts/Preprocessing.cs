@@ -15,6 +15,7 @@ public class Preprocessing : MonoBehaviour
     public GameObject ButtonNewGame;
     public GameObject ButtonContinue;
     public GameObject CanvasGameOver; // prefab
+    public GameObject PrefabStatistics;
 
     public static GameObject sGObjectPreproc;
     public static GameObject sCanvasMain;
@@ -66,10 +67,6 @@ public class Preprocessing : MonoBehaviour
             {
                 // ask user about language
                 LanguagePressed();
-
-                /*// The saved game cannot exist before the first session 
-                Button buttonContinue = ButtonContinue.GetComponent<Button>();
-                buttonContinue.interactable = false;*/
             }
             else 
             { 
@@ -81,20 +78,19 @@ public class Preprocessing : MonoBehaviour
         else
         {
             if (settings.flagIsFinished)
-            { 
-                Instantiate(CanvasGameOver);
+            {
+                // show Statistics
+                var instance = Instantiate(PrefabStatistics);
+                instance.SendMessage("TheStart", true);
+
+                // set all flags
                 settings.flagIsFinished = false;
-                PersonalSettings.flagSavedGame = false;
-                PS.SetFlagSavedGame(PersonalSettings.flagSavedGame);
-                /*// The saved game cannot exist after it was finished
-                Button buttonContinue = ButtonContinue.GetComponent<Button>();
-                buttonContinue.interactable = false;*/
+                PS.SetStatistics(false);
             }
         }
 
         // If the saved game doesn't exist, ButtonContinue is uninteractable
         Button buttonContinue = ButtonContinue.GetComponent<Button>();
-        print("flagSavedGame: " + PersonalSettings.flagSavedGame);
         if (PersonalSettings.flagSavedGame == false)
         { buttonContinue.interactable = false; }
         else
@@ -141,6 +137,13 @@ public class Preprocessing : MonoBehaviour
     {
         CanvasMain.SetActive(false);
         Instantiate(PrefabCanvasHelp.gameObject);
+    }
+
+    public void StatisticsPressed()
+    {
+        // show Statistics
+        var instance = Instantiate(PrefabStatistics);
+        instance.SendMessage("TheStart", false);
     }
 
     public Sprite SpriteSwinchOn; 

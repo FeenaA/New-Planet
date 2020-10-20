@@ -22,7 +22,7 @@ public class PersonalSettings : MonoBehaviour
         PathPersonalSettings = Application.persistentDataPath + "/PersonalSettings.xml";
         //"C:/Users/Feena/AppData/LocalLow/Feena/New Planet/test.txt"
         string stringPersonalSettings =
-        "<?xml version=\"1.0\"?><PersonalSettings><firstGame>true</firstGame><language>Russian</language><savedGame>false</savedGame><music>True</music><NBlue>2</NBlue></PersonalSettings>";
+        "<?xml version=\"1.0\"?><PersonalSettings><firstGame>true</firstGame><language>Russian</language><savedGame>False</savedGame><music>True</music><NBlue>45</NBlue><BestPerSent>0</BestPerSent><BestNResUnits>0</BestNResUnits><Wins>0</Wins><Loses>0</Loses></PersonalSettings>";
 
         // if file doesn't exist, create it and fill 
         if (!File.Exists(PathPersonalSettings))
@@ -69,6 +69,15 @@ public class PersonalSettings : MonoBehaviour
 
             else if (xnode.Name == "NBlue")
             { BlueCoin.sNBlueCoin = System.Convert.ToInt32(xnode.InnerText); }
+
+            else if (xnode.Name == "BestPerSent")
+            { Statistics.sBestPerSent = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "BestNResUnits")
+            { Statistics.sBestNResUnits = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "Wins") 
+            { Statistics.sWins = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "Loses")
+            { Statistics.sLoses = System.Convert.ToInt32(xnode.InnerText); }
         }
     }
 
@@ -115,6 +124,32 @@ public class PersonalSettings : MonoBehaviour
         foreach (XmlNode xnode in xRoot)
         {
             if (xnode.Name == "savedGame") { xnode.InnerText = System.Convert.ToString(FlagSavedGame); }
+        }
+
+        StringWriter sw = new StringWriter();
+        XmlTextWriter xw = new XmlTextWriter(sw);
+        xDoc.WriteTo(xw);
+
+        File.WriteAllText(PathPersonalSettings, sw.ToString());
+
+        flagSavedGame = FlagSavedGame;
+    }
+
+    public void SetStatistics(bool FlagSavedGame)
+    {
+        XmlElement xRoot = xDoc.DocumentElement;
+        foreach (XmlNode xnode in xRoot)
+        {
+            if (xnode.Name == "savedGame")
+            { xnode.InnerText = System.Convert.ToString(FlagSavedGame); }
+            else if (xnode.Name == "BestPerSent")
+            { xnode.InnerText = System.Convert.ToString(Statistics.sBestPerSent); }
+            else if (xnode.Name == "BestNResUnits")
+            { xnode.InnerText = System.Convert.ToString(Statistics.sBestNResUnits); }
+            else if (xnode.Name == "Wins")
+            { xnode.InnerText = System.Convert.ToString(Statistics.sWins); }
+            else if (xnode.Name == "Loses")
+            { xnode.InnerText = System.Convert.ToString(Statistics.sLoses); }
         }
 
         StringWriter sw = new StringWriter();

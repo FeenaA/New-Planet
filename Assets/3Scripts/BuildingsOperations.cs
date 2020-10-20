@@ -133,7 +133,7 @@ public class BuildingsOperations : MonoBehaviour
                 textProfit = textProfitPF;
                 panel = panelPF;
                 BuildBuilding(ProbeFactory);
-                settings.gameSettings.NProbe++;// settings.sNProbes++;
+                settings.gameSettings.NProbe++;
                 break;
                 
             case 1:

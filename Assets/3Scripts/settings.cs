@@ -84,7 +84,6 @@ public class settings : MonoBehaviour
     /// </summary>
     public static bool flagIsWin = false; 
 
-    //public static bool flagPeopleTransport = false;
     // flag to show MessageBox with Congratulations
     public static bool flagShowMessageTransport = false;
 

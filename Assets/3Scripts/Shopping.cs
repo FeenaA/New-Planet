@@ -43,6 +43,7 @@ public class Shopping : MonoBehaviour
     private static int numButtonResource;
     private static int cost;
 
+    // objects of another classes
     private static panelInform PI;
     private static ShowProgress SP; 
     private static BlueCoin BC;
