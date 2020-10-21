@@ -486,7 +486,7 @@ MonoBehaviour:
   - {fileID: 2192097075340114724}
   - {fileID: 2192097075688649296}
   TextHelp: {fileID: 2192097076038953310}
-  CanvasHelp: {fileID: 2192097075453894431}
+  TextTitle: {fileID: 2192097075848538708}
 --- !u!1 &2192097075554116028
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ GameObject:
   - component: {fileID: 2192097075848538709}
   - component: {fileID: 2192097075848538708}
   m_Layer: 5
-  m_Name: TextGeneral
+  m_Name: TextTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

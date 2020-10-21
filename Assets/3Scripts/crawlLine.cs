@@ -10,7 +10,7 @@ public class crawlLine : MonoBehaviour
     // step on x for new position
     public float stepSize = 0.05f;
     // moving gameObject
-    public RectTransform moveingGameObject;
+    public GameObject moveingGameObject;
     // stable gameObject
     public RectTransform stableGameObject;
     // text massage

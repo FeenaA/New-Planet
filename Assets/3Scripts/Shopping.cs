@@ -21,14 +21,16 @@ public class Shopping : MonoBehaviour
     public GameObject textCostResource;
     private static GameObject sTextCostResource;
 
-    public GameObject TransportButton;
-    private static GameObject sTransportButton;
-    public GameObject BuyButton; 
-    private static GameObject sBuyButton;
+    public Button TransportButton;
+    public Button BuyButton;
+    public Button SellButton;
     public GameObject EtherButton;
-    private static GameObject sEtherButton;
-    public GameObject SellButton;
-    private static GameObject sSellButton;
+
+    //private static GameObject sTransportButton;
+    //private static GameObject sBuyButton;
+    //private static GameObject sEtherButton;
+    //private static GameObject sSellButton;
+
     public GameObject TextStorage;
     private static GameObject sTextStorage;
 
@@ -58,13 +60,13 @@ public class Shopping : MonoBehaviour
     private List<int> ListToFillEmpty = new List<int>();
     private static int numClick = 0;
 
-    private static string strUnlimited = "Unlimited resource";
-    private static string strNoSC = "No spacesraft";
-    private static string strMaximum = "Maximum!";
-    private static string strAtStorage = " at storage";
-    private static string strNoResources = "No resources";
-    private static string strResource = "Resource";
-    private static string strPress = "Press on the title to choose resource";
+    private string strUnlimited;
+    private string strNoSC;
+    private string strMaximum;
+    private string strAtStorage;
+    private string strNoResources;
+    private string strResource;
+    private string strPress;
 
     /// <summary>
     /// copy GOs to their static analoges and correct language
@@ -75,10 +77,10 @@ public class Shopping : MonoBehaviour
         sPanelPlanets = PanelPlanets;
         sTextTitle = TextTitle;
 
-        sTransportButton = TransportButton;
-        sBuyButton = BuyButton;
-        sEtherButton = EtherButton;
-        sSellButton = SellButton;
+        //sTransportButton = TransportButton;
+        //sBuyButton = BuyButton;
+        //sEtherButton = EtherButton;
+        //sSellButton = SellButton;
 
         sTextStorage = TextStorage;
         sTextCostResource = textCostResource;
@@ -92,7 +94,22 @@ public class Shopping : MonoBehaviour
     /// </summary>
     private void CorrectLanguages()
     {
-        if (PersonalSettings.language == LanguageSettings.Language.English)
+        if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+        {
+            strUnlimited = "БЕСКОНЕЧНЫЙ РЕСУРС";
+            strNoSC = "НЕТ КОСМИЧЕСКОГО КОРАБЛЯ";
+            strMaximum = "МАКСИМУМ!";
+            strAtStorage = " ДОСТУПНО";
+            strNoResources = "НЕТ РЕСУРСОВ";
+            strResource = "РЕСУРС";
+            strPress = "НАЖМИ НА ЗАГОЛОВОК, ЧТОБЫ ИЗМЕНИТЬ РЕСУРС";
+
+            // buttons on the Shopping panel
+            TransportButton.GetComponentInChildren<Text>().text = "ПЕРЕВЕЗТИ";
+            BuyButton.GetComponentInChildren<Text>().text = "КУПИТЬ";
+            SellButton.GetComponentInChildren<Text>().text = "ПРОДАТЬ";
+        }
+        else
         {
             strUnlimited = "Unlimited resource";
             strNoSC = "No spacesraft";
@@ -101,19 +118,11 @@ public class Shopping : MonoBehaviour
             strNoResources = "No resources";
             strResource = "Resource";
             strPress = "Press on the title to choose resource";
-        }
-        else
-        {
-            if ((PersonalSettings.language == LanguageSettings.Language.Russian))
-            {
-                strUnlimited = "БЕСКОНЕЧНЫЙ РЕСУРС";
-                strNoSC = "НЕТ КОСМИЧЕСКОГО КОРАБЛЯ";
-                strMaximum = "МАКСИМУМ!";
-                strAtStorage = " ДОСТУПНО";
-                strNoResources = "НЕТ РЕСУРСОВ";
-                strResource = "РЕСУРС";
-                strPress = "НАЖМИ НА ЗАГОЛОВОК, ЧТОБЫ ИЗМЕНИТЬ РЕСУРС";
-            }
+
+            // buttons on the Shopping panel
+            TransportButton.GetComponentInChildren<Text>().text = "Transport";
+            BuyButton.GetComponentInChildren<Text>().text = "Buy";
+            SellButton.GetComponentInChildren<Text>().text = "Sell";
         }
     }
 
@@ -263,11 +272,11 @@ public class Shopping : MonoBehaviour
 
             // amount of Ether
             settingsResearches.sTextEth.GetComponent<Text>().text = System.Convert.ToString(--settings.gameSettings.NEther);
-            if (settings.gameSettings.NEther == 0)  { sEtherButton.SetActive(false); }
+            if (settings.gameSettings.NEther == 0)  { EtherButton.SetActive(false); }
 
             // after Ether using resource became transportable
             if (settings.gameSettings.NSpasecraft > 0)
-            { sTransportButton.GetComponent<Button>().interactable = true; }
+            { TransportButton.interactable = true; }
 
             LoadGame.SetEther(true);
         }
@@ -481,15 +490,15 @@ public class Shopping : MonoBehaviour
         // reset buttons
         if (NRes == 10)
         {
-            sTransportButton.GetComponent<Button>().interactable = false;
-            sBuyButton.GetComponent<Button>().interactable = false;
-            sEtherButton.SetActive(false);
+            TransportButton.interactable = false;
+            BuyButton.interactable = false;
+            EtherButton.SetActive(false);
         }
         else
         {
             if (NRes > 0)
             {
-                sSellButton.GetComponent<Button>().interactable = true;
+                SellButton.interactable = true;
             }
         }
     }
@@ -546,10 +555,10 @@ public class Shopping : MonoBehaviour
             sTextStorage.GetComponent<Text>().text = strPress;
             sTextCostResource.GetComponent<Text>().text = " 0";
             // make all buttons not interactable 
-            sTransportButton.GetComponent<Button>().interactable = false;
-            sBuyButton.GetComponent<Button>().interactable = false;
-            sSellButton.GetComponent<Button>().interactable = false;
-            sEtherButton.SetActive(false);
+            TransportButton.interactable = false;
+            BuyButton.interactable = false;
+            SellButton.interactable = false;
+            EtherButton.SetActive(false);
 
             GenerateListForEmptySlot();
         }
@@ -580,31 +589,31 @@ public class Shopping : MonoBehaviour
         if (NRes == 10)
         {
             // transport
-            sTransportButton.GetComponent<Button>().interactable = false;
+            TransportButton.interactable = false;
             // ether
-            sEtherButton.SetActive(false);
+            EtherButton.SetActive(false);
             // blue coins
-            sBuyButton.GetComponent<Button>().interactable = false;
+            BuyButton.interactable = false;
             // sell 
-            sSellButton.GetComponent<Button>().interactable = true;
+            SellButton.interactable = true;
         }
         else
         {
             // transport
-            sTransportButton.GetComponent<Button>().interactable = false;
+            TransportButton.interactable = false;
             if (settings.gameSettings.NSpasecraft > 0)
             {
                 if (((numButtonResource > 0) && (PI.GetAmountInStorage(numRes) > 0))
                     || (numButtonResource < 0))
-                { sTransportButton.GetComponent<Button>().interactable = true; }
+                { TransportButton.interactable = true; }
             }
             // ether
-            if ( numButtonResource < 0 ) { sEtherButton.SetActive(false); } // necessary
-            else { sEtherButton.SetActive(settings.gameSettings.NEther > 0); } // extra
+            if ( numButtonResource < 0 ) { EtherButton.SetActive(false); } // necessary
+            else { EtherButton.SetActive(settings.gameSettings.NEther > 0); } // extra
             // blue coins
-            sBuyButton.GetComponent<Button>().interactable = (BlueCoin.sNBlueCoin > 0);
+            BuyButton.interactable = (BlueCoin.sNBlueCoin > 0);
             // sell 
-            sSellButton.GetComponent<Button>().interactable = (NRes > 0);
+            SellButton.interactable = (NRes > 0);
         }
     }
 

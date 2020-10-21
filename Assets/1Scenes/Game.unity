@@ -3950,6 +3950,11 @@ PrefabInstance:
       propertyPath: TextTitile
       value: 
       objectReference: {fileID: 1869153547}
+    - target: {fileID: 4608731914473986126, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+        type: 3}
+      propertyPath: moveingGameObject
+      value: 
+      objectReference: {fileID: 1381755932}
     - target: {fileID: 4608731916290043368, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
         type: 3}
       propertyPath: m_Name
@@ -4065,6 +4070,12 @@ PrefabInstance:
 --- !u!224 &1381755931 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4608731916290043369, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1381755930}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1381755932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4608731915424647474, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
     type: 3}
   m_PrefabInstance: {fileID: 1381755930}
   m_PrefabAsset: {fileID: 0}
