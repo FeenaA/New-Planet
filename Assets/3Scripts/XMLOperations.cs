@@ -22,6 +22,7 @@ public class XMLOperations : MonoBehaviour
 
         getItems.sGreekAlph = GetTextFromXML("GreekAlph");
         getItems.sIntroduction = GetTextFromXML1("Introduction");
+        crawlLine.sCrawlContent = GetTextFromXML1("CrawlLine");
 
         getItems.ResourceAdd = GetTextFromXML3("ExtraResources");
         getItems.ResNess = GetTextFromXML3("NesessResources");

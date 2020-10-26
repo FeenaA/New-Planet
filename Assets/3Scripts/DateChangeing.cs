@@ -35,9 +35,12 @@ public class DateChangeing : MonoBehaviour
     public GameObject NSpaceCraft; 
 
     private readonly int DaysWithoutDeth = 10;
-    public static int DayDeth = 0;
+    public static int DayDeth = 0; 
     public readonly static float koefPeopleStart = 0.1f;
     private static int DiedToday = 1;
+
+    private readonly int DaysWithoutBuildings = 5;
+    private static bool flagMBoxBuildings = false;
 
     public static readonly int MaxCoins = 99999;
     public static readonly int MaxN = 99;
@@ -45,12 +48,22 @@ public class DateChangeing : MonoBehaviour
     private string SceneName;
 
     public GameObject CanvasGameOver;
+    
+    // prefab to show message via string
+    public GameObject MessageBox;
+    private static bool flagFirstVictim = false;
+    private GameObject messageBox;
+    // MessageBox's parent
+    public Transform MainCanvas;
 
     private static string strOn = "";
     private static string strDied = "";
     private static string strNew = "";
     private static string strDay = "";
     private static string strMoved = "";
+    private static string strFirstVictim = "";
+    private static string strNoBuildings = "";
+    private static string strPlanet = "";
 
     void Start()
     {
@@ -97,24 +110,29 @@ public class DateChangeing : MonoBehaviour
 
     private void CorrectLanguage()
     {
-        if (PersonalSettings.language == LanguageSettings.Language.English)
+        if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+        {
+            strDay = "ДЕНЬ ";
+            strOn = "НА ";
+            strDied = "ПОГИБЛО: ";
+            strNew = " (НОВАЯ): ";
+            strMoved = " ПЕРЕЕХАЛИ";
+            strFirstVictim = "ПЕРВАЯ ЖЕРТВА! ВИРУС НАЧАЛ УБИВАТЬ ТВОЙ НАРОД.";
+            //strNoBuildings = "ПЛАНЕТА ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ. ДЛЯ ЭТОГО НАЖМИ НА СВОЮ ПЛАНЕТУ.";
+            strPlanet = "ПЛАНЕТА ";
+            strNoBuildings = " ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ. ДЛЯ ЭТОГО НАЖМИ НА ";
+        }
+        else
         {
             strDay = "Day ";
             strOn = "On ";
             strDied = "Died: ";
             strNew = " (new): ";
             strMoved = " shifted";
-        }
-        else
-        {
-            if ((PersonalSettings.language == LanguageSettings.Language.Russian))
-            {
-                strDay = "ДЕНЬ ";
-                strOn = "НА ";
-                strDied = "ПОГИБЛО: ";
-                strNew = " (НОВАЯ): ";
-                strMoved = " ПЕРЕЕХАЛИ";
-            }
+            strFirstVictim = "The first victim has appeared!\nThe virus has begun to kill your people.";
+            //strNoBuildings = "Your planet is infected with a virus. Build buildings to find a new planet. Tab to your planet to see buildings.";
+            strPlanet = "The planet ";
+            strNoBuildings = " is infected with a virus. Build buildings to find a new planet. Tab to ";
         }
     }
 
@@ -136,14 +154,36 @@ public class DateChangeing : MonoBehaviour
             #endregion
 
             // if people've started to die
-            if (settings.gameSettings.NDays > DaysWithoutDeth) { GetPeopleAmount(); }
+            if (settings.gameSettings.NDays > DaysWithoutDeth) 
+            {
+                GetPeopleAmount();
+
+                #region MessageBox: "People've started to die"
+                if (!flagFirstVictim && DiedToday>0)
+                {
+                    // show Message
+                    messageBox = Instantiate(MessageBox);
+                    messageBox.SendMessage("TheStart", strFirstVictim);
+                    // SetParent to the MessageBox
+                    messageBox.transform.SetParent(MainCanvas, false);
+
+                    flagFirstVictim = true;
+                }
+                #endregion
+            }
 
             if (SceneName == "Game")
             {
                 #region show people
+
                 // died people
                 if (settings.gameSettings.NDays > DaysWithoutDeth)
                 {
+                    if (peopleDied.activeSelf == false)
+                    {
+                        crawlLine.RestartTimer();
+                    }
+
                     peopleDied.SetActive(true);
                     peopleDied.GetComponent<Text>().text = strDied + Convert.ToString(settings.gameSettings.NPeopleDied);
                 }
@@ -158,6 +198,31 @@ public class DateChangeing : MonoBehaviour
                 {
                     peopleOnNew.GetComponent<Text>().text = strOn + settings.gameSettings.NameNew + strNew +
                         Convert.ToString(settings.gameSettings.NPeopleOnNew);
+                }
+
+                // SetParent to the MessageBox
+                //messageBox.transform.SetParent(settings.sCanvas.transform, false);
+
+                #endregion
+
+                #region MessageBox: "Build buildings!"
+                bool NoBuildings = ((settings.gameSettings.ProbeFactory.N == 0) &&
+                    (settings.gameSettings.Mine.N == 0) &&
+                    (settings.gameSettings.Hospital.N == 0) &&
+                    (settings.gameSettings.SCfactory.N == 0));
+                if (!flagMBoxBuildings && 
+                    (settings.gameSettings.NDays > DaysWithoutBuildings) &&
+                    NoBuildings)
+                {
+                    // show Message
+                    messageBox = Instantiate(MessageBox);
+                    string strMessage = strPlanet + settings.gameSettings.NameNative + strNoBuildings + 
+                        settings.gameSettings.NameNative + ".";
+                    messageBox.SendMessage("TheStart", strMessage);
+                    // SetParent to the MessageBox
+                    messageBox.transform.SetParent(MainCanvas, false);
+
+                    flagMBoxBuildings = true;
                 }
                 #endregion
 

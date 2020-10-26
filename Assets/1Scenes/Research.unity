@@ -1488,7 +1488,7 @@ MonoBehaviour:
   panelInform: {fileID: 254587505}
   Sphere: {fileID: 1443719247}
   NamePlanet: {fileID: 1984406873}
-  textIntro: {fileID: 512656284}
+  textIntro: {fileID: 512656286}
   buttonResearchSelect: {fileID: 2381355919237487141}
   panelInformation: {fileID: 254587505}
   ResWater: {fileID: 1385123179}
@@ -2642,6 +2642,9 @@ MonoBehaviour:
   NSpaceCraft: {fileID: 1126424097}
   CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
     type: 3}
+  MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
+    type: 3}
+  MainCanvas: {fileID: 1353864826}
 --- !u!114 &538435818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2673,7 +2676,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: day 1
+  m_Text: day 555
 --- !u!222 &538435819
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8165,6 +8168,16 @@ PrefabInstance:
       propertyPath: TextTitile
       value: 
       objectReference: {fileID: 1174683395}
+    - target: {fileID: 4608731914473986126, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+        type: 3}
+      propertyPath: TextMessage
+      value: 
+      objectReference: {fileID: 4608731915455204665}
+    - target: {fileID: 4608731914473986126, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+        type: 3}
+      propertyPath: TextTitle
+      value: 
+      objectReference: {fileID: 4608731915455204666}
     - target: {fileID: 4608731916290043368, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
         type: 3}
       propertyPath: m_Name
@@ -8277,6 +8290,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7239553a91524dc4d8cf1df04a8e6fd5, type: 3}
+--- !u!114 &4608731915455204665 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4608731914553726672, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608731915455204664}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4608731915455204666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4608731914347655741, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608731915455204664}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174683395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &5084640776768604660
 CanvasRenderer:
   m_ObjectHideFlags: 0

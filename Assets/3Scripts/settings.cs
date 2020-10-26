@@ -137,6 +137,7 @@ public class settings : MonoBehaviour
         sPrefabTest = prefabTest;
         sCanvas = Canvas;
         sPauseRectangle = PauseRectangle;
+        sTitleCrawlLine = title;
 
         buttons BUT = sCanvas.GetComponent<buttons>();
 
@@ -154,6 +155,11 @@ public class settings : MonoBehaviour
             { sMaterials[i] = materials[i]; }
         }
         #endregion
+
+        // rewrite all strings
+        CorrectTextOnScene();
+        // to operate with CrawlLine
+        crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
 
         // start of a new session
         if (String.IsNullOrEmpty(gameSettings.NameNative))
@@ -179,18 +185,18 @@ public class settings : MonoBehaviour
 
             // rewrite all strings
             CorrectTextOnScene();
- 
-            #region show welcome message (crawl line)
-            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
-            sTitleCrawlLine = title;
-            CL.Show(StrWelcome);
-            #endregion
+
+            // show welcome message (crawl line)
+            CL.ShowNext(StrWelcome);
 
             // save all new params
             LoadGame.SetAll();
         }
         else
-        { if (DateChangeing.pause) { BUT.PauseOn(); } }
+        {
+            crawlLine.RestartTimer();
+            if (DateChangeing.pause) { BUT.PauseOn(); } 
+        }
 
         EarthOnClick.flagBuildings = false;
         Earth.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NEarthMaterial];
@@ -208,11 +214,8 @@ public class settings : MonoBehaviour
             // show MessageBox: people may be transported
             var instance = Instantiate(MessageBox);
             instance.transform.SetParent(sCanvas.transform, false);
-
             // craw line 
-            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
-            sTitleCrawlLine = title;
-            CL.Show(StrAuto);
+            CL.ShowNext(StrAuto);
 
             flagShowMessageTransport = false;
         }
@@ -220,24 +223,21 @@ public class settings : MonoBehaviour
 
     private void CorrectTextOnScene()
     {
-        if (PersonalSettings.language == LanguageSettings.Language.English)
+        if (PersonalSettings.language == LanguageSettings.Language.Russian)
+        {
+            ButtonResearch.GetComponentInChildren<Text>().text = "ПОИСК";
+            PeopleTextTitle.transform.GetComponent<Text>().text = "ЛЮДИ";
+            ReqResTitle.transform.GetComponent<Text>().text = "ТРЕБУЕМЫЕ РЕСУРСЫ";
+            StrWelcome = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!";
+            StrAuto = "ТЫ МОЖЕШЬ ПОСЫЛАТЬ КОСМОЛЕТЫ С ЖИТЕЛЯМИ АВТОМАТИЧЕСКИ.";
+        }
+        else
         {
             ButtonResearch.GetComponentInChildren<Text>().text = "Research";
             PeopleTextTitle.transform.GetComponent<Text>().text = "People";
             ReqResTitle.transform.GetComponent<Text>().text = "Requested resources";
             StrWelcome = "Welcome to the planet " + gameSettings.NameNative + "!";
             StrAuto = "You can send spacecraft with people automatically.";
-        }
-        else
-        {
-            if (PersonalSettings.language == LanguageSettings.Language.Russian)
-            {
-                ButtonResearch.GetComponentInChildren<Text>().text = "ПОИСК";
-                PeopleTextTitle.transform.GetComponent<Text>().text = "ЛЮДИ";
-                ReqResTitle.transform.GetComponent<Text>().text = "ТРЕБУЕМЫЕ РЕСУРСЫ";
-                StrWelcome = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!";
-                StrAuto = "ТЫ МОЖЕШЬ ПОСЫЛАТЬ КОСМОЛЕТЫ С ЖИТЕЛЯМИ АВТОМАТИЧЕСКИ.";
-            }
         }
     }
 }

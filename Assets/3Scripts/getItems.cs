@@ -154,7 +154,11 @@ public class getItems : MonoBehaviour
         return false;
     }
 
-    // generator: set of probable Names
+    /// <summary>
+    /// generator: set of probable Names
+    /// </summary>
+    /// <param name="NPlanets">amount of Names</param>
+    /// <returns></returns>
     private static string[] SetNameGenerate(int NPlanets)
     {
         // generate set of unique numbers 
@@ -169,7 +173,12 @@ public class getItems : MonoBehaviour
         return Name;
     }
 
-    // generator: set of terraindexes
+    /// <summary>
+    /// generator: set of terraindexes
+    /// </summary>
+    /// <param name="len">amount of elements in the set</param>
+    /// <param name="setTIndex">the set of TerraIndex</param>
+    /// <param name="resources">amount of necessary resources</param>
     private static void SetTIndexGenerate(int len, ref int[] setTIndex, ref Dictionary<int, int[]> resources)
     {
         System.Random rnd = new System.Random();
@@ -208,12 +217,16 @@ public class getItems : MonoBehaviour
         }
     }
 
-    // generator: set of unique numbers
+    /// <summary>
+    /// generator: set of unique numbers
+    /// </summary>
+    /// <param name="len">amount of elements in the returned array</param>
+    /// <param name="minVal">low border</param>
+    /// <param name="maxVal">high border</param>
+    /// <returns></returns>
     private static int[] SetNumbersGenerate(int len, int minVal, int maxVal)
     {
         int[] array = new int[len];
-        // number of native planet
-        //int value_Numb = settings.sValNativePlanet;
 
         for (int i = 0; i < len; i++)
         {
@@ -221,6 +234,7 @@ public class getItems : MonoBehaviour
             do
             {
                 array[i] = rnd.Next(minVal, maxVal);
+                //array[i] = rndNumbers.Next(minVal, maxVal);
                 flag_isUnique = true;
 
                 for (int j = 0; j < i; j++)
@@ -237,9 +251,10 @@ public class getItems : MonoBehaviour
         return array;
     }
 
-    // Name for Native Planet
-    //public static string NameGenerate(out int value_Numb)
-    //public static string NameGenerate()
+    /// <summary>
+    /// Name for Native Planet
+    /// </summary>
+    /// <returns></returns>
     public string NameGenerate()
     {
         // choise particular name

@@ -27,7 +27,7 @@ public class panelInform : MonoBehaviour
     {
         settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
         settingsResearches.sNamePlanet.GetComponent<Text>().text = PP.textName;
-        settingsResearches.sTextIntro.GetComponent<Text>().text = getItems.sIntroduction[PP.numIntro];
+        settingsResearches.sTextIntro.text = getItems.sIntroduction[PP.numIntro];
 
         //show nesessary resources
         settingsResearches.rAir.GetComponentInChildren<Text>().text =

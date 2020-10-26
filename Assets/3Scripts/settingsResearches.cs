@@ -26,8 +26,8 @@ public class settingsResearches: MonoBehaviour
     public static GameObject sSphere;
     public GameObject NamePlanet;
     public static GameObject sNamePlanet;
-    public GameObject textIntro;
-    public static GameObject sTextIntro;
+    public Text textIntro;
+    public static Text sTextIntro;
     public GameObject buttonResearchSelect;
     public static GameObject sButtonResearchSelect;
     public GameObject panelInformation;
@@ -107,9 +107,10 @@ public class settingsResearches: MonoBehaviour
         sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
         // craw line 
-        crawlLine cl = ImageCrawlLine.GetComponent<crawlLine>();
+        crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
         settings.sTitleCrawlLine = title;
-        cl.Show("Water was successfully transported from your native planet!");
+        crawlLine.RestartTimer();
+        CL.ShowNext("Water was successfully transported from your native planet!");
 
         // fill information about planets
         OnReceivedModels();

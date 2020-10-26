@@ -11,6 +11,10 @@ public class BuildingsOperations : MonoBehaviour
 
     public GameObject imageCompleted;
 
+    public GameObject panelHelp;
+    public Text textHelp;
+    private static bool flagFirstTime = false;
+
     // GOs for probeFactory
     public GameObject buttonPF;
     public GameObject textTitlePF;
@@ -171,7 +175,10 @@ public class BuildingsOperations : MonoBehaviour
         LoadGame.SetBuildings();
     }
 
-    // fulfill building
+    /// <summary>
+    /// fulfill building
+    /// </summary>
+    /// <param name="building">updated buildings</param>
     private void BuildBuilding(Building building)
     {
         if (settings.gameSettings.NCoins > building.Cost)
@@ -350,6 +357,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             if (building.N == NMaxBuildings)
             { profit = "     +1" + Per + building.Time / 2 + Days; }
+            
             else { profit = "     +1" + Per + building.Time / 2 + Days + Now + building.Time + ")"; }
         }
         return profit;
@@ -429,6 +437,42 @@ public class BuildingsOperations : MonoBehaviour
                 textTitleSC.transform.GetComponent<Text>().text = "КОСМОПОРТ";
             }
         }
+    }
+
+    // "help" is pressed
+    public void ShowHelp()
+    {
+        //to block showing any new messages while the messagebox exists
+        crawlLine.BlockCrawlLine = true;
+        CorrectHelpText();
+        panelHelp.SetActive(true);
+    }
+
+    private void CorrectHelpText()
+    {
+        if (PersonalSettings.language == LanguageSettings.Language.Russian)
+        {
+            textHelp.text = "ЗОНД НЕОБХОДИМ, ЧТОБЫ ИЗУЧИТЬ НОВУЮ ПЛАНЕТУ\n" +
+                "БОЛЬНИЦЫ СНИЖАЮТ УРОВЕНЬ СМЕРТНОСТИ ВИРУСА\n" +
+                "РУДНИКИ ДАЮТ ПРИБЫЛЬ\n" +
+                "КОСМОЛЁТЫ ПЕРЕВОЗЯТ РЕСУРСЫ И ЛЮДЕЙ НА НОВУЮ ПЛАНЕТУ ";
+        }
+        else
+        {
+            textHelp.text = "Probe is necessary to research a new planet\n" +
+                "Hospital reduces mortality\n" +
+                "Mine produses coins\n" +
+                "Spacecraft transports resources and people";
+        }
+    }
+     
+    public void ExitHelp()
+    {
+        // to operate with CrawlLine
+        crawlLine.BlockCrawlLine = false;
+        crawlLine.RestartTimer();
+
+        panelHelp.SetActive(false);
     }
 
     // "cross at canvas" is pressed

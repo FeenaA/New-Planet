@@ -83,6 +83,7 @@
     <Compile Include="Assets\3Scripts\ItemOnClick.cs" />
     <Compile Include="Assets\3Scripts\LanguageSettings.cs" />
     <Compile Include="Assets\3Scripts\LoadGame.cs" />
+    <Compile Include="Assets\3Scripts\MessageBox.cs" />
     <Compile Include="Assets\3Scripts\MessageTreasure.cs" />
     <Compile Include="Assets\3Scripts\People.cs" />
     <Compile Include="Assets\3Scripts\PersonalSettings.cs" />
@@ -133,6 +134,7 @@
     <None Include="Assets\2Prefabs\Shapes2D\changelog.txt" />
     <None Include="Assets\Resources\ExtraResources.xml" />
     <None Include="Assets\Resources\Help.xml" />
+    <None Include="Assets\Resources\CrawlLine.xml" />
     <None Include="Assets\2Prefabs\Shapes2D\Shaders\Path.cginc" />
     <None Include="Assets\Resources\GreekAlph.xml" />
     <None Include="Assets\2Prefabs\Shapes2D\readme.txt" />

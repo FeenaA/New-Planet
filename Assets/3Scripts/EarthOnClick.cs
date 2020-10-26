@@ -12,6 +12,8 @@ public class EarthOnClick : MonoBehaviour
 
     // Earth is clicked
     public static bool flagBuildings = false;
+    // Earth is clicked the first time
+    private static bool flagFirstTime = false;
     void OnMouseDown()
     {
         // to prevent multi showing of the BuildingPanel
@@ -22,6 +24,13 @@ public class EarthOnClick : MonoBehaviour
             settings.sCanvasBuildings.SetActive(true);
             settings.sPanelPeople.SetActive(false);
             settings.sPanelResources.SetActive(false);
+
+            if (!flagFirstTime)
+            {
+                flagFirstTime = true;
+                BuildingsOperations BO = settings.sCanvasBuildings.GetComponent<BuildingsOperations>();
+                BO.ShowHelp();
+            }
         }
     }
 }

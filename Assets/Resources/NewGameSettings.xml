@@ -10,12 +10,12 @@
   <NPeopleOnNative>100000</NPeopleOnNative>
   <AllPeople>100000</AllPeople>
   <NPeopleDied>0</NPeopleDied>
-  <stepCoins>0</stepCoins>
+  <stepCoins>5</stepCoins>
   <flagSelectedPlanet>false</flagSelectedPlanet>
   <NameNew></NameNew>
   <ProbeFactory Cost="300" N="0" Time="160"></ProbeFactory>
   <Hospital Cost="100" N="0"></Hospital>
-  <Mine Cost="200" N="0" stepCoins="0"></Mine>
+  <Mine Cost="200" N="0" stepCoins="5"></Mine>
   <SCfactory Cost="500" N="0" Time="200"></SCfactory>
   <koefToday>0,100</koefToday>
   <NEther>0</NEther>
