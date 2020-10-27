@@ -43,7 +43,6 @@ public class settingsResearches: MonoBehaviour
 
     // amount of probes
     public GameObject textProbes;
-    public static GameObject sTextProbes;
     // amount of spacecrafts
     public GameObject textSC;
     public static GameObject sTextSC;
@@ -97,20 +96,19 @@ public class settingsResearches: MonoBehaviour
         sButtonResearchSelect = buttonResearchSelect;
 
         // panel for different items
-        sTextProbes = textProbes;
         sTextSC = textSC;
         sTextEth = textEth;
         sTextBC = textBC;
-        sTextProbes.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NProbe);
+        textProbes.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NProbe);
         sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NSpasecraft);
         sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NEther);
         sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
         // craw line 
-        crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+        //crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
         settings.sTitleCrawlLine = title;
         crawlLine.RestartTimer();
-        CL.ShowNext("Water was successfully transported from your native planet!");
+        //CL.ShowNext("Water was successfully transported from your native planet!");
 
         // fill information about planets
         OnReceivedModels();

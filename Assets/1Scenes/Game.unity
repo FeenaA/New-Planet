@@ -1797,15 +1797,17 @@ MonoBehaviour:
   result: 0
   PauseRectangle: {fileID: 3035294852868131636}
   PopUpLine: {fileID: 1899178717}
-  textCoinsObject: {fileID: 1237414552}
+  TextCoins: {fileID: 4324342279860094757}
   peopleOnNative: {fileID: 1358044492}
   peopleOnNew: {fileID: 418639746}
   peopleDied: {fileID: 1377902926}
   ButtonSendPeople: {fileID: 1632650483}
   NProbes: {fileID: 0}
   NSpaceCraft: {fileID: 0}
+  CanvasBuildings: {fileID: 7274764275769379441}
   CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
     type: 3}
+  ImageCrawlLine: {fileID: 1381755935}
   MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
     type: 3}
   MainCanvas: {fileID: 1353864826}
@@ -3553,7 +3555,7 @@ GameObject:
   - component: {fileID: 1192782757}
   - component: {fileID: 1192782756}
   m_Layer: 5
-  m_Name: TextProfitProbes
+  m_Name: TextProfitMortality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3668,16 +3670,12 @@ MonoBehaviour:
   PeopleTextTitle: {fileID: 3895284774664153428}
   ReqResTitle: {fileID: 300080006}
   PauseRectangle: {fileID: 3035294852868131636}
-  prefabTest: {fileID: 3268876871465631314, guid: 215afbd1d88b926428e7cc6a55c2a549,
-    type: 3}
   Canvas: {fileID: 1353864822}
   MessageBox: {fileID: 3238391761287202839, guid: 321543c2689799f43b28e7fceb511906,
     type: 3}
   textCoins: {fileID: 1237414552}
   textDays: {fileID: 538435815}
-  PanelPeople: {fileID: 426056183}
-  PanelResources: {fileID: 822935723}
-  canvasBuildings: {fileID: 7274764275769379441}
+  TextReqs: {fileID: 1682316945}
   pauseImage: {fileID: 21300000, guid: 80e83f6641a47bf4e95dd1e60fac84a8, type: 3}
   continueImage: {fileID: 21300000, guid: ef11fb57ec71fc842853e3a64c8d677b, type: 3}
   buttonPause: {fileID: 685590302}
@@ -4570,6 +4568,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1381755935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4608731914473986122, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1381755930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1411570659 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1922194742693439116, guid: e97b1b2c56416fe439f81e257a405cbe,
@@ -6488,8 +6492,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec1b79826c59ce4993a8403b4342c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabBuildings: {fileID: 7274764275163554941, guid: c6c2a7d50b682e64381b4ee52a8e4110,
-    type: 3}
+  CanvasBuildings: {fileID: 7274764275769379441}
+  PanelPeople: {fileID: 426056183}
+  PanelResources: {fileID: 822935723}
 --- !u!224 &2066040635 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4324342278637666335, guid: d2c9782e5124535478a55d49fa28a6a1,
@@ -7287,6 +7292,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2c9782e5124535478a55d49fa28a6a1, type: 3}
+--- !u!114 &4324342279860094757 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4324342278941504952, guid: d2c9782e5124535478a55d49fa28a6a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 4324342279860094756}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237414552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4396731400522886144 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 18216350530009852, guid: b7a9f90edba261943a4168259bf825f3,
@@ -9046,35 +9063,39 @@ MonoBehaviour:
   NMaxBuildings: 5
   imageCompleted: {fileID: 660315608908843995, guid: 01e96134144662840b12ec2ec3f91c94,
     type: 3}
+  ImageCrawlLine: {fileID: 1381755935}
+  TextCoins: {fileID: 4324342279860094757}
   panelHelp: {fileID: 1044197087}
   textHelp: {fileID: 1049323575784856953}
+  PanelPeople: {fileID: 426056183}
+  PanelResources: {fileID: 822935723}
   buttonPF: {fileID: 7274764276461512867}
-  textTitlePF: {fileID: 7274764276669224262}
-  textXPF: {fileID: 1287472371}
-  textCostPF: {fileID: 1042886366}
+  textTitlePF: {fileID: 7274764276669224280}
+  textXPF: {fileID: 1287472373}
+  textCostPF: {fileID: 1042886368}
   textProfitTitlePF: {fileID: 2041600337}
-  textProfitPF: {fileID: 1078937123}
+  textProfitPF: {fileID: 1078937125}
   panelPF: {fileID: 7274764276633916048}
   buttonHospital: {fileID: 7274764275677376558}
-  textTitleHospital: {fileID: 1835433173}
-  textXHSP: {fileID: 1728554601}
+  textTitleHospital: {fileID: 1835433175}
+  textXHSP: {fileID: 1728554603}
   textProfitTitleHSP: {fileID: 1808740652}
-  textCostHSP: {fileID: 457013827}
+  textCostHSP: {fileID: 457013829}
   panelHSP: {fileID: 7274764275694099267}
-  textMortality: {fileID: 1192782754}
+  textMortality: {fileID: 1192782756}
   buttonMine: {fileID: 7274764275510066223}
-  textTitleMine: {fileID: 7274764275866135889}
-  textXMN: {fileID: 1324098478}
-  textCostMN: {fileID: 1900327990}
+  textTitleMine: {fileID: 7274764275866135891}
+  textXMN: {fileID: 1324098479}
+  textCostMN: {fileID: 1900327992}
   textProfitTitleMN: {fileID: 1692498877}
-  textProfitMN: {fileID: 1760307840}
+  textProfitMN: {fileID: 1760307842}
   panelMN: {fileID: 7274764275422165268}
   buttonSC: {fileID: 7274764276451525802}
-  textTitleSC: {fileID: 7274764274865701128}
-  textXSC: {fileID: 816712771}
-  textCostSC: {fileID: 1835116278}
+  textTitleSC: {fileID: 7274764274865701130}
+  textXSC: {fileID: 816712773}
+  textCostSC: {fileID: 1835116280}
   textProfitTitleSC: {fileID: 1082914316}
-  textProfitSC: {fileID: 310615848}
+  textProfitSC: {fileID: 310615850}
   panelSC: {fileID: 7274764275839906766}
 --- !u!224 &7274764275769379445
 RectTransform:

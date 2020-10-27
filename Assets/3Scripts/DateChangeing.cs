@@ -21,12 +21,12 @@ public class DateChangeing : MonoBehaviour
     private static int nDayPF = 0;
     private static int nDaySC = 0;
     // Coins
-    public GameObject textCoinsObject;
-    public static GameObject sTextCoinsObject;
+    public Text TextCoins; 
     // People
     public GameObject peopleOnNative;
     public GameObject peopleOnNew;
     public GameObject peopleDied;
+
     // button to transport people
     public GameObject ButtonSendPeople;
     // probes
@@ -47,9 +47,13 @@ public class DateChangeing : MonoBehaviour
 
     private string SceneName;
 
+    public GameObject CanvasBuildings;
     public GameObject CanvasGameOver;
-    
-    // prefab to show message via string
+
+    // CrawlLine script's parent
+    public GameObject ImageCrawlLine;
+
+    // prefab to show message via a string
     public GameObject MessageBox;
     private static bool flagFirstVictim = false;
     private GameObject messageBox;
@@ -64,25 +68,25 @@ public class DateChangeing : MonoBehaviour
     private static string strFirstVictim = "";
     private static string strNoBuildings = "";
     private static string strPlanet = "";
+    private static string strFirstOnNew = "";
 
     void Start()
     {
         if (pause)
         {
             gameObject.GetComponent<Text>().color = buttons.sColorPause;
-            textCoinsObject.GetComponent<Text>().color = buttons.sColorPause;
+            TextCoins.color = buttons.sColorPause;
             PauseRectangle.SetActive(true);
         }
         else
         {
             gameObject.GetComponent<Text>().color = buttons.sColorProcess;
-            textCoinsObject.GetComponent<Text>().color = buttons.sColorProcess;
+            TextCoins.color = buttons.sColorProcess;
             PauseRectangle.SetActive(false);
         }
 
-        sTextCoinsObject = textCoinsObject;
         GetComponent<Text>().text = settings.sStringTextDays;
-        sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NCoins);
+        TextCoins.text = Convert.ToString(settings.gameSettings.NCoins);
 
         if (SceneName == "Research")
         {
@@ -118,9 +122,9 @@ public class DateChangeing : MonoBehaviour
             strNew = " (НОВАЯ): ";
             strMoved = " ПЕРЕЕХАЛИ";
             strFirstVictim = "ПЕРВАЯ ЖЕРТВА! ВИРУС НАЧАЛ УБИВАТЬ ТВОЙ НАРОД.";
-            //strNoBuildings = "ПЛАНЕТА ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ. ДЛЯ ЭТОГО НАЖМИ НА СВОЮ ПЛАНЕТУ.";
             strPlanet = "ПЛАНЕТА ";
             strNoBuildings = " ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ. ДЛЯ ЭТОГО НАЖМИ НА ";
+            strFirstOnNew = "ПЕРВАЯ ГРУППА ЛЮДЕЙ УСПЕШНО ВЫСАДИЛАСЬ НА ПЛАНЕТУ ";
         }
         else
         {
@@ -130,9 +134,9 @@ public class DateChangeing : MonoBehaviour
             strNew = " (new): ";
             strMoved = " shifted";
             strFirstVictim = "The first victim has appeared!\nThe virus has begun to kill your people.";
-            //strNoBuildings = "Your planet is infected with a virus. Build buildings to find a new planet. Tab to your planet to see buildings.";
             strPlanet = "The planet ";
             strNoBuildings = " is infected with a virus. Build buildings to find a new planet. Tab to ";
+            strFirstOnNew = "The first group of people successfully landed on the planet ";
         }
     }
 
@@ -150,7 +154,7 @@ public class DateChangeing : MonoBehaviour
 
             #region coins increment
             settings.gameSettings.NCoins = AddCoins(settings.gameSettings.stepCoins);
-            sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NCoins);
+            TextCoins.text = Convert.ToString(settings.gameSettings.NCoins);
             #endregion
 
             // if people've started to die
@@ -199,10 +203,6 @@ public class DateChangeing : MonoBehaviour
                     peopleOnNew.GetComponent<Text>().text = strOn + settings.gameSettings.NameNew + strNew +
                         Convert.ToString(settings.gameSettings.NPeopleOnNew);
                 }
-
-                // SetParent to the MessageBox
-                //messageBox.transform.SetParent(settings.sCanvas.transform, false);
-
                 #endregion
 
                 #region MessageBox: "Build buildings!"
@@ -229,7 +229,7 @@ public class DateChangeing : MonoBehaviour
                 #region show buildings 
                 if (EarthOnClick.flagBuildings == true)
                 {
-                    BuildingsOperations BO = settings.sCanvasBuildings.GetComponent<BuildingsOperations>();
+                    BuildingsOperations BO = CanvasBuildings.GetComponent<BuildingsOperations>();
                     BO.ReloadButtons();
                 }
                 #endregion
@@ -334,11 +334,15 @@ public class DateChangeing : MonoBehaviour
         { NSpacecraft = settings.gameSettings.NSpasecraft; }
         if (NSpacecraft == 0) return;
 
-        
+        // the first group of people was sent
         if (!settings.gameSettings.flagPeopleVeBeenSent)
         {
             settings.gameSettings.flagPeopleVeBeenSent = true;
             LoadGame.SetPeopleVeBeenSent();
+
+            // to operate with CrawlLine
+            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+            CL.ShowNext(strFirstOnNew + settings.gameSettings.NameNew);
         }
 
         // NTransportedPeople - amount of avaliable people
@@ -453,4 +457,3 @@ public class DateChangeing : MonoBehaviour
         return res;
     }
 }
-

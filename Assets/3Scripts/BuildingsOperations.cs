@@ -11,49 +11,56 @@ public class BuildingsOperations : MonoBehaviour
 
     public GameObject imageCompleted;
 
+    public GameObject ImageCrawlLine;
+
+    public Text TextCoins;
+
     public GameObject panelHelp;
     public Text textHelp;
-    private static bool flagFirstTime = false;
+
+    // panels to become active after destroy gameobject
+    public GameObject PanelPeople;
+    public GameObject PanelResources;
 
     // GOs for probeFactory
     public GameObject buttonPF;
-    public GameObject textTitlePF;
-    public GameObject textXPF;
-    public GameObject textCostPF;
+    public Text textTitlePF;
+    public Text textXPF;
+    public Text textCostPF;
     public GameObject textProfitTitlePF;
-    public GameObject textProfitPF;
+    public Text textProfitPF;
     public GameObject panelPF;
      
     // GOs for Hospital
     public GameObject buttonHospital;
-    public GameObject textTitleHospital;
-    public GameObject textXHSP; 
+    public Text textTitleHospital;
+    public Text textXHSP; 
     public GameObject textProfitTitleHSP; 
-    public GameObject textCostHSP;
+    public Text textCostHSP;
     public GameObject panelHSP;
-    public GameObject textMortality;
+    public Text textMortality;
 
     // GOs for Mine
     public GameObject buttonMine;
-    public GameObject textTitleMine;
-    public GameObject textXMN;
-    public GameObject textCostMN;
+    public Text textTitleMine;
+    public Text textXMN;
+    public Text textCostMN;
     public GameObject textProfitTitleMN;
-    public GameObject textProfitMN;
+    public Text textProfitMN;
     public GameObject panelMN;
 
     // GOs for spaceport
     public GameObject buttonSC;
-    public GameObject textTitleSC;
-    public GameObject textXSC; 
-    public GameObject textCostSC;
+    public Text textTitleSC;
+    public Text textXSC; 
+    public Text textCostSC;
     public GameObject textProfitTitleSC;
-    public GameObject textProfitSC;
+    public Text textProfitSC;
     public GameObject panelSC;
 
-    private static GameObject textX;
-    private static GameObject textCost;
-    public static GameObject textProfit;
+    private static Text textX;
+    private static Text textCost;
+    public static Text textProfit;
     private static GameObject buttonBuild;
     private static GameObject panel;
 
@@ -75,19 +82,29 @@ public class BuildingsOperations : MonoBehaviour
         public int stepCoins; 
     }
 
-    private static BuildingTime ProbeFactory = new BuildingTime();
-    private static BuildingHospital Hospital = new BuildingHospital();
-    private static BuildingMine Mine = new BuildingMine();
-    private static BuildingTime SCfactory = new BuildingTime();
+    private BuildingTime ProbeFactory = new BuildingTime();
+    private BuildingHospital Hospital = new BuildingHospital();
+    private BuildingMine Mine = new BuildingMine();
+    private BuildingTime SCfactory = new BuildingTime();
 
-    private static string Cost = ""; 
-    private static string Per = "";
-    private static string Days = "";
-    private static string Day = "";
-    private static string Now = "";
-    private static string Maximum = "";
-    private static string Treatment = ""; 
-     
+    private string Cost = ""; 
+    private string Per = "";
+    private string Days = "";
+    private string Day = "";
+    private string Now = "";
+    private string Maximum = "";
+    private string Treatment = "";
+
+    private string FirstPF = ""; 
+    private string FirstHospital = "";
+    private string FirstMine = "";
+    private string FirstSC = "";
+
+    private string NewPF = "";
+    private string NewHospital = "";
+    private string NewMine = "";
+    private string NewSC = "";
+
     void Start()
     {
         CorrectTextOnScene();
@@ -126,6 +143,10 @@ public class BuildingsOperations : MonoBehaviour
     // button "Build" is pressed 
     public void BuildBuilding(int N)
     {
+        // to operate with CrawlLine
+        crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+        bool flagBuild = false;
+
         //set all static gameobjects
         switch (N)
         {
@@ -135,18 +156,32 @@ public class BuildingsOperations : MonoBehaviour
                 textCost = textCostPF;
                 buttonBuild = buttonPF;
                 textProfit = textProfitPF;
-                panel = panelPF;
-                BuildBuilding(ProbeFactory);
+                panel = panelPF; 
+                flagBuild = BuildBuilding(ProbeFactory);
                 settings.gameSettings.NProbe++;
+
+                // deal with crawl line
+                if (flagBuild)
+                {
+                    if (ProbeFactory.N == 1) { CL.ShowNext(FirstPF); }
+                    else { CL.ShowNext(NewPF); }
+                }
                 break;
                 
             case 1:
-                // Hospital
+                // Hospital 
                 textX = textXHSP;
                 textCost = textCostHSP;
                 buttonBuild = buttonHospital;
                 panel = panelHSP;
-                BuildBuilding(Hospital);
+                flagBuild = BuildBuilding(Hospital);
+
+                // deal with crawl line
+                if (flagBuild)
+                {
+                    if (Hospital.N == 1) { CL.ShowNext(FirstHospital); }
+                    else { CL.ShowNext(NewHospital); }
+                }
                 break;
             case 2:
                 // Mine
@@ -155,7 +190,14 @@ public class BuildingsOperations : MonoBehaviour
                 buttonBuild = buttonMine;
                 textProfit = textProfitMN;
                 panel = panelMN;
-                BuildBuilding(Mine);
+                flagBuild = BuildBuilding(Mine);
+
+                // deal with crawl line
+                if (flagBuild)
+                {
+                    if (Mine.N == 1) { CL.ShowNext(FirstMine); }
+                    else { CL.ShowNext(NewMine); }
+                }
                 settings.gameSettings.stepCoins = Mine.stepCoins;
                 break;
             case 3:
@@ -165,12 +207,20 @@ public class BuildingsOperations : MonoBehaviour
                 buttonBuild = buttonSC;
                 textProfit = textProfitSC;
                 panel = panelSC;
-                BuildBuilding(SCfactory);
+                flagBuild = BuildBuilding(SCfactory);
+
+                // deal with crawl line
+                if (flagBuild)
+                {
+                    if (SCfactory.N == 1) { CL.ShowNext(FirstSC); }
+                    else { CL.ShowNext(NewSC); }
+                }
                 settings.gameSettings.NSpasecraft++;
                 break;
             default:
                 break;
         }
+
         ReloadButtons();
         LoadGame.SetBuildings();
     }
@@ -179,36 +229,40 @@ public class BuildingsOperations : MonoBehaviour
     /// fulfill building
     /// </summary>
     /// <param name="building">updated buildings</param>
-    private void BuildBuilding(Building building)
+    private bool BuildBuilding(Building building)
     {
-        if (settings.gameSettings.NCoins > building.Cost)
-        {
-            // pay and show
-            settings.gameSettings.NCoins -= building.Cost;
-            DateChangeing.sTextCoinsObject.GetComponent<Text>().text = Convert.ToString(settings.gameSettings.NCoins);
+        // there isn't enough money to build the building
+        if (settings.gameSettings.NCoins < building.Cost)
+        { return false; }
 
-            // new cost and account
-            building.Cost *= (++building.N + 1);
-            // show 
-            textX.GetComponent<Text>().text = "X" + building.N;
-            textCost.GetComponent<Text>().text = Cost + building.Cost;
+        // pay and show
+        settings.gameSettings.NCoins -= building.Cost;
+        TextCoins.text = Convert.ToString(settings.gameSettings.NCoins);
 
-            // update and show profit
-            if (building is BuildingTime) 
-            { textProfit.GetComponent<Text>().text = CorrectProfitTime((BuildingTime)building); }
-            else    if (building is BuildingHospital) { UpdateHospital((BuildingHospital)building); }
-            else    if (building is BuildingMine)     
-            { textProfit.GetComponent<Text>().text = CorrectProfitCoin((BuildingMine)building); }
+        // new cost and account
+        building.Cost *= (++building.N + 1);
+        // show 
+        textX.text = "X" + building.N;
+        textCost.text = Cost + building.Cost;
+
+        // update and show profit
+        if (building is BuildingTime) 
+        { textProfit.text = CorrectProfitTime((BuildingTime)building); }
+        else    if (building is BuildingHospital) { UpdateHospital((BuildingHospital)building); }
+        else    if (building is BuildingMine)     
+        { textProfit.text = CorrectProfitCoin((BuildingMine)building); }
             
-            // to prevent building extra buildings
-            if ( building.N == NMaxBuildings)
-            {
-                Destroy(buttonBuild);
-                GameObject instance = Instantiate(imageCompleted);
-                instance.GetComponentInChildren<Text>().text = Maximum;
-                instance.transform.SetParent(panel.transform, false);
-            }
+        // to prevent building extra buildings
+        if ( building.N == NMaxBuildings)
+        {
+            Destroy(buttonBuild);
+            GameObject instance = Instantiate(imageCompleted);
+            instance.GetComponentInChildren<Text>().text = Maximum;
+            instance.transform.SetParent(panel.transform, false);
         }
+
+        // the biulding is built
+        return true;
     }
 
     private void CheckMax()
@@ -228,7 +282,7 @@ public class BuildingsOperations : MonoBehaviour
             Destroy(textCostHSP);
             Destroy(buttonHospital);
             GameObject instance = Instantiate(imageCompleted);
-            textMortality.transform.GetComponent<Text>().text = Treatment;
+            textMortality.text = Treatment;
             instance.GetComponentInChildren<Text>().text = Maximum;
             instance.transform.SetParent(panelHSP.transform, false);
         }
@@ -274,7 +328,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostHSP);
             Destroy(buttonHospital);
-            textMortality.transform.GetComponent<Text>().text = Treatment;
+            textMortality.text = Treatment;
         }
         else
         {
@@ -376,7 +430,46 @@ public class BuildingsOperations : MonoBehaviour
 
     private void CorrectTextOnScene()
     {
-        if (PersonalSettings.language == LanguageSettings.Language.English)
+        if (PersonalSettings.language == LanguageSettings.Language.Russian)
+        {
+            textTitle.GetComponent<Text>().text = "ЗДАНИЯ НА " + settings.gameSettings.NameNative;
+            Cost = "ЦЕНА:            ";
+            Per = " ЗА ";
+            Days = " ДНЕЙ\n";
+            Day = "ДЕНЬ\n";
+            Now = " (СЕЙЧАС ";
+            Maximum = "МАКСИМУМ!";
+            Treatment = "ЛЕЧЕНИЕ ИДЕТ";
+
+            FirstPF = "ИССЛЕДОВАТЬ ПЛАНЕТЫ ЛЕГКО! ПЕРВАЯ ФАБРИКА ЗОНДОВ ГОТОВА К РАБОТЕ";
+            FirstHospital = "ПЕРВЫЙ ПРОФИЛЬНЫЙ МЕДИЦИНСКИЙ ЦЕНТР ПРИСТУПИЛ К БОРЬБЕ С ВИРУСОМ";
+            FirstMine = "ЗАПУЩЕН РУДНИК, ПРИНОСЯЩИЙ ЕЖЕДНЕВНУЮ ПРИБЫЛЬ";
+            FirstSC = "ПЕРЕВОЗИТЬ РЕСУРСЫ И ЛЮДЕЙ ТЕПЕРЬ ВОЗМОЖНО! ПОСТРОЕН ПЕРВЫЙ КОСМОПОРТ";
+
+            NewPF = "НОВАЯ ФАБРИКА ЗОНДОВ ПОЗВОЛЯЕТ ЧАЩЕ ИССЛЕДОВАТЬ НОВЫЕ ПЛАНЕТЫ";
+            NewHospital = "НОВАЯ БОЛЬНИЦА БОРЕТСЯ С РАСПРОСТРАНЕНИЕМ ВИРУСА";
+            NewMine = "НОВЫЙ РУДНИК УВЕЛИЧИЛ ЕЖЕДНЕВНУЮ ПРИБЫЛЬ";
+            NewSC = "НОВЫЙ КОСМОПОРТ ПОЗВОЛЯЕТ ЧАЩЕ ПЕРЕВОЗИТЬ РЕСУРСЫ И ЛЮДЕЙ НА НОВУЮ ПЛАНЕТУ";
+
+            string strBuild = "СТРОИТЬ";
+            buttonPF.GetComponentInChildren<Text>().text = strBuild;
+            buttonSC.GetComponentInChildren<Text>().text = strBuild;
+            buttonHospital.GetComponentInChildren<Text>().text = strBuild;
+            buttonMine.GetComponentInChildren<Text>().text = strBuild;
+
+            string strProfit = "ВЫГОДА:";
+            textProfitTitlePF.transform.GetComponent<Text>().text = strProfit;
+            textProfitTitleHSP.transform.GetComponent<Text>().text = strProfit;
+            textProfitTitleMN.transform.GetComponent<Text>().text = strProfit;
+            textProfitTitleSC.transform.GetComponent<Text>().text = strProfit;
+
+            textTitlePF.text = "ФАБРИКА ЗОНДОВ";
+            textTitleMine.text = "РУДНИК";
+            textTitleHospital.text = "БОЛЬНИЦА";
+            textMortality.text = "СНИЖЕНИЕ\nСМЕРТНОСТИ";
+            textTitleSC.text = "КОСМОПОРТ";
+        }
+        else
         {
             textTitle.GetComponent<Text>().text = settings.gameSettings.NameNative + "'s buildings";
             Cost = "Cost:             ";
@@ -386,6 +479,16 @@ public class BuildingsOperations : MonoBehaviour
             Now = "  (now ";
             Maximum = "Max!";
             Treatment = "Under treatment";
+
+            FirstPF = "Planets researching is easy! The first probe factory ready to operate";
+            FirstHospital = "The first specialized medical center began to fight the virus";
+            FirstMine = "The mine is lanched to receive profit daily";
+            FirstSC = "It is possible to transport resources and people! The spaceport is built";
+
+            NewPF = "New probe factory allows to research more new planets";
+            NewHospital = "New hospital fighting the spread of the virus";
+            NewMine = "New mine has increased daily profit";
+            NewSC = "New spaceport allows to transport resources and people more often";
 
             string strBuild = "Build";
             buttonPF.GetComponentInChildren<Text>().text = strBuild;
@@ -399,43 +502,11 @@ public class BuildingsOperations : MonoBehaviour
             textProfitTitleMN.transform.GetComponent<Text>().text = strProfit;
             textProfitTitleSC.transform.GetComponent<Text>().text = strProfit;
 
-            textTitlePF.transform.GetComponent<Text>().text = "Probe Factory";
-            textTitleMine.transform.GetComponent<Text>().text = "Mine";
-            textTitleHospital.transform.GetComponent<Text>().text = "Hospital";
-            textMortality.transform.GetComponent<Text>().text = "Reduction of\nmortality";
-            textTitleSC.transform.GetComponent<Text>().text = "Spaceport";
-        }
-        else
-        {
-            if (PersonalSettings.language == LanguageSettings.Language.Russian)
-            {
-                textTitle.GetComponent<Text>().text = "ЗДАНИЯ НА " + settings.gameSettings.NameNative;
-                Cost = "ЦЕНА:            ";
-                Per = " ЗА ";
-                Days = " ДНЕЙ\n";
-                Day = "ДЕНЬ\n";
-                Now = " (СЕЙЧАС ";
-                Maximum = "МАКСИМУМ!";
-                Treatment = "ЛЕЧЕНИЕ ИДЕТ";
-
-                string strBuild = "СТРОИТЬ";
-                buttonPF.GetComponentInChildren<Text>().text = strBuild;
-                buttonSC.GetComponentInChildren<Text>().text = strBuild;
-                buttonHospital.GetComponentInChildren<Text>().text = strBuild;
-                buttonMine.GetComponentInChildren<Text>().text = strBuild;
-
-                string strProfit = "ВЫГОДА:";
-                textProfitTitlePF.transform.GetComponent<Text>().text = strProfit;
-                textProfitTitleHSP.transform.GetComponent<Text>().text = strProfit;
-                textProfitTitleMN.transform.GetComponent<Text>().text = strProfit;
-                textProfitTitleSC.transform.GetComponent<Text>().text = strProfit;
-
-                textTitlePF.transform.GetComponent<Text>().text = "ФАБРИКА ЗОНДОВ";
-                textTitleMine.transform.GetComponent<Text>().text = "РУДНИК";
-                textTitleHospital.transform.GetComponent<Text>().text = "БОЛЬНИЦА";
-                textMortality.transform.GetComponent<Text>().text = "СНИЖЕНИЕ\nСМЕРТНОСТИ";
-                textTitleSC.transform.GetComponent<Text>().text = "КОСМОПОРТ";
-            }
+            textTitlePF.text = "Probe Factory"; 
+            textTitleMine.text = "Mine";
+            textTitleHospital.text = "Hospital";
+            textMortality.text = "Reduction of\nmortality";
+            textTitleSC.text = "Spaceport";
         }
     }
 
@@ -479,8 +550,8 @@ public class BuildingsOperations : MonoBehaviour
     public void ExitBuildings()
     {
         EarthOnClick.flagBuildings = false;
-        settings.sCanvasBuildings.SetActive(false);
-        settings.sPanelPeople.SetActive(true);
-        settings.sPanelResources.SetActive(true);
+        gameObject.SetActive(false);
+        PanelPeople.SetActive(true);
+        PanelResources.SetActive(true);
     }
 }

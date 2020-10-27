@@ -10,6 +10,7 @@ public class panelInform : MonoBehaviour
     private readonly int presentedCoins = 1000;
     public GameObject MessageBox;
     public Canvas MainCanvas;
+    public Text TextCoins;
     public static string strResearch = "Research";
     public static string strSelect = "Select";
 
@@ -133,7 +134,8 @@ public class panelInform : MonoBehaviour
                     DateChangeing DC = TextDate.GetComponent<DateChangeing>();
                     settings.gameSettings.NCoins = DC.AddCoins(presentedCoins);
                     // show changes
-                    DateChangeing.sTextCoinsObject.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NCoins);
+                    //DateChangeing.sTextCoinsObject.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NCoins);
+                    TextCoins.text = System.Convert.ToString(settings.gameSettings.NCoins);
 
                     // show Congratulations
                     var instance = Instantiate(MessageBox);

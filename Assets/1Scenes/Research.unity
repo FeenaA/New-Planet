@@ -1338,6 +1338,7 @@ MonoBehaviour:
   MessageBox: {fileID: 3581867336716266080, guid: ccd348f140290404cbcc8f99e2f11ae9,
     type: 3}
   MainCanvas: {fileID: 1353864825}
+  TextCoins: {fileID: 1199631246}
 --- !u!114 &254587511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2633,15 +2634,17 @@ MonoBehaviour:
   result: 2
   PauseRectangle: {fileID: 462644282}
   PopUpLine: {fileID: 0}
-  textCoinsObject: {fileID: 1199631245}
+  TextCoins: {fileID: 1199631246}
   peopleOnNative: {fileID: 0}
   peopleOnNew: {fileID: 0}
   peopleDied: {fileID: 0}
   ButtonSendPeople: {fileID: 0}
   NProbes: {fileID: 2063788488}
   NSpaceCraft: {fileID: 1126424097}
+  CanvasBuildings: {fileID: 0}
   CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
     type: 3}
+  ImageCrawlLine: {fileID: 4608731915455204667}
   MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
     type: 3}
   MainCanvas: {fileID: 1353864826}
@@ -4063,6 +4066,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1199631243}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1199631246 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4324342278941504952, guid: d2c9782e5124535478a55d49fa28a6a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1199631243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199631245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1215159473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8314,6 +8329,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4608731915455204667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4608731914473986122, guid: 7239553a91524dc4d8cf1df04a8e6fd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4608731915455204664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!222 &5084640776768604660
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class crawlLine : MonoBehaviour
      
     // timer to show smth if there wasn't any actions for a long time
     public static int TimerCrawlLine = 0;
-    private int nSecondsToWait = 10;
+    private int nSecondsToWait = 7;
 
     // crawl line content
     public static Dictionary<int, string> sCrawlContent;
@@ -36,6 +36,8 @@ public class crawlLine : MonoBehaviour
 
    private void Start()
     {
+        print("Message: " + MessageToShow);
+
         string strTitle = "Spot news";
         if ((PersonalSettings.language == LanguageSettings.Language.Russian)) { strTitle = "НОВОСТИ"; }
         TextTitle.text = strTitle;
@@ -68,16 +70,16 @@ public class crawlLine : MonoBehaviour
             // if it is time to show message
             if (TimerCrawlLine == nSecondsToWait)
             {
-                if (System.String.IsNullOrEmpty(MessageToShow) )
+                string message = MessageToShow;
+                MessageToShow = "";
+
+                if (System.String.IsNullOrEmpty(message) )
                 {
                     // Show the string of an entertaining content
                     int index = random.Next(1, amountOfMessages);
-                    MessageToShow = sCrawlContent[index];
+                    message = sCrawlContent[index];
                 }
-
-                Show(MessageToShow);
-
-                MessageToShow = "";
+                Show(message);
                 TimerCrawlLine = 0;
             }
 

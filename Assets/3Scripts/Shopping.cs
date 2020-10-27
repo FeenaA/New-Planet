@@ -77,11 +77,6 @@ public class Shopping : MonoBehaviour
         sPanelPlanets = PanelPlanets;
         sTextTitle = TextTitle;
 
-        //sTransportButton = TransportButton;
-        //sBuyButton = BuyButton;
-        //sEtherButton = EtherButton;
-        //sSellButton = SellButton;
-
         sTextStorage = TextStorage;
         sTextCostResource = textCostResource;
         sTextResource = textResource;

@@ -8,7 +8,11 @@ using UnityEngine.EventSystems;
 
 public class EarthOnClick : MonoBehaviour
 {
-    public GameObject prefabBuildings;
+    // CanvasBuildings to be shown on the scene
+    public GameObject CanvasBuildings;
+    // panels to be unactive when CanvasBuildings is on the scene
+    public GameObject PanelPeople;
+    public GameObject PanelResources;
 
     // Earth is clicked
     public static bool flagBuildings = false;
@@ -21,14 +25,14 @@ public class EarthOnClick : MonoBehaviour
         {
             // show prefabBuildings 
             flagBuildings = true;
-            settings.sCanvasBuildings.SetActive(true);
-            settings.sPanelPeople.SetActive(false);
-            settings.sPanelResources.SetActive(false);
+            CanvasBuildings.SetActive(true);
+            PanelPeople.SetActive(false);
+            PanelResources.SetActive(false);
 
             if (!flagFirstTime)
             {
                 flagFirstTime = true;
-                BuildingsOperations BO = settings.sCanvasBuildings.GetComponent<BuildingsOperations>();
+                BuildingsOperations BO = CanvasBuildings.GetComponent<BuildingsOperations>();
                 BO.ShowHelp();
             }
         }

@@ -13,8 +13,6 @@ public class settings : MonoBehaviour
     public GameObject PauseRectangle;
     public static GameObject sPauseRectangle;
 
-    public GameObject prefabTest;
-    public static GameObject sPrefabTest;
     // the main canvas
     public GameObject Canvas;
     public static GameObject sCanvas;
@@ -30,15 +28,8 @@ public class settings : MonoBehaviour
     public static GameObject sTextDays;
     public static string sStringTextDays;
 
-    // panels - People and resources
-    public GameObject PanelPeople;
-    public GameObject PanelResources;
-    public static GameObject sPanelPeople;
-    public static GameObject sPanelResources;
-
-    // canvas for buildings
-    public GameObject canvasBuildings;
-    public static GameObject sCanvasBuildings;
+    // requested resources
+    public Transform TextReqs;
 
     // Sprites, Button - changeing images of ButtonPause
     public Sprite pauseImage;
@@ -47,8 +38,6 @@ public class settings : MonoBehaviour
     public static Sprite sContinueImage;
     public Button buttonPause;
     public static Button sButtonPause;
-    // flag - was the game paused before the instance of prefab instanciated?
-    //public static bool flagPauseBeforePrefab = false;
 
     // GOs for random materials
     public GameObject Earth;
@@ -132,9 +121,6 @@ public class settings : MonoBehaviour
         sPauseImage = pauseImage;
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
-        sCanvasBuildings = canvasBuildings;
-        sPanelPeople = PanelPeople;
-        sPrefabTest = prefabTest;
         sCanvas = Canvas;
         sPauseRectangle = PauseRectangle;
         sTitleCrawlLine = title;
@@ -201,9 +187,6 @@ public class settings : MonoBehaviour
         EarthOnClick.flagBuildings = false;
         Earth.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NEarthMaterial];
         Moon.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NMoonMaterial];
-
-        sPanelResources = PanelResources;
-        Transform TextReqs = sPanelResources.transform.Find("TextRequestedResources");
 
         ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
         TextReqs.GetComponent<Text>().text = SP.Show(gameSettings.RequestedResources);
