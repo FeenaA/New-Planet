@@ -14,7 +14,7 @@ public class crawlLine : MonoBehaviour
     // text message
     public Text TextMessage;
     // text title
-    public Text TextTitle;
+    public GameObject TextTitle;
 
     // flag to mean that crawlline is bisy now
     private static bool flagCrawlBusy = false;
@@ -40,7 +40,7 @@ public class crawlLine : MonoBehaviour
 
         string strTitle = "Spot news";
         if ((PersonalSettings.language == LanguageSettings.Language.Russian)) { strTitle = "НОВОСТИ"; }
-        TextTitle.text = strTitle;
+        TextTitle.GetComponent<Text>().text = strTitle;
 
         int nSecondsStep = 1;
         TimerCrawlLine = nSecondsToWait;
@@ -55,6 +55,11 @@ public class crawlLine : MonoBehaviour
     {
         flagCrawlBusy = false;
         TimerCrawlLine = 0;
+    }
+
+    public static void RestartToShow()
+    { 
+        flagCrawlBusy = false;
     }
 
     /// <summary>
@@ -111,14 +116,14 @@ public class crawlLine : MonoBehaviour
         // periodical spiking of the title
         float timePulse = 0.5f;
         yield return new WaitForSeconds(timePulse);
-        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Bold;
+        TextTitle.GetComponent<Text>().fontStyle = FontStyle.Bold;
         yield return new WaitForSeconds(timePulse);
-        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Normal;
+        TextTitle.GetComponent<Text>().fontStyle = FontStyle.Normal;
         yield return new WaitForSeconds(timePulse);
-        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Bold;
+        TextTitle.GetComponent<Text>().fontStyle = FontStyle.Bold;
         yield return new WaitForSeconds(timePulse);
-        settings.sTitleCrawlLine.SetActive(false);
-        settings.sTitleCrawlLine.GetComponent<Text>().fontStyle = FontStyle.Normal;
+        TextTitle.SetActive(false);
+        TextTitle.GetComponent<Text>().fontStyle = FontStyle.Normal;
 
         // crawl line moving
         TextMessage.text = message;
@@ -131,7 +136,7 @@ public class crawlLine : MonoBehaviour
             yield return new WaitForSeconds(movementSpeed);
             moveingGameObject.position += new Vector3(-stepSize, 0, 0);
         }
-        settings.sTitleCrawlLine.SetActive(true);
+        TextTitle.SetActive(true);
 
         moveingGameObject.gameObject.SetActive(false);
         moveingGameObject.position = initPos;

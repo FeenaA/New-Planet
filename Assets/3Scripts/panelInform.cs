@@ -13,7 +13,9 @@ public class panelInform : MonoBehaviour
     public Text TextCoins;
     public static string strResearch = "Research";
     public static string strSelect = "Select";
-
+    public Renderer Sphere;
+    public Text NamePlanet;
+    public Text TextIntro;
 
     void Start()
     {
@@ -26,9 +28,9 @@ public class panelInform : MonoBehaviour
     /// <param name="PP"></param>
     public void ResetPlanet(getItems.PlanetProperty PP)
     {
-        settingsResearches.sSphere.GetComponent<Renderer>().material = settings.sMaterials[PP.numMaterial];
-        settingsResearches.sNamePlanet.GetComponent<Text>().text = PP.textName;
-        settingsResearches.sTextIntro.text = getItems.sIntroduction[PP.numIntro];
+        Sphere.material = settings.sMaterials[PP.numMaterial];
+        NamePlanet.text = PP.textName;
+        TextIntro.text = getItems.sIntroduction[PP.numIntro];
 
         //show nesessary resources
         settingsResearches.rAir.GetComponentInChildren<Text>().text =

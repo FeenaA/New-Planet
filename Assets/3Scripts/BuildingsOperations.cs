@@ -10,10 +10,17 @@ public class BuildingsOperations : MonoBehaviour
     public int NMaxBuildings = 5;
 
     public GameObject imageCompleted;
-
+    
+    // crawl line
     public GameObject ImageCrawlLine;
+    // MessageBox - to suggest researching new planets
+    public GameObject MessageBox; 
+    private static bool flagStartResearch = false;
+    public Transform MainCanvas;
 
+    // coins - to show changes of the budjet
     public Text TextCoins;
+
 
     public GameObject panelHelp;
     public Text textHelp;
@@ -58,11 +65,12 @@ public class BuildingsOperations : MonoBehaviour
     public Text textProfitSC;
     public GameObject panelSC;
 
-    private static Text textX;
-    private static Text textCost;
-    public static Text textProfit;
-    private static GameObject buttonBuild;
-    private static GameObject panel;
+    // general gameobjects
+    private Text textX;
+    private Text textCost;
+    public Text textProfit;
+    private GameObject buttonBuild;
+    private GameObject panel;
 
     public class Building
     {
@@ -104,6 +112,13 @@ public class BuildingsOperations : MonoBehaviour
     private string NewHospital = "";
     private string NewMine = "";
     private string NewSC = "";
+
+    private string MaxPF = "";
+    private string MaxHospital = "";
+    private string MaxMine = "";
+    private string MaxSC = "";
+
+    private string strStartResearch = "";
 
     void Start()
     {
@@ -163,8 +178,9 @@ public class BuildingsOperations : MonoBehaviour
                 // deal with crawl line
                 if (flagBuild)
                 {
-                    if (ProbeFactory.N == 1) { CL.ShowNext(FirstPF); }
-                    else { CL.ShowNext(NewPF); }
+                    if (ProbeFactory.N == 1)    CL.ShowNext(FirstPF); 
+                    else    if (ProbeFactory.N == NMaxBuildings)    CL.ShowNext(MaxPF);
+                    else    CL.ShowNext(NewPF);
                 }
                 break;
                 
@@ -180,6 +196,7 @@ public class BuildingsOperations : MonoBehaviour
                 if (flagBuild)
                 {
                     if (Hospital.N == 1) { CL.ShowNext(FirstHospital); }
+                    else if (Hospital.N == NMaxBuildings) CL.ShowNext(MaxHospital);
                     else { CL.ShowNext(NewHospital); }
                 }
                 break;
@@ -196,6 +213,7 @@ public class BuildingsOperations : MonoBehaviour
                 if (flagBuild)
                 {
                     if (Mine.N == 1) { CL.ShowNext(FirstMine); }
+                    else if (Mine.N == NMaxBuildings) CL.ShowNext(MaxMine);
                     else { CL.ShowNext(NewMine); }
                 }
                 settings.gameSettings.stepCoins = Mine.stepCoins;
@@ -213,6 +231,7 @@ public class BuildingsOperations : MonoBehaviour
                 if (flagBuild)
                 {
                     if (SCfactory.N == 1) { CL.ShowNext(FirstSC); }
+                    else if (SCfactory.N == NMaxBuildings) CL.ShowNext(MaxSC);
                     else { CL.ShowNext(NewSC); }
                 }
                 settings.gameSettings.NSpasecraft++;
@@ -451,6 +470,13 @@ public class BuildingsOperations : MonoBehaviour
             NewMine = "НОВЫЙ РУДНИК УВЕЛИЧИЛ ЕЖЕДНЕВНУЮ ПРИБЫЛЬ";
             NewSC = "НОВЫЙ КОСМОПОРТ ПОЗВОЛЯЕТ ЧАЩЕ ПЕРЕВОЗИТЬ РЕСУРСЫ И ЛЮДЕЙ НА НОВУЮ ПЛАНЕТУ";
 
+            MaxPF = "СТРОИТЕЛЬСТВО ФАБРИК ЗОНДОВ ВЫШЛО НА МАКСИМАЛЬНЫЙ УРОВЕНЬ";
+            MaxHospital = "МЕДИЦИНА ДОСТИГЛА ПРЕДЕЛА СВОИХ ВОЗМОЖНОСТЕЙ";
+            MaxMine = "СУЩЕСТВУЮЩИЕ РУДНИКИ ЗАНЯЛИ ВСЕ ИЗВЕСТНЫЕ МЕСТОРОЖДЕНИЯ"; 
+            MaxSC = "ПРОИЗВОДСТВО КОСМИЧЕСКИХ КОРАБЛЕЙ ВЫШЛО НА МАКСИМАЛЬНЫЙ УРОВЕНЬ";
+
+            strStartResearch = "ПОРА НАЧИНАТЬ ПОИСК НОВОЙ ПЛАНЕТЫ. ДЛЯ ЭТОГО НАЖМИ КНОПКУ \"ПОИСК\"";
+
             string strBuild = "СТРОИТЬ";
             buttonPF.GetComponentInChildren<Text>().text = strBuild;
             buttonSC.GetComponentInChildren<Text>().text = strBuild;
@@ -489,6 +515,13 @@ public class BuildingsOperations : MonoBehaviour
             NewHospital = "New hospital fighting the spread of the virus";
             NewMine = "New mine has increased daily profit";
             NewSC = "New spaceport allows to transport resources and people more often";
+
+            MaxPF = "Probe factory construction reaches maximum level";
+            MaxHospital = "МЕДИЦИНА ДОСТИГЛА ПРЕДЕЛА СВОИХ ВОЗМОЖНОСТЕЙ";
+            MaxMine = "Existing mines took all known deposits";
+            MaxSC = "Spacecraft production reaches maximum level";
+
+            strStartResearch = "It's time to start searching for a new planet. For this press the button \"RESEARCH\"";
 
             string strBuild = "Build";
             buttonPF.GetComponentInChildren<Text>().text = strBuild;
@@ -553,5 +586,18 @@ public class BuildingsOperations : MonoBehaviour
         gameObject.SetActive(false);
         PanelPeople.SetActive(true);
         PanelResources.SetActive(true);
+
+        #region MessageBox: "start researching planets"
+        if (!flagStartResearch && !settings.gameSettings.flagSelectedPlanet)
+        {
+            // show Message
+            GameObject messageBox = Instantiate(MessageBox);
+            messageBox.SendMessage("TheStart", strStartResearch);
+            // SetParent to the MessageBox
+            messageBox.transform.SetParent(MainCanvas, false);
+
+            flagStartResearch = true;
+        }
+        #endregion
     }
 }

@@ -34,7 +34,7 @@ public class DateChangeing : MonoBehaviour
     // SpaceCraft
     public GameObject NSpaceCraft; 
 
-    private readonly int DaysWithoutDeth = 10;
+    private readonly int DaysWithoutDeth = 20;
     public static int DayDeth = 0; 
     public readonly static float koefPeopleStart = 0.1f;
     private static int DiedToday = 1;
@@ -123,7 +123,7 @@ public class DateChangeing : MonoBehaviour
             strMoved = " ПЕРЕЕХАЛИ";
             strFirstVictim = "ПЕРВАЯ ЖЕРТВА! ВИРУС НАЧАЛ УБИВАТЬ ТВОЙ НАРОД.";
             strPlanet = "ПЛАНЕТА ";
-            strNoBuildings = " ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ. ДЛЯ ЭТОГО НАЖМИ НА ";
+            strNoBuildings = " ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ ПЛАНЕТУ. ДЛЯ ЭТОГО НАЖМИ НА ";
             strFirstOnNew = "ПЕРВАЯ ГРУППА ЛЮДЕЙ УСПЕШНО ВЫСАДИЛАСЬ НА ПЛАНЕТУ ";
         }
         else
@@ -326,7 +326,7 @@ public class DateChangeing : MonoBehaviour
     {
         if (settings.gameSettings.NPeopleOnNative == 0) return;
 
-        People PEP = settings.sCanvas.GetComponent<People>();
+        People PEP = MainCanvas.GetComponent<People>();
         int NPeopleInSC = PEP.NPeopleInSC;
 
         // NSpacecraft - amount of avaliable SCs

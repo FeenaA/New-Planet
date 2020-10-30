@@ -15,13 +15,8 @@ public class settings : MonoBehaviour
 
     // the main canvas
     public GameObject Canvas;
-    public static GameObject sCanvas;
     // MessageBox about the transportation of people
     public GameObject MessageBox;
-
-    // text - amount of coins
-    public GameObject textCoins;
-    public static GameObject sTextCoins; 
 
     // text - amount of intervened days
     public GameObject textDays;
@@ -61,8 +56,8 @@ public class settings : MonoBehaviour
 
     // crawl line
     public RectTransform ImageCrawlLine;
-    public GameObject title;
-    public static GameObject sTitleCrawlLine;
+    //public GameObject title;
+    //public static GameObject sTitleCrawlLine;
 
     /// <summary>
     /// finished(true), in promotionary(false)
@@ -115,17 +110,15 @@ public class settings : MonoBehaviour
     void Start()
     {
         // general objects which are valid whether it's the new session or not 
-        sTextCoins = textCoins;
         sTextDays = textDays;
         sStringTextDays = sTextDays.GetComponent<Text>().text;
         sPauseImage = pauseImage;
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
-        sCanvas = Canvas;
         sPauseRectangle = PauseRectangle;
-        sTitleCrawlLine = title;
+        //sTitleCrawlLine = title;
 
-        buttons BUT = sCanvas.GetComponent<buttons>();
+        buttons BUT = Canvas.GetComponent<buttons>();
 
         GI = gameObject.GetComponent<getItems>();
         int L = materials.Length;
@@ -196,7 +189,7 @@ public class settings : MonoBehaviour
         {
             // show MessageBox: people may be transported
             var instance = Instantiate(MessageBox);
-            instance.transform.SetParent(sCanvas.transform, false);
+            instance.transform.SetParent(Canvas.transform, false);
             // craw line 
             CL.ShowNext(StrAuto);
 

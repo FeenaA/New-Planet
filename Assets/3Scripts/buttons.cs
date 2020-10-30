@@ -51,15 +51,17 @@ public class buttons : MonoBehaviour
     /// change texts' color,
     /// change ButtonPause's sprite
     /// </summary>
+    public GameObject TextCoins;
     public static Color sColorProcess = new Color(255, 255, 255); //white
     public static Color sColorPause = new Color(221, 84, 0);//orange
     public static Color sColorCurrent;
     private static bool flagPause = false;
-    public void PauseOn()
+    public void PauseOn() 
     {
         flagPause = true;
         settings.sTextDays.GetComponent<Text>().color = sColorPause;
-        settings.sTextCoins.GetComponent<Text>().color = sColorPause; 
+        //settings.sTextCoins.GetComponent<Text>().color = sColorPause; 
+        TextCoins.GetComponent<Text>().color = sColorPause;
         settings.sPauseRectangle.SetActive(true);
         DateChangeing.pause = true;
         sColorCurrent = sColorPause;
@@ -68,7 +70,7 @@ public class buttons : MonoBehaviour
     public void PauseOff()
     {
         flagPause = false;
-        settings.sTextCoins.GetComponent<Text>().color = sColorProcess;//white
+        TextCoins.GetComponent<Text>().color = sColorProcess;//white
         settings.sTextDays.GetComponent<Text>().color = sColorProcess;
         settings.sPauseRectangle.SetActive(false);
         DateChangeing.pause = false;
@@ -85,21 +87,21 @@ public class buttons : MonoBehaviour
         SceneManager.LoadScene("Research");
     }
 
-    public GameObject TextCoins;
+    public GameObject TextCoinsPerDay;
     /// <summary>
     /// Coin Pressed -> Show NCoins a day
     /// </summary>
     /// <param name="prefab"></param>
     public void NCoinPressed()
     {
-        if (!TextCoins.activeSelf)
+        if (!TextCoinsPerDay.activeSelf)
         {
-            TextCoins.SetActive(true);
+            TextCoinsPerDay.SetActive(true);
             if (PersonalSettings.language == LanguageSettings.Language.English)
-            { TextCoins.GetComponent<Text>().text = settings.gameSettings.stepCoins + " per day"; }
+            { TextCoinsPerDay.GetComponent<Text>().text = settings.gameSettings.stepCoins + " per day"; }
             else {
                 if (PersonalSettings.language == LanguageSettings.Language.Russian)
-                { TextCoins.GetComponent<Text>().text = settings.gameSettings.stepCoins + " В ДЕНЬ"; }}
+                { TextCoinsPerDay.GetComponent<Text>().text = settings.gameSettings.stepCoins + " В ДЕНЬ"; }}
             StartCoroutine(MakeSleepObject());
         }
     }
@@ -109,7 +111,7 @@ public class buttons : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         if (TextCoins.activeSelf)
         {
-            TextCoins.SetActive(false);
+            TextCoinsPerDay.SetActive(false);
         }
     }
 

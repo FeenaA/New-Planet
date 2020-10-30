@@ -16,18 +16,15 @@ public class settingsResearches: MonoBehaviour
     public RectTransform content;
     // left planet
     public GameObject panelInform;
-    // number of choosen palnet
-    public static int nChoosenPlanet = 0;
     // chosen planet
     public static GameObject ChosenPlanet = null;
 
     // gameobjects to fill PanelInformation
-    public GameObject Sphere;
-    public static GameObject sSphere;
-    public GameObject NamePlanet;
+/*    public GameObject NamePlanet;
     public static GameObject sNamePlanet;
     public Text textIntro;
-    public static Text sTextIntro;
+    public static Text sTextIntro;*/
+
     public GameObject buttonResearchSelect;
     public static GameObject sButtonResearchSelect;
     public GameObject panelInformation;
@@ -71,13 +68,30 @@ public class settingsResearches: MonoBehaviour
     public RectTransform ImageCrawlLine;
     public GameObject title; 
     public static GameObject sTitle;
+    private static bool flagFirstInResearch = true;
+
+    // all strings
+    private string strWelcome = "";
+
 
     void Start()
     {
+        CorrectLanguage();
+
+        // craw line 
+        if (flagFirstInResearch)
+        {
+            crawlLine.RestartToShow();
+            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+
+            CL.ShowNext(strWelcome);
+            flagFirstInResearch = false;
+        }
+        else { crawlLine.RestartTimer(); }
+        
         // gameobjects to fill PanelInformation
-        sSphere = Sphere;
-        sNamePlanet = NamePlanet;
-        sTextIntro = textIntro;
+/*        sNamePlanet = NamePlanet;
+        sTextIntro = textIntro;*/
         sTextRequestedResources = TextRequestedResources;
         sPanelInformation = panelInformation;
 
@@ -104,18 +118,24 @@ public class settingsResearches: MonoBehaviour
         sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NEther);
         sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
-        // craw line 
-        //crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
-        settings.sTitleCrawlLine = title;
-        crawlLine.RestartTimer();
-        //CL.ShowNext("Water was successfully transported from your native planet!");
-
         // fill information about planets
         OnReceivedModels();
 
         ShowProgress SP = panelInformation.GetComponent<ShowProgress>();
         sTextRequestedResources.GetComponent<Text>().text = 
             SP.Show(settings.gameSettings.RequestedResources);
+    }
+
+    private void CorrectLanguage()
+    {
+        if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+        {
+            strWelcome = "УЧЕНЫЕ ПОДОБРАЛИ ПЛАНЕТЫ С ПОДХОДЯЩИМИ ТЕМПЕРАТУРОЙ, РАЗМЕРОМ И ГРАВИТАЦИЕЙ";
+        }
+        else
+        {
+            strWelcome = "Scientists've compiled a list of planets with suitable temperature, size and gravity";
+        }
     }
 
     /// <summary>
@@ -133,10 +153,9 @@ public class settingsResearches: MonoBehaviour
             InitializeItemView(instance.transform, planet);
 
             // name of an object in inspector
-            if (nChoosenPlanet == nPlanet)
+            if ( nPlanet == 0 )
             {
                 ChosenPlanet = instance;
-                //sPlanet = planet;
                 ItemOnClick.sButtonName = instance.transform.Find("ButtonName").GetComponent<Button>();
 
                 // item select
