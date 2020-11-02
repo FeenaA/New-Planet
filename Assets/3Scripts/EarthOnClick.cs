@@ -25,6 +25,7 @@ public class EarthOnClick : MonoBehaviour
         {
             // show prefabBuildings 
             flagBuildings = true;
+            crawlLine.BlockCrawlLine = true;
             CanvasBuildings.SetActive(true);
             PanelPeople.SetActive(false);
             PanelResources.SetActive(false);

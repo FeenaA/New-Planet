@@ -1339,9 +1339,11 @@ MonoBehaviour:
     type: 3}
   MainCanvas: {fileID: 1353864825}
   TextCoins: {fileID: 1199631246}
+  ButtonResearchSelect: {fileID: 2381355919237487141}
   Sphere: {fileID: 1443719250}
   NamePlanet: {fileID: 1984406875}
   TextIntro: {fileID: 512656286}
+  TextRequestedResources: {fileID: 1566076261}
 --- !u!114 &254587511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1489,9 +1491,7 @@ MonoBehaviour:
   prefabPlanet: {fileID: 1515924314823488695, guid: b665b6e8bb4378145827ce761a737f06,
     type: 3}
   content: {fileID: 225867095}
-  panelInform: {fileID: 254587505}
-  buttonResearchSelect: {fileID: 2381355919237487141}
-  panelInformation: {fileID: 254587505}
+  PanelInformation: {fileID: 254587505}
   ResWater: {fileID: 1385123179}
   ResAir: {fileID: 102161790}
   ResSoil: {fileID: 481815452}
@@ -1502,7 +1502,7 @@ MonoBehaviour:
   textSC: {fileID: 1126424097}
   textEth: {fileID: 1725025583}
   textBC: {fileID: 1422019993}
-  TextRequestedResources: {fileID: 1566076259}
+  TextRequestedResources: {fileID: 1566076261}
   TextPlanet: {fileID: 683792778529862879}
   ImageCrawlLine: {fileID: 1586287987}
   title: {fileID: 1174683395}
@@ -2638,6 +2638,7 @@ MonoBehaviour:
   peopleOnNative: {fileID: 0}
   peopleOnNew: {fileID: 0}
   peopleDied: {fileID: 0}
+  ButtonResearchSelect: {fileID: 2381355919237487141}
   ButtonSendPeople: {fileID: 0}
   NProbes: {fileID: 2063788488}
   NSpaceCraft: {fileID: 1126424097}
@@ -6712,6 +6713,8 @@ MonoBehaviour:
   TextTitle: {fileID: 1515924313533023219}
   textResource: {fileID: 1516248988}
   textCostResource: {fileID: 682164599}
+  TextRequestedResources: {fileID: 1566076261}
+  PanelInformation: {fileID: 254587505}
   TransportButton: {fileID: 200387480}
   BuyButton: {fileID: 79301954}
   SellButton: {fileID: 1518785211}
@@ -6723,6 +6726,7 @@ MonoBehaviour:
   MainCanvas: {fileID: 1353864825}
   MessageBox: {fileID: 3238391761287202839, guid: 321543c2689799f43b28e7fceb511906,
     type: 3}
+  ImageCrawlLine: {fileID: 4608731915455204667}
 --- !u!1 &1947104527
 GameObject:
   m_ObjectHideFlags: 0

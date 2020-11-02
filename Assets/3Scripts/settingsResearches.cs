@@ -8,26 +8,17 @@ public class settingsResearches: MonoBehaviour
 {
     // text - amount of intervened days
     public GameObject textDays;
-    // 
+    // to make scrollBar be at the highest position
     public Scrollbar scrollBar;
     // prefab item
     public RectTransform prefabPlanet;
     // parent
     public RectTransform content;
-    // left planet
-    public GameObject panelInform;
     // chosen planet
     public static GameObject ChosenPlanet = null;
 
-    // gameobjects to fill PanelInformation
-/*    public GameObject NamePlanet;
-    public static GameObject sNamePlanet;
-    public Text textIntro;
-    public static Text sTextIntro;*/
-
-    public GameObject buttonResearchSelect;
-    public static GameObject sButtonResearchSelect;
-    public GameObject panelInformation;
+    // to have possibility to operate with the panel from ItemOnClick
+    public GameObject PanelInformation; 
     public static GameObject sPanelInformation;
 
     // nesessary resources
@@ -51,8 +42,7 @@ public class settingsResearches: MonoBehaviour
     public static GameObject sTextBC;
 
     // text for requested resources
-    public GameObject TextRequestedResources;
-    public static GameObject sTextRequestedResources;
+    public Text TextRequestedResources;
 
     public Text TextPlanet;
 
@@ -81,8 +71,8 @@ public class settingsResearches: MonoBehaviour
         // craw line 
         if (flagFirstInResearch)
         {
-            crawlLine.RestartToShow();
             crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+            CL.RestartToShow();
 
             CL.ShowNext(strWelcome);
             flagFirstInResearch = false;
@@ -90,24 +80,17 @@ public class settingsResearches: MonoBehaviour
         else { crawlLine.RestartTimer(); }
         
         // gameobjects to fill PanelInformation
-/*        sNamePlanet = NamePlanet;
-        sTextIntro = textIntro;*/
-        sTextRequestedResources = TextRequestedResources;
-        sPanelInformation = panelInformation;
+        sPanelInformation = PanelInformation;
 
         rWater = ResWater;
         rAir = ResAir;
         rSoil = ResSoil;
 
-        if (PersonalSettings.language == LanguageSettings.Language.English)
-        { TextPlanet.GetComponent<Text>().text = "Planet"; }
-        else { if ((PersonalSettings.language == LanguageSettings.Language.Russian))
-            { TextPlanet.GetComponent<Text>().text = "ПЛАНЕТА"; }}
+        if ((PersonalSettings.language == LanguageSettings.Language.Russian))
+        { TextPlanet.text = "ПЛАНЕТА"; }
+        else { TextPlanet.text = "Planet"; }
 
         r = new Transform[3] { ResAdd1, ResAdd2, ResAdd3};
-
-        // button to Research or Select planet
-        sButtonResearchSelect = buttonResearchSelect;
 
         // panel for different items
         sTextSC = textSC;
@@ -121,9 +104,8 @@ public class settingsResearches: MonoBehaviour
         // fill information about planets
         OnReceivedModels();
 
-        ShowProgress SP = panelInformation.GetComponent<ShowProgress>();
-        sTextRequestedResources.GetComponent<Text>().text = 
-            SP.Show(settings.gameSettings.RequestedResources);
+        ShowProgress SP = PanelInformation.GetComponent<ShowProgress>();
+        TextRequestedResources.text = SP.Show(settings.gameSettings.RequestedResources);
     }
 
     private void CorrectLanguage()
@@ -214,5 +196,3 @@ public class settingsResearches: MonoBehaviour
     }
 
 }
-
-

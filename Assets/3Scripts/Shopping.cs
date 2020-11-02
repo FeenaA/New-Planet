@@ -20,16 +20,15 @@ public class Shopping : MonoBehaviour
     // cost of resource to sell it
     public GameObject textCostResource;
     private static GameObject sTextCostResource;
+    // text for requested resources
+    public Text TextRequestedResources;
+    // panel with name, intro, resources
+    public GameObject PanelInformation;
 
     public Button TransportButton;
     public Button BuyButton;
     public Button SellButton;
     public GameObject EtherButton;
-
-    //private static GameObject sTransportButton;
-    //private static GameObject sBuyButton;
-    //private static GameObject sEtherButton;
-    //private static GameObject sSellButton;
 
     public GameObject TextStorage;
     private static GameObject sTextStorage;
@@ -40,6 +39,7 @@ public class Shopping : MonoBehaviour
     public GameObject TextCoins;
     // blueCoins 
     public GameObject BlueCoins;
+
 
     private static int numRes;
     private static int numButtonResource;
@@ -52,6 +52,7 @@ public class Shopping : MonoBehaviour
 
     public Canvas MainCanvas;
     public GameObject MessageBox;
+    public GameObject ImageCrawlLine;
 
     /// <summary>
     /// amount of the current resource on the selected planet
@@ -67,6 +68,10 @@ public class Shopping : MonoBehaviour
     private string strNoResources;
     private string strResource;
     private string strPress;
+    private string CrawlLineTransport;
+    private string CrawlLineResource;
+    private string CrawlLineSell;
+    private string CrawlLineProfit;
 
     /// <summary>
     /// copy GOs to their static analoges and correct language
@@ -103,6 +108,12 @@ public class Shopping : MonoBehaviour
             TransportButton.GetComponentInChildren<Text>().text = "ПЕРЕВЕЗТИ";
             BuyButton.GetComponentInChildren<Text>().text = "КУПИТЬ";
             SellButton.GetComponentInChildren<Text>().text = "ПРОДАТЬ";
+
+            // crawl line
+            CrawlLineResource = "РЕСУРС ";
+            CrawlLineTransport = " УСПЕШНО ТРАНСПОРТИРОВАН С ПЛАНЕТЫ ";
+            CrawlLineSell = "ПРОДАЖА РЕСУРСА ";
+            CrawlLineProfit = " ПРИНОСИТ ПРИБЫЛЬ В БЮДЖЕТ";
         }
         else
         {
@@ -118,6 +129,12 @@ public class Shopping : MonoBehaviour
             TransportButton.GetComponentInChildren<Text>().text = "Transport";
             BuyButton.GetComponentInChildren<Text>().text = "Buy";
             SellButton.GetComponentInChildren<Text>().text = "Sell";
+
+            // crawl line
+            CrawlLineResource = "The resource of ";
+            CrawlLineTransport = " was successfully transported from the planet ";
+            CrawlLineSell = "Selling of the resource ";
+            CrawlLineProfit = " brings profit to the budget";
         }
     }
 
@@ -138,8 +155,8 @@ public class Shopping : MonoBehaviour
             return; 
         }
 
-        SP = settingsResearches.sPanelInformation.GetComponent<ShowProgress>();
-        PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();
+        SP = PanelInformation.GetComponent<ShowProgress>();
+        PI = PanelInformation.GetComponent<panelInform>();
         BC = settingsResearches.sTextBC.GetComponent<BlueCoin>();
 
         // get amount of the resource on the selected planet
@@ -218,8 +235,26 @@ public class Shopping : MonoBehaviour
             // increase amount of the Resource at the selected planet
             AddResourceToPanet(++NRes);
 
-            // move 1 resource from storage
-            if (numButtonResource > 0) { PI.TakeAwayResourceFromStorage(numRes); }
+            // message
+            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+            //crawlLine.RestartToShow();
+            //CL.RestartSeconds();
+            if (numButtonResource > 0) // extraordinary resource
+            {
+                // move 1 resource from storage (from NamePlanet)
+                string NamePlanet = PI.TakeAwayResourceFromStorage(numRes);
+                // crawl line 
+                // CL.ShowNext(CrawlLineResource + getItems.ResourceAdd[numRes].name + CrawlLineTransport + NamePlanet);
+                CL.ShowWithoutPause(CrawlLineResource + 
+                    getItems.ResourceAdd[numRes].name + CrawlLineTransport + NamePlanet);     
+            }
+            else // necessary resource
+            {
+                // crawl line
+                //CL.ShowNext(CrawlLineResource + getItems.ResNess[numButtonResource].name + CrawlLineTransport + settings.gameSettings.NameNative);
+                CL.ShowWithoutPause(CrawlLineResource + 
+                    getItems.ResNess[numButtonResource].name + CrawlLineTransport + settings.gameSettings.NameNative);
+            }
 
             // show amount of spacecrafts
             settings.gameSettings.NSpasecraft--;
@@ -478,8 +513,7 @@ public class Shopping : MonoBehaviour
         if (settings.gameSettings.RequestedResources.ContainsKey(numRes))
         {
             settings.gameSettings.RequestedResources[numRes]++;
-            settingsResearches.sTextRequestedResources.GetComponent<Text>().text = 
-                SP.Show(settings.gameSettings.RequestedResources);
+            TextRequestedResources.text = SP.Show(settings.gameSettings.RequestedResources);
         }
 
         // reset buttons
@@ -523,8 +557,7 @@ public class Shopping : MonoBehaviour
         if (settings.gameSettings.RequestedResources.ContainsKey(numRes))
         {
             settings.gameSettings.RequestedResources[numRes]--; // it is nonnegative
-            settingsResearches.sTextRequestedResources.GetComponent<Text>().text = 
-                SP.Show(settings.gameSettings.RequestedResources);
+            TextRequestedResources.text = SP.Show(settings.gameSettings.RequestedResources);
         }
 
         // make all buttons active or inactive

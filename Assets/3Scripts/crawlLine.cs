@@ -20,7 +20,9 @@ public class crawlLine : MonoBehaviour
     private static bool flagCrawlBusy = false;
     // flag to prevent new messages
     public static bool BlockCrawlLine = false;
-     
+    // flag to show message without pause
+    public bool flagShowNow = false;
+
     // timer to show smth if there wasn't any actions for a long time
     public static int TimerCrawlLine = 0;
     private int nSecondsToWait = 7;
@@ -57,10 +59,19 @@ public class crawlLine : MonoBehaviour
         TimerCrawlLine = 0;
     }
 
-    public static void RestartToShow()
-    { 
+    
+    public void RestartToShow()
+    {
         flagCrawlBusy = false;
+        //TimerCrawlLine = nSecondsToWait;
     }
+
+    /*public void RestartSeconds()
+    {
+        //flagCrawlBusy = false;
+        //TimerCrawlLine = nSecondsToWait;
+        flagShowNow = true;
+    }*/
 
     /// <summary>
     /// to manage all processes with CrawlLine
@@ -85,7 +96,6 @@ public class crawlLine : MonoBehaviour
                     message = sCrawlContent[index];
                 }
                 Show(message);
-                TimerCrawlLine = 0;
             }
 
             // timer increment
@@ -99,6 +109,17 @@ public class crawlLine : MonoBehaviour
     /// <param name="message">message to be shown</param>
     public void ShowNext(string message)
     {
+        MessageToShow = message;
+    }
+
+    /// <summary>
+    /// ti show the message after a pause
+    /// </summary>
+    /// <param name="message">message to be shown</param>
+    public void ShowWithoutPause(string message)
+    {
+        flagShowNow = true;
+        if (!flagCrawlBusy) TimerCrawlLine = nSecondsToWait;
         MessageToShow = message;
     }
 
@@ -141,8 +162,12 @@ public class crawlLine : MonoBehaviour
         moveingGameObject.gameObject.SetActive(false);
         moveingGameObject.position = initPos;
 
+        // make crawl line free
         flagCrawlBusy = false;
-        // restart TimerCrawlLine
-        TimerCrawlLine = 0;
+
+        if (!flagShowNow) 
+        { TimerCrawlLine = 0; } // restart TimerCrawlLine
+        else 
+        { TimerCrawlLine = nSecondsToWait; flagShowNow = false; } // there is a message to be shown right now
     }
 }

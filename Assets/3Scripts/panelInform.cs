@@ -11,11 +11,15 @@ public class panelInform : MonoBehaviour
     public GameObject MessageBox;
     public Canvas MainCanvas;
     public Text TextCoins;
-    public static string strResearch = "Research";
-    public static string strSelect = "Select";
+    // button 
+    public GameObject ButtonResearchSelect;
+    public string strResearch = "Research";
+    public string strSelect = "Select";
     public Renderer Sphere;
     public Text NamePlanet;
     public Text TextIntro;
+    // text for requested resources
+    public Text TextRequestedResources;
 
     void Start()
     {
@@ -43,11 +47,11 @@ public class panelInform : MonoBehaviour
         // extraordinary resources
         if (PP.flagIsResearched == false)
         {
-            settingsResearches.sButtonResearchSelect.SetActive(true);
-            settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = strResearch;
+            ButtonResearchSelect.SetActive(true);
+            ButtonResearchSelect.GetComponentInChildren<Text>().text = strResearch;
 
             if (settings.gameSettings.NProbe == 0)
-            { settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable = false; }
+            { ButtonResearchSelect.GetComponent<Button>().interactable = false; }
 
             foreach (var resource in settingsResearches.r)
             {
@@ -59,11 +63,11 @@ public class panelInform : MonoBehaviour
             // dealing with Research/Select Button
             if (settings.gameSettings.flagSelectedPlanet == false)
             {
-                settingsResearches.sButtonResearchSelect.SetActive(true);
-                settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable = true;
-                settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect;
+                ButtonResearchSelect.SetActive(true);
+                ButtonResearchSelect.GetComponent<Button>().interactable = true;
+                ButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect;
             }
-            else { settingsResearches.sButtonResearchSelect.SetActive(false); }
+            else { ButtonResearchSelect.SetActive(false); }
 
             for (int i = 0; i < 3; i++)
             {
@@ -96,9 +100,9 @@ public class panelInform : MonoBehaviour
                     System.Convert.ToString(settings.gameSettings.NProbe);
 
                 if (settings.gameSettings.flagSelectedPlanet == false)
-                { settingsResearches.sButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect; }
+                { ButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect; }
                 else
-                { settingsResearches.sButtonResearchSelect.SetActive(false); }
+                { ButtonResearchSelect.SetActive(false); }
 
                 ItemOnClick.PP.flagIsResearched = true;
 
@@ -169,8 +173,7 @@ public class panelInform : MonoBehaviour
 
         settings.gameSettings.flagSelectedPlanet = true;
         settings.gameSettings.NameNew = ItemOnClick.PP.textName;
-        //settings.SelectedPlanet = ItemOnClick.PP;
-        settingsResearches.sButtonResearchSelect.SetActive(false);
+        ButtonResearchSelect.SetActive(false);
 
         settingsResearches.ChosenPlanet.GetComponent<Outline>().effectColor = buttons.sColorPause;
         ItemOnClick.sButtonName.GetComponent<Outline>().effectColor = buttons.sColorPause;
@@ -198,7 +201,7 @@ public class panelInform : MonoBehaviour
         { settings.gameSettings.CurrentNResUnits += item; }
 
         ShowProgress SP = GetComponent<ShowProgress>();
-        settingsResearches.sTextRequestedResources.GetComponent<Text>().text = SP.Show(settings.gameSettings.RequestedResources);
+        TextRequestedResources.text = SP.Show(settings.gameSettings.RequestedResources);
 
         // save data about selected planet
         LoadGame.SetSelected();
@@ -289,7 +292,8 @@ public class panelInform : MonoBehaviour
     }
 
     // use 1 resource from the storage and remove empty resource
-    public void TakeAwayResourceFromStorage(int numRes)
+    //public void TakeAwayResourceFromStorage(int numRes)
+    public string TakeAwayResourceFromStorage(int numRes)
     {
         // change amount of resource at the storage
         --settings.gameSettings.Storage[numRes][0].amount;
@@ -298,10 +302,10 @@ public class panelInform : MonoBehaviour
         int key = 1;
         int Size = settings.sNPlanets;
         bool flagPlanetFound = false;
+        // NamePlanet at storage with a resource. We're looking for this planet
         string NamePlanet = settings.gameSettings.Storage[numRes][0].NamePlanet;
         while ((!flagPlanetFound) && (key < Size))
         {
-            //if (getItems.sPlanetProperty[key].textName == NamePlanet)
             if (settings.gameSettings.SetPlanets[key].textName == NamePlanet)
             {
                 for (int j = 0; j < 3; j++)
@@ -321,6 +325,8 @@ public class panelInform : MonoBehaviour
             if (settings.gameSettings.Storage[numRes].Count == 0)
             { settings.gameSettings.Storage.Remove(numRes); }
         }
+
+        return NamePlanet;
     }
 
     /// <summary>

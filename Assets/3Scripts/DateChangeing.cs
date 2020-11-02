@@ -26,6 +26,8 @@ public class DateChangeing : MonoBehaviour
     public GameObject peopleOnNative;
     public GameObject peopleOnNew;
     public GameObject peopleDied;
+    // button to be done active or not
+    public GameObject ButtonResearchSelect;
 
     // button to transport people
     public GameObject ButtonSendPeople;
@@ -245,10 +247,9 @@ public class DateChangeing : MonoBehaviour
                     if (SceneName == "Research")
                     { 
                         StartCoroutine(AddShow(NProbes, Convert.ToString(settings.gameSettings.NProbe)));
-                        // if sButtonResearchSelect exists and is not interactable, make it interactable
-                        if (settingsResearches.sButtonResearchSelect.activeSelf &&
-                            !settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable)
-                        { settingsResearches.sButtonResearchSelect.GetComponent<Button>().interactable = true; } 
+                        // if sButtonResearchSelect exists, make it interactable
+                        if (ButtonResearchSelect.activeSelf)
+                        { ButtonResearchSelect.GetComponent<Button>().interactable = true; } 
                     }
                     nDayPF = 0;
                 }

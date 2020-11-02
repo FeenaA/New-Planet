@@ -178,9 +178,14 @@ public class BuildingsOperations : MonoBehaviour
                 // deal with crawl line
                 if (flagBuild)
                 {
-                    if (ProbeFactory.N == 1)    CL.ShowNext(FirstPF); 
+                    /*if (ProbeFactory.N == 1)    CL.ShowNext(FirstPF); 
                     else    if (ProbeFactory.N == NMaxBuildings)    CL.ShowNext(MaxPF);
-                    else    CL.ShowNext(NewPF);
+                    else    CL.ShowNext(NewPF);*/
+
+                    if (ProbeFactory.N == 1) CL.ShowWithoutPause(FirstPF);
+                    else if (ProbeFactory.N == NMaxBuildings) CL.ShowWithoutPause(MaxPF);
+                    else CL.ShowWithoutPause(NewPF);
+
                 }
                 break;
                 
@@ -195,9 +200,13 @@ public class BuildingsOperations : MonoBehaviour
                 // deal with crawl line
                 if (flagBuild)
                 {
-                    if (Hospital.N == 1) { CL.ShowNext(FirstHospital); }
+                    /*if (Hospital.N == 1) { CL.ShowNext(FirstHospital); }
                     else if (Hospital.N == NMaxBuildings) CL.ShowNext(MaxHospital);
-                    else { CL.ShowNext(NewHospital); }
+                    else { CL.ShowNext(NewHospital); }*/
+
+                    if (Hospital.N == 1) { CL.ShowWithoutPause(FirstHospital); }
+                    else if (Hospital.N == NMaxBuildings) CL.ShowWithoutPause(MaxHospital);
+                    else { CL.ShowWithoutPause(NewHospital); }
                 }
                 break;
             case 2:
@@ -212,9 +221,13 @@ public class BuildingsOperations : MonoBehaviour
                 // deal with crawl line
                 if (flagBuild)
                 {
-                    if (Mine.N == 1) { CL.ShowNext(FirstMine); }
+                    /*if (Mine.N == 1) { CL.ShowNext(FirstMine); }
                     else if (Mine.N == NMaxBuildings) CL.ShowNext(MaxMine);
-                    else { CL.ShowNext(NewMine); }
+                    else { CL.ShowNext(NewMine); }*/
+
+                    if (Mine.N == 1) { CL.ShowWithoutPause(FirstMine); }
+                    else if (Mine.N == NMaxBuildings) CL.ShowWithoutPause(MaxMine);
+                    else { CL.ShowWithoutPause(NewMine); }
                 }
                 settings.gameSettings.stepCoins = Mine.stepCoins;
                 break;
@@ -230,9 +243,14 @@ public class BuildingsOperations : MonoBehaviour
                 // deal with crawl line
                 if (flagBuild)
                 {
+                    /*
                     if (SCfactory.N == 1) { CL.ShowNext(FirstSC); }
                     else if (SCfactory.N == NMaxBuildings) CL.ShowNext(MaxSC);
-                    else { CL.ShowNext(NewSC); }
+                    else { CL.ShowNext(NewSC); }*/
+
+                    if (SCfactory.N == 1) { CL.ShowWithoutPause(FirstSC); }
+                    else if (SCfactory.N == NMaxBuildings) CL.ShowWithoutPause(MaxSC);
+                    else { CL.ShowWithoutPause(NewSC); }
                 }
                 settings.gameSettings.NSpasecraft++;
                 break;
@@ -583,6 +601,7 @@ public class BuildingsOperations : MonoBehaviour
     public void ExitBuildings()
     {
         EarthOnClick.flagBuildings = false;
+        crawlLine.BlockCrawlLine = false;
         gameObject.SetActive(false);
         PanelPeople.SetActive(true);
         PanelResources.SetActive(true);
