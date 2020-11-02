@@ -16,6 +16,9 @@ public class settings : MonoBehaviour
     // the main canvas
     public GameObject Canvas;
     // MessageBox about the transportation of people
+    public GameObject MessageBoxTrPeople;
+
+    // general message box
     public GameObject MessageBox;
 
     // text - amount of intervened days
@@ -56,8 +59,6 @@ public class settings : MonoBehaviour
 
     // crawl line
     public RectTransform ImageCrawlLine;
-    //public GameObject title;
-    //public static GameObject sTitleCrawlLine;
 
     /// <summary>
     /// finished(true), in promotionary(false)
@@ -66,7 +67,15 @@ public class settings : MonoBehaviour
     /// <summary>
     /// winning(true), failure(false)
     /// </summary>
-    public static bool flagIsWin = false; 
+    public static bool flagIsWin = false;
+    /// <summary>
+    /// welcomeBack was(true) / wasn't(false) shown
+    /// </summary>
+    private static bool flagWelcomeBack = false;
+    /// <summary>
+    /// suggestion to build buildings
+    /// </summary>
+    public static bool flagBuild = false;
 
     // flag to show MessageBox with Congratulations
     public static bool flagShowMessageTransport = false;
@@ -104,8 +113,10 @@ public class settings : MonoBehaviour
     public static GameSettings gameSettings;
     private getItems GI;
 
-    private string StrWelcome = ""; 
-    private string StrAuto = "";
+    private string StrWelcome;
+    private string StrAuto;
+    private string StrWelcomeBack;
+    private string StrBuildings;
 
     void Start()
     {
@@ -116,7 +127,6 @@ public class settings : MonoBehaviour
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
         sPauseRectangle = PauseRectangle;
-        //sTitleCrawlLine = title;
 
         buttons BUT = Canvas.GetComponent<buttons>();
 
@@ -165,16 +175,41 @@ public class settings : MonoBehaviour
             // rewrite all strings
             CorrectTextOnScene();
 
+            #region MessageBox: "Build buildings!"
+            if (!flagBuild)
+            {
+                flagBuild = true;
+                var messageBox = Instantiate(MessageBox);
+                messageBox.SendMessage("TheStart", StrBuildings);
+                // SetParent to the MessageBox
+                messageBox.transform.SetParent(Canvas.transform, false);
+            }
+            #endregion
+
             // show welcome message (crawl line)
-            CL.ShowNext(StrWelcome);
+            CL.ShowWithoutPause(StrWelcome);
+
+            // to prevent the message "Welcome back!" during the session
+            flagWelcomeBack = true;
 
             // save all new params
             LoadGame.SetAll();
         }
         else
         {
+            #region MessageBox: "Welcome back!"
+            if (!flagWelcomeBack)
+            {
+                flagWelcomeBack = true;
+                var messageBox = Instantiate(MessageBox);
+                messageBox.SendMessage("TheStart", StrWelcomeBack);
+                // SetParent to the MessageBox
+                messageBox.transform.SetParent(Canvas.transform, false);
+            }
+            #endregion
+
             crawlLine.RestartTimer();
-            if (DateChangeing.pause) { BUT.PauseOn(); } 
+            if (DateChangeing.pause) { BUT.PauseOn(); }
         }
 
         EarthOnClick.flagBuildings = false;
@@ -184,17 +219,17 @@ public class settings : MonoBehaviour
         ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
         TextReqs.GetComponent<Text>().text = SP.Show(gameSettings.RequestedResources);
 
-        
+        #region show MessageBox: people may be transported
         if ( flagShowMessageTransport )
         {
-            // show MessageBox: people may be transported
-            var instance = Instantiate(MessageBox);
+            var instance = Instantiate(MessageBoxTrPeople);
             instance.transform.SetParent(Canvas.transform, false);
             // craw line 
             CL.ShowNext(StrAuto);
 
             flagShowMessageTransport = false;
         }
+        #endregion
     }
 
     private void CorrectTextOnScene()
@@ -206,6 +241,8 @@ public class settings : MonoBehaviour
             ReqResTitle.transform.GetComponent<Text>().text = "ТРЕБУЕМЫЕ РЕСУРСЫ";
             StrWelcome = "НАРОД ПЛАНЕТЫ " + gameSettings.NameNative + " ПРИВЕТСТВУЕТ ТЕБЯ!";
             StrAuto = "ТЫ МОЖЕШЬ ПОСЫЛАТЬ КОСМОЛЕТЫ С ЖИТЕЛЯМИ АВТОМАТИЧЕСКИ.";
+            StrWelcomeBack = "С ВОЗВРАЩЕНИЕМ!";
+            StrBuildings = "ПЛАНЕТА " + gameSettings.NameNative + " ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ ПЛАНЕТУ. ДЛЯ ЭТОГО НАЖМИ НА " + gameSettings.NameNative;
         }
         else
         {
@@ -214,6 +251,8 @@ public class settings : MonoBehaviour
             ReqResTitle.transform.GetComponent<Text>().text = "Requested resources";
             StrWelcome = "Welcome to the planet " + gameSettings.NameNative + "!";
             StrAuto = "You can send spacecraft with people automatically.";
+            StrWelcomeBack = "Welcome back!";
+            StrBuildings = "The planet " + gameSettings.NameNative + " is infected with a virus. Build buildings to find a new planet. Tab to " + gameSettings.NameNative;
         }
     }
 }

@@ -32,7 +32,17 @@ public class MessageBox : MonoBehaviour
     {
         // to operate with CrawlLine
         crawlLine.BlockCrawlLine = false;
-        crawlLine.RestartTimer();
+
+        if (!crawlLine.flagShowNow) 
+        {
+            // restart TimerCrawlLine
+            crawlLine.RestartTimer();
+        }
+        else // there is a message to be shown right now
+        {
+            crawlLine.TimerCrawlLine = crawlLine.nSecondsToWait;
+            crawlLine.flagShowNow = false;
+        }
 
         Destroy(gameObject);
     }

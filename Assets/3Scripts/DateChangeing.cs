@@ -41,7 +41,7 @@ public class DateChangeing : MonoBehaviour
     public readonly static float koefPeopleStart = 0.1f;
     private static int DiedToday = 1;
 
-    private readonly int DaysWithoutBuildings = 5;
+    private readonly int DaysWithoutBuildings = 2;
     private static bool flagMBoxBuildings = false;
 
     public static readonly int MaxCoins = 99999;
@@ -57,20 +57,18 @@ public class DateChangeing : MonoBehaviour
 
     // prefab to show message via a string
     public GameObject MessageBox;
-    private static bool flagFirstVictim = false;
     private GameObject messageBox;
     // MessageBox's parent
     public Transform MainCanvas;
 
-    private static string strOn = "";
-    private static string strDied = "";
-    private static string strNew = "";
-    private static string strDay = "";
-    private static string strMoved = "";
-    private static string strFirstVictim = "";
-    private static string strNoBuildings = "";
-    private static string strPlanet = "";
-    private static string strFirstOnNew = "";
+    private string strOn;
+    private string strDied;
+    private string strNew;
+    private string strDay;
+    private string strMoved;
+    private string strFirstVictim;
+    private string strFirstOnNew;
+    
 
     void Start()
     {
@@ -124,8 +122,6 @@ public class DateChangeing : MonoBehaviour
             strNew = " (НОВАЯ): ";
             strMoved = " ПЕРЕЕХАЛИ";
             strFirstVictim = "ПЕРВАЯ ЖЕРТВА! ВИРУС НАЧАЛ УБИВАТЬ ТВОЙ НАРОД.";
-            strPlanet = "ПЛАНЕТА ";
-            strNoBuildings = " ЗАРАЖЕНА ВИРУСОМ! СТРОЙ ЗДАНИЯ, ЧТОБЫ ИСКАТЬ НОВУЮ ПЛАНЕТУ. ДЛЯ ЭТОГО НАЖМИ НА ";
             strFirstOnNew = "ПЕРВАЯ ГРУППА ЛЮДЕЙ УСПЕШНО ВЫСАДИЛАСЬ НА ПЛАНЕТУ ";
         }
         else
@@ -136,8 +132,6 @@ public class DateChangeing : MonoBehaviour
             strNew = " (new): ";
             strMoved = " shifted";
             strFirstVictim = "The first victim has appeared!\nThe virus has begun to kill your people.";
-            strPlanet = "The planet ";
-            strNoBuildings = " is infected with a virus. Build buildings to find a new planet. Tab to ";
             strFirstOnNew = "The first group of people successfully landed on the planet ";
         }
     }
@@ -162,18 +156,18 @@ public class DateChangeing : MonoBehaviour
             // if people've started to die
             if (settings.gameSettings.NDays > DaysWithoutDeth) 
             {
+                int previousMortality = settings.gameSettings.NPeopleDied;
+
                 GetPeopleAmount();
 
                 #region MessageBox: "People've started to die"
-                if (!flagFirstVictim && DiedToday>0)
+                if ( DiedToday>0 && previousMortality==0)
                 {
                     // show Message
                     messageBox = Instantiate(MessageBox);
                     messageBox.SendMessage("TheStart", strFirstVictim);
                     // SetParent to the MessageBox
                     messageBox.transform.SetParent(MainCanvas, false);
-
-                    flagFirstVictim = true;
                 }
                 #endregion
             }
@@ -187,7 +181,8 @@ public class DateChangeing : MonoBehaviour
                 {
                     if (peopleDied.activeSelf == false)
                     {
-                        crawlLine.RestartTimer();
+                        // restart timer for crawl line
+                        crawlLine.TimerCrawlLine = 0;
                     }
 
                     peopleDied.SetActive(true);
@@ -204,27 +199,6 @@ public class DateChangeing : MonoBehaviour
                 {
                     peopleOnNew.GetComponent<Text>().text = strOn + settings.gameSettings.NameNew + strNew +
                         Convert.ToString(settings.gameSettings.NPeopleOnNew);
-                }
-                #endregion
-
-                #region MessageBox: "Build buildings!"
-                bool NoBuildings = ((settings.gameSettings.ProbeFactory.N == 0) &&
-                    (settings.gameSettings.Mine.N == 0) &&
-                    (settings.gameSettings.Hospital.N == 0) &&
-                    (settings.gameSettings.SCfactory.N == 0));
-                if (!flagMBoxBuildings && 
-                    (settings.gameSettings.NDays > DaysWithoutBuildings) &&
-                    NoBuildings)
-                {
-                    // show Message
-                    messageBox = Instantiate(MessageBox);
-                    string strMessage = strPlanet + settings.gameSettings.NameNative + strNoBuildings + 
-                        settings.gameSettings.NameNative + ".";
-                    messageBox.SendMessage("TheStart", strMessage);
-                    // SetParent to the MessageBox
-                    messageBox.transform.SetParent(MainCanvas, false);
-
-                    flagMBoxBuildings = true;
                 }
                 #endregion
 

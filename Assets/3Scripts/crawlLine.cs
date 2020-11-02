@@ -21,11 +21,11 @@ public class crawlLine : MonoBehaviour
     // flag to prevent new messages
     public static bool BlockCrawlLine = false;
     // flag to show message without pause
-    public bool flagShowNow = false;
+    public static bool flagShowNow = false;
 
     // timer to show smth if there wasn't any actions for a long time
     public static int TimerCrawlLine = 0;
-    private int nSecondsToWait = 7;
+    public static int nSecondsToWait = 7;
 
     // crawl line content
     public static Dictionary<int, string> sCrawlContent;
@@ -63,15 +63,7 @@ public class crawlLine : MonoBehaviour
     public void RestartToShow()
     {
         flagCrawlBusy = false;
-        //TimerCrawlLine = nSecondsToWait;
     }
-
-    /*public void RestartSeconds()
-    {
-        //flagCrawlBusy = false;
-        //TimerCrawlLine = nSecondsToWait;
-        flagShowNow = true;
-    }*/
 
     /// <summary>
     /// to manage all processes with CrawlLine
@@ -119,7 +111,6 @@ public class crawlLine : MonoBehaviour
     public void ShowWithoutPause(string message)
     {
         flagShowNow = true;
-        if (!flagCrawlBusy) TimerCrawlLine = nSecondsToWait;
         MessageToShow = message;
     }
 
@@ -166,8 +157,14 @@ public class crawlLine : MonoBehaviour
         flagCrawlBusy = false;
 
         if (!flagShowNow) 
-        { TimerCrawlLine = 0; } // restart TimerCrawlLine
-        else 
-        { TimerCrawlLine = nSecondsToWait; flagShowNow = false; } // there is a message to be shown right now
+        { 
+            // restart TimerCrawlLine
+            TimerCrawlLine = 0; 
+        } 
+        else // there is a message to be shown right now
+        { 
+            TimerCrawlLine = nSecondsToWait; 
+            flagShowNow = false; 
+        }
     }
 }

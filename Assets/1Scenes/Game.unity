@@ -1736,6 +1736,7 @@ MonoBehaviour:
   peopleOnNative: {fileID: 1358044492}
   peopleOnNew: {fileID: 418639746}
   peopleDied: {fileID: 1377902926}
+  ButtonResearchSelect: {fileID: 0}
   ButtonSendPeople: {fileID: 1632650483}
   NProbes: {fileID: 0}
   NSpaceCraft: {fileID: 0}
@@ -3606,7 +3607,9 @@ MonoBehaviour:
   ReqResTitle: {fileID: 300080006}
   PauseRectangle: {fileID: 3035294852868131636}
   Canvas: {fileID: 1353864822}
-  MessageBox: {fileID: 3238391761287202839, guid: 321543c2689799f43b28e7fceb511906,
+  MessageBoxTrPeople: {fileID: 3238391761287202839, guid: 321543c2689799f43b28e7fceb511906,
+    type: 3}
+  MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
     type: 3}
   textDays: {fileID: 538435815}
   TextReqs: {fileID: 1682316945}

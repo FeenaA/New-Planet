@@ -591,8 +591,8 @@ public class BuildingsOperations : MonoBehaviour
     public void ExitHelp()
     {
         // to operate with CrawlLine
-        crawlLine.BlockCrawlLine = false;
-        crawlLine.RestartTimer();
+        //crawlLine.BlockCrawlLine = false;
+        //crawlLine.RestartTimer();
 
         panelHelp.SetActive(false);
     }

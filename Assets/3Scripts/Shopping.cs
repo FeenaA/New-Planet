@@ -235,23 +235,18 @@ public class Shopping : MonoBehaviour
             // increase amount of the Resource at the selected planet
             AddResourceToPanet(++NRes);
 
-            // message
+            // crawl line 
             crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
-            //crawlLine.RestartToShow();
-            //CL.RestartSeconds();
             if (numButtonResource > 0) // extraordinary resource
             {
                 // move 1 resource from storage (from NamePlanet)
                 string NamePlanet = PI.TakeAwayResourceFromStorage(numRes);
-                // crawl line 
-                // CL.ShowNext(CrawlLineResource + getItems.ResourceAdd[numRes].name + CrawlLineTransport + NamePlanet);
+
                 CL.ShowWithoutPause(CrawlLineResource + 
                     getItems.ResourceAdd[numRes].name + CrawlLineTransport + NamePlanet);     
             }
             else // necessary resource
             {
-                // crawl line
-                //CL.ShowNext(CrawlLineResource + getItems.ResNess[numButtonResource].name + CrawlLineTransport + settings.gameSettings.NameNative);
                 CL.ShowWithoutPause(CrawlLineResource + 
                     getItems.ResNess[numButtonResource].name + CrawlLineTransport + settings.gameSettings.NameNative);
             }
@@ -325,6 +320,10 @@ public class Shopping : MonoBehaviour
         settings.gameSettings.NCoins = DC.AddCoins(cost);
         // show an amount of coins
         TextCoins.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NCoins);
+
+        // crawl line 
+        crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
+        CL.ShowWithoutPause(CrawlLineSell + getItems.ResourceAdd[numRes].name + CrawlLineProfit);
 
         // take away the sold resource
         TakeAwayResource();
