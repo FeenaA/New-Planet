@@ -41,6 +41,8 @@ public class settings : MonoBehaviour
     public GameObject Earth;
     public GameObject Moon;
 
+    public GameObject PrefabSound;
+
     // amount of planets
     public static int sNPlanets = 50;
 
@@ -132,6 +134,13 @@ public class settings : MonoBehaviour
 
         GI = gameObject.GetComponent<getItems>();
         int L = materials.Length;
+        
+        #region Switch on/off music
+        if (PersonalSettings.flagMusic)
+        { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().PlayMusic(); }
+        else
+        { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().StopMusic(); }
+        #endregion
 
         #region materials for the set of planets
         if (flagBeginNewSession == true)

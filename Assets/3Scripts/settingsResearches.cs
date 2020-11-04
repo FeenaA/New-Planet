@@ -66,7 +66,16 @@ public class settingsResearches: MonoBehaviour
 
     void Start()
     {
+        // correct text on current scene 
         CorrectLanguage();
+
+        // music settings
+        #region Switch on/off music
+        if (PersonalSettings.flagMusic)
+        { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().PlayMusic(); }
+        else
+        { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().StopMusic(); }
+        #endregion
 
         // craw line 
         if (flagFirstInResearch)

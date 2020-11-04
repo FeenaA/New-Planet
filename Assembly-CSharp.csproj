@@ -91,6 +91,7 @@
     <Compile Include="Assets\3Scripts\RoundMoving.cs" />
     <Compile Include="Assets\3Scripts\Shopping.cs" />
     <Compile Include="Assets\3Scripts\ShowProgress.cs" />
+    <Compile Include="Assets\3Scripts\SoundClass.cs" />
     <Compile Include="Assets\3Scripts\StartTransportPeople.cs" />
     <Compile Include="Assets\3Scripts\Statistics.cs" />
     <Compile Include="Assets\3Scripts\SunRotate.cs" />

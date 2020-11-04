@@ -28,6 +28,8 @@ public class Preprocessing : MonoBehaviour
     private XMLOperations XMLOp;
     private PersonalSettings PS;
     private LoadGame LG;
+     
+    public GameObject PrefabSound;
 
     void Start()
     {
@@ -46,21 +48,6 @@ public class Preprocessing : MonoBehaviour
             // create or read file with personal settings
             PS.GetPersonalSettings();
             CorrectTextOnScene();
-
-            #region // Music
-            if (PersonalSettings.flagMusic)
-            {
-                // swich on music 
-                ButtonMusic.GetComponent<Image>().sprite = SpriteSwinchOn;
-                AudioListener.pause = false;
-            }
-            else
-            {
-                // swich off music
-                ButtonMusic.GetComponent<Image>().sprite = SpriteSwinchOff;
-                AudioListener.pause = true;
-            }
-            #endregion
 
             // personal settings - if a user plays the first time 
             if (PersonalSettings.flagFirstGame)
@@ -88,6 +75,21 @@ public class Preprocessing : MonoBehaviour
                 PS.SetStatistics(false);
             }
         }
+
+        #region Switch on/off music
+        if (PersonalSettings.flagMusic)
+        {
+            // swich on music 
+            ButtonMusic.GetComponent<Image>().sprite = SpriteSwinchOn;
+            GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().PlayMusic();
+        }
+        else
+        {
+            // swich off music
+            ButtonMusic.GetComponent<Image>().sprite = SpriteSwinchOff;
+            GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().StopMusic();
+        }
+        #endregion
 
         // If the saved game doesn't exist, ButtonContinue is uninteractable
         Button buttonContinue = ButtonContinue.GetComponent<Button>();
@@ -157,14 +159,13 @@ public class Preprocessing : MonoBehaviour
         {
             // swich on music 
             ButtonMusic.GetComponent<Image>().sprite = SpriteSwinchOn;
-            AudioListener.pause = false;
+            GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().PlayMusic();
         }
         else
         {
             // swich off music
             ButtonMusic.GetComponent<Image>().sprite = SpriteSwinchOff;
-            AudioListener.pause = true;
-
+            GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().StopMusic();
         }
 
         // save flagMusic to file

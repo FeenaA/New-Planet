@@ -41,9 +41,6 @@ public class DateChangeing : MonoBehaviour
     public readonly static float koefPeopleStart = 0.1f;
     private static int DiedToday = 1;
 
-    private readonly int DaysWithoutBuildings = 2;
-    private static bool flagMBoxBuildings = false;
-
     public static readonly int MaxCoins = 99999;
     public static readonly int MaxN = 99;
 

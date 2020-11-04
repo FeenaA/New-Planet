@@ -1340,6 +1340,8 @@ MonoBehaviour:
   MainCanvas: {fileID: 1353864825}
   TextCoins: {fileID: 1199631246}
   ButtonResearchSelect: {fileID: 2381355919237487141}
+  strResearch: Research
+  strSelect: Select
   Sphere: {fileID: 1443719250}
   NamePlanet: {fileID: 1984406875}
   TextIntro: {fileID: 512656286}
@@ -1541,7 +1543,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330253080}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4c2500eb080eaee4285b119c2330bdfd, type: 3}
