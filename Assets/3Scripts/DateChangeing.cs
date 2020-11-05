@@ -58,6 +58,10 @@ public class DateChangeing : MonoBehaviour
     // MessageBox's parent
     public Transform MainCanvas;
 
+    // Text: +1 in 10d
+    public Text TimerProbe;
+    public Text TimerSC;
+ 
     private string strOn;
     private string strDied;
     private string strNew;
@@ -65,8 +69,9 @@ public class DateChangeing : MonoBehaviour
     private string strMoved;
     private string strFirstVictim;
     private string strFirstOnNew;
+    private string strPlusOne = "+1 / ";
+    private string strDayShort;
     
-
     void Start()
     {
         if (pause)
@@ -120,6 +125,7 @@ public class DateChangeing : MonoBehaviour
             strMoved = " ПЕРЕЕХАЛИ";
             strFirstVictim = "ПЕРВАЯ ЖЕРТВА! ВИРУС НАЧАЛ УБИВАТЬ ТВОЙ НАРОД.";
             strFirstOnNew = "ПЕРВАЯ ГРУППА ЛЮДЕЙ УСПЕШНО ВЫСАДИЛАСЬ НА ПЛАНЕТУ ";
+            strDayShort = "Д";
         }
         else
         {
@@ -130,6 +136,7 @@ public class DateChangeing : MonoBehaviour
             strMoved = " shifted";
             strFirstVictim = "The first victim has appeared!\nThe virus has begun to kill your people.";
             strFirstOnNew = "The first group of people successfully landed on the planet ";
+            strDayShort = " d";
         }
     }
 
@@ -209,21 +216,35 @@ public class DateChangeing : MonoBehaviour
             }
 
             #region probes increment
+
+            //print(settings.gameSettings.ProbeFactory.Time + " - " + nDayPF);
+
             if ((settings.gameSettings.ProbeFactory.N > 0) && (settings.gameSettings.NProbe < MaxN))
             {
                 nDayPF++;
+
+                // Text timer: +1 in 10d
+                if (SceneName == "Research")
+                {
+                    int timeProbes = settings.gameSettings.ProbeFactory.Time - nDayPF;
+                    TimerProbe.text = strPlusOne + timeProbes + strDayShort;
+                }
+
                 if (nDayPF == settings.gameSettings.ProbeFactory.Time)
                 {
                     settings.gameSettings.NProbe++;
                     if (SceneName == "Research")
                     { 
                         StartCoroutine(AddShow(NProbes, Convert.ToString(settings.gameSettings.NProbe)));
+
                         // if sButtonResearchSelect exists, make it interactable
                         if (ButtonResearchSelect.activeSelf)
-                        { ButtonResearchSelect.GetComponent<Button>().interactable = true; } 
+                        { ButtonResearchSelect.GetComponent<Button>().interactable = true; }
                     }
                     nDayPF = 0;
                 }
+                // to cope with changed ProbeFactory.Time
+                else if (nDayPF > settings.gameSettings.ProbeFactory.Time) { nDayPF = 0; }
             }
             #endregion
 
@@ -233,6 +254,15 @@ public class DateChangeing : MonoBehaviour
             if ((settings.gameSettings.SCfactory.N > 0) && (settings.gameSettings.NSpasecraft < MaxN))
             {
                 nDaySC++;
+                print(nDaySC);
+
+                // Text timer: +1 in 10d
+                if (SceneName == "Research")
+                { 
+                    int timeSC = settings.gameSettings.SCfactory.Time - nDaySC;
+                    TimerSC.text = strPlusOne + timeSC + strDayShort;
+                }
+
                 if (nDaySC == settings.gameSettings.SCfactory.Time)
                 {
                     settings.gameSettings.NSpasecraft++;
@@ -272,6 +302,8 @@ public class DateChangeing : MonoBehaviour
                     }
                     nDaySC = 0;
                 }
+                // to cope with changed ProbeFactory.Time
+                else if (nDaySC > settings.gameSettings.SCfactory.Time) { nDaySC = 0; }
             }
             // if the selected planet exists and there is al list one SpaceCraft
             if (SceneName == "Game" &&

@@ -95,6 +95,7 @@ public class panelInform : MonoBehaviour
         {
             if (settings.gameSettings.NProbe > 0)
             {
+                // Probe decrement
                 settings.gameSettings.NProbe--;
                 TextProbes.GetComponent<Text>().text = 
                     System.Convert.ToString(settings.gameSettings.NProbe);
@@ -140,7 +141,6 @@ public class panelInform : MonoBehaviour
                     DateChangeing DC = TextDate.GetComponent<DateChangeing>();
                     settings.gameSettings.NCoins = DC.AddCoins(presentedCoins);
                     // show changes
-                    //DateChangeing.sTextCoinsObject.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NCoins);
                     TextCoins.text = System.Convert.ToString(settings.gameSettings.NCoins);
 
                     // show Congratulations

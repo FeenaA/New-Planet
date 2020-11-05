@@ -38,7 +38,7 @@ public class crawlLine : MonoBehaviour
 
    private void Start()
     {
-        print("Message: " + MessageToShow);
+        //print("Message: " + MessageToShow);
 
         string strTitle = "Spot news";
         if ((PersonalSettings.language == LanguageSettings.Language.Russian)) { strTitle = "НОВОСТИ"; }
@@ -71,7 +71,7 @@ public class crawlLine : MonoBehaviour
     /// <returns></returns>
     private void ManagerCrawlLine()
     {
-        print(flagCrawlBusy + " " + TimerCrawlLine);
+        //print(flagCrawlBusy + " " + TimerCrawlLine);
 
         if (!(BlockCrawlLine || flagCrawlBusy || DateChangeing.pause))
         {

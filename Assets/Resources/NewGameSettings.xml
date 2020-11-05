@@ -16,7 +16,7 @@
   <ProbeFactory Cost="300" N="0" Time="160"></ProbeFactory>
   <Hospital Cost="100" N="0"></Hospital>
   <Mine Cost="200" N="0" stepCoins="5"></Mine>
-  <SCfactory Cost="400" N="0" Time="200"></SCfactory>
+  <SCfactory Cost="350" N="0" Time="170"></SCfactory>
   <koefToday>0,100</koefToday>
   <NEther>0</NEther>
   <NProbe>0</NProbe>
