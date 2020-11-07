@@ -42,7 +42,7 @@ public class Shopping : MonoBehaviour
 
 
     private static int numRes;
-    private static int numButtonResource;
+    public static int numButtonResource;
     private static int cost;
 
     // objects of another classes

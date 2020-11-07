@@ -16,11 +16,17 @@ public class Preprocessing : MonoBehaviour
     public GameObject ButtonContinue;
     public GameObject CanvasGameOver; // prefab
     public GameObject PrefabStatistics;
+    public GameObject SetNameNew;
+    public InputField inputField;
+
+    // materials for planets
+    public Material[] materials;
 
     public static GameObject sGObjectPreproc;
     public static GameObject sCanvasMain;
 
     private static bool FlagStartGame = true;
+    public static bool FlagStartSession = true; //---
 
     public static string[] strHelp; 
     public static string[] strHelpTitle;
@@ -28,8 +34,7 @@ public class Preprocessing : MonoBehaviour
     private XMLOperations XMLOp;
     private PersonalSettings PS;
     private LoadGame LG;
-     
-    public GameObject PrefabSound;
+    private getItems GI;
 
     void Start()
     {
@@ -39,6 +44,7 @@ public class Preprocessing : MonoBehaviour
         XMLOp = gameObject.GetComponent<XMLOperations>();
         PS = gameObject.GetComponent<PersonalSettings>();
         LG = gameObject.GetComponent<LoadGame>();
+        GI = gameObject.GetComponent<getItems>();
 
         CorrectTextOnScene();
 
@@ -49,6 +55,13 @@ public class Preprocessing : MonoBehaviour
             PS.GetPersonalSettings();
             CorrectTextOnScene();
 
+            #region materials for the set of planets
+            int L = materials.Length;
+            getItems.sMaterials = new Material[materials.Length];
+            for (int i = 0; i < L; i++)
+            { getItems.sMaterials[i] = materials[i]; }
+            #endregion
+
             // personal settings - if a user plays the first time 
             if (PersonalSettings.flagFirstGame)
             {
@@ -58,8 +71,8 @@ public class Preprocessing : MonoBehaviour
             else 
             { 
                 // read all files
-                GetXML(); 
-            } 
+                GetXML();
+            }
         }
         // current mission is finished or interrupted
         else
@@ -178,10 +191,25 @@ public class Preprocessing : MonoBehaviour
         LG.StartNew();
         // flag - the application is working on the session
         FlagStartGame = false;
+        // flag - to generate new materials in settings
+        FlagStartSession = true;
+
         // flag - the saved game exists
         PS.SetFlagSavedGame(true);
-        // move to scene "Game"
-        SceneManager.LoadScene("Game");
+
+
+        // generate the name of native planet
+        settings.gameSettings.NameNative = GI.NameGenerate();
+        // set of all planets with their properties
+        settings.gameSettings.SetPlanets = GI.GetItems();
+        // set of requested resources
+        settings.gameSettings.RequestedResources = GI.SetReqs();
+
+
+        // open a form to input NameNative
+        inputField.text = settings.gameSettings.NameNative;
+
+        SetNameNew.SetActive(true);
     }
 
     public void ContinuePressed()
@@ -190,6 +218,8 @@ public class Preprocessing : MonoBehaviour
         if (FlagStartGame) { LG.Continue(); }
         // flag - the application is working on the session
         FlagStartGame = false;
+        // flag - not to generate new materials in settings
+        FlagStartSession = false;
         // flag - the saved game exists
         PS.SetFlagSavedGame(true);
         // move to scene "Game"

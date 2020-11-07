@@ -10,7 +10,10 @@ public class getItems : MonoBehaviour
     private static int NPlanets;
 
     private static System.Random rnd;
-    private static int value_Numb;
+    private static int value_Numb = 0;
+
+    // materials for planets
+    public static Material[] sMaterials;
 
     public class ResourceInformation
     {
@@ -24,7 +27,6 @@ public class getItems : MonoBehaviour
     }
 
     // nesessary resources
-    //public static Dictionary<int, string> ResNess;
     public static Dictionary<int, ResourceInformation> ResNess;
     // extra resources
     public static Dictionary<int, ResourceInformation> ResourceAdd;
@@ -82,8 +84,7 @@ public class getItems : MonoBehaviour
         SetTIndexGenerate(NPlanets, ref TI, ref resources);
 
         rnd = new System.Random();
-        //System.Random rnd = new System.Random();
-        int NMat = settings.sMaterials.Length - 1;
+        int NMat = sMaterials.Length - 1;
         int NIntro = sIntroduction.Count;
 
         // key - number of planet, value - number of an additional resource
@@ -127,9 +128,6 @@ public class getItems : MonoBehaviour
                 else PP.flagEther = false;
                 trigger = !trigger;
             }
-
-            //if (PP.flagEther) print("Ether!");
-            //if (PP.flagCoins) print("Coins!");
 
             result.Add((i + 1), PP);
         }

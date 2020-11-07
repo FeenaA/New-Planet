@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // text
+using UnityEngine.SceneManagement; // name of the current scene
 
 public class advert : MonoBehaviour
 {
@@ -28,6 +29,17 @@ public class advert : MonoBehaviour
         BC.AddBlueCoins(1);
         BlueCoin.sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
         buttons.sBlueCoin.interactable = true;
+
+        // the name of the current scene
+        if (SceneManager.GetActiveScene().name == "Research" && 
+            Shopping.sPanelShopping.activeSelf &&
+            Shopping.NRes < 10)
+        {
+            // make ButtonBuy active
+            Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
+            Transform ButtonBuy = PanelButtons.Find("ButtonBuy");
+            ButtonBuy.GetComponent<Button>().interactable = true; 
+        }
     }
 
     /// <summary>

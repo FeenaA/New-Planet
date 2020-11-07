@@ -46,18 +46,11 @@ public class settings : MonoBehaviour
     // amount of planets
     public static int sNPlanets = 50;
 
-    // materials for planets
-    public Material[] materials;
-    public static Material[] sMaterials;
-
     // !!! download
     public static int nLanguage = 0; // 0 - Russian, 1 - English
 
     // Are people sent cycled or not? 
     public static bool flagCycledSent = false;
-
-    // have we just started the application?
-    private static bool flagBeginNewSession = true;
 
     // crawl line
     public RectTransform ImageCrawlLine;
@@ -113,7 +106,7 @@ public class settings : MonoBehaviour
         public int CurrentNResUnits;
     } 
     public static GameSettings gameSettings;
-    private getItems GI;
+    //private getItems GI;
 
     private string StrWelcome;
     private string StrAuto;
@@ -132,8 +125,7 @@ public class settings : MonoBehaviour
 
         buttons BUT = Canvas.GetComponent<buttons>();
 
-        GI = gameObject.GetComponent<getItems>();
-        int L = materials.Length;
+        int L = getItems.sMaterials.Length;
         
         #region Switch on/off music
         if (PersonalSettings.flagMusic)
@@ -142,33 +134,18 @@ public class settings : MonoBehaviour
         { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().StopMusic(); }
         #endregion
 
-        #region materials for the set of planets
-        if (flagBeginNewSession == true)
-        {
-            flagBeginNewSession = false;
-
-            // set of materials for planets
-            sMaterials = new Material[materials.Length];
-            for (int i = 0; i < L; i++)
-            { sMaterials[i] = materials[i]; }
-        }
-        #endregion
-
         // rewrite all strings
         CorrectTextOnScene();
         // to operate with CrawlLine
         crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
 
         // start of a new session
-        if (String.IsNullOrEmpty(gameSettings.NameNative))
+        if(Preprocessing.FlagStartSession)
         {
+            Preprocessing.FlagStartSession = false;
+
             DateChangeing.pause = false;
             BUT.PauseOff(); 
-
-            gameSettings.NameNative = GI.NameGenerate();
-
-            // set of all planets with their properties
-            gameSettings.SetPlanets = GI.GetItems();
 
             // primary amount of people
             gameSettings.NPeopleOnNative = gameSettings.AllPeople;
@@ -178,8 +155,6 @@ public class settings : MonoBehaviour
             gameSettings.NEarthMaterial = rnd.Next(0, L - 1);
             gameSettings.NMoonMaterial = rnd.Next(0, L - 1);
             #endregion
-
-            gameSettings.RequestedResources = GI.SetReqs();
 
             // rewrite all strings
             CorrectTextOnScene();
@@ -203,6 +178,8 @@ public class settings : MonoBehaviour
 
             // save all new params
             LoadGame.SetAll();
+
+            print("NEarthMaterial: " + gameSettings.NEarthMaterial);
         }
         else
         {
@@ -221,9 +198,11 @@ public class settings : MonoBehaviour
             if (DateChangeing.pause) { BUT.PauseOn(); }
         }
 
+        print("NEarthMaterial: " + gameSettings.NEarthMaterial);
+
         EarthOnClick.flagBuildings = false;
-        Earth.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NEarthMaterial];
-        Moon.GetComponent<Renderer>().material = settings.sMaterials[gameSettings.NMoonMaterial];
+        Earth.GetComponent<Renderer>().material = getItems.sMaterials[gameSettings.NEarthMaterial];
+        Moon.GetComponent<Renderer>().material = getItems.sMaterials[gameSettings.NMoonMaterial];
 
         ShowProgress SP = TextReqs.GetComponent<ShowProgress>();
         TextReqs.GetComponent<Text>().text = SP.Show(gameSettings.RequestedResources);

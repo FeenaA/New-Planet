@@ -1747,6 +1747,8 @@ MonoBehaviour:
   MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
     type: 3}
   MainCanvas: {fileID: 1353864826}
+  TimerProbe: {fileID: 0}
+  TimerSC: {fileID: 0}
 --- !u!114 &538435818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3567,7 +3569,6 @@ GameObject:
   - component: {fileID: 1197974365}
   - component: {fileID: 1197974366}
   - component: {fileID: 1197974367}
-  - component: {fileID: 1197974369}
   m_Layer: 0
   m_Name: Settings
   m_TagString: Untagged
@@ -3664,18 +3665,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 016729fdaad1ffa41a19a0398c1bc696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1197974369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197974364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc06c66ef03ab1f4bb08b67298e450e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1237414552 stripped

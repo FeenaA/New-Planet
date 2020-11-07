@@ -48,8 +48,8 @@ public class RoundMoving : MonoBehaviour
 
     private void getMaterial()
     {
-        int L = settings.sMaterials.Length - 1;
-        this.GetComponent<Renderer>().material = settings.sMaterials[rnd.Next(0, L)];
+        int L = getItems.sMaterials.Length - 1;
+        this.GetComponent<Renderer>().material = getItems.sMaterials[rnd.Next(0, L)];
     }
 
 

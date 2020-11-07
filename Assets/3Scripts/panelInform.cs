@@ -32,7 +32,7 @@ public class panelInform : MonoBehaviour
     /// <param name="PP"></param>
     public void ResetPlanet(getItems.PlanetProperty PP)
     {
-        Sphere.material = settings.sMaterials[PP.numMaterial];
+        Sphere.material = getItems.sMaterials[PP.numMaterial];
         NamePlanet.text = PP.textName;
         TextIntro.text = getItems.sIntroduction[PP.numIntro];
 

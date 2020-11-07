@@ -284,15 +284,37 @@ public class DateChangeing : MonoBehaviour
                     { 
                         StartCoroutine(AddShow(NSpaceCraft, Convert.ToString(settings.gameSettings.NSpasecraft)));
                         // operate with Shopping
-                        int CurrentAmount = Shopping.NRes;
-                        if ((Shopping.sPanelShopping.activeSelf) && (CurrentAmount < 10) && (CurrentAmount > 0))
+                        /*int CurrentAmount = Shopping.NRes;
+                        if ((Shopping.sPanelShopping.activeSelf) && 
+                            (CurrentAmount < 10) && (CurrentAmount > 0)
+                            //settings.gameSettings.Storage.ContainsKey(numRes)
+                            )
                         {
                             // make buttonTransport active
                             Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
                             Transform ButtonTransport = PanelButtons.Find("ButtonTransport");
                             ButtonTransport.GetComponent<Button>().interactable = true;
+                        }*/
+
+
+                        
+                        // operate with Shopping
+                        int CurrentAmount = Shopping.NRes;
+                        if ((Shopping.sPanelShopping.activeSelf) && (CurrentAmount < 10))
+                        {
+                            int numButton = Shopping.numButtonResource;
+                            if ((numButton < 0) || // necessary resource
+                                // extra, not empty, exists in storage
+                                (numButton > 0 && CurrentAmount > 0 &&
+                                settings.gameSettings.Storage.ContainsKey(ItemOnClick.PP.ResAdd[numButton - 1]))) 
+                            {
+                                // make buttonTransport active
+                                Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
+                                Transform ButtonTransport = PanelButtons.Find("ButtonTransport");
+                                ButtonTransport.GetComponent<Button>().interactable = true;
+                            }
                         }
-                    }
+                    } 
                     else if (SceneName == "Game")
                     {
                         if (!settings.flagCycledSent && settings.gameSettings.flagPeopleTransport)
