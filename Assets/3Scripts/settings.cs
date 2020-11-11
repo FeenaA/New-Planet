@@ -96,6 +96,7 @@ public class settings : MonoBehaviour
         public BuildingsOperations.BuildingMine Mine;//+
         public BuildingsOperations.BuildingTime SCfactory;//+
         public float koefToday;//+
+        public float koefAfterUpdate;
         public int NProbe;//+
         public Dictionary<int, List<settingsResearches.AcceptRes>> Storage;
         public int NSpasecraft;

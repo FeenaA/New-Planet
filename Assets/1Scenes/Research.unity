@@ -2762,6 +2762,7 @@ MonoBehaviour:
   result: 2
   PauseRectangle: {fileID: 462644282}
   PopUpLine: {fileID: 0}
+  CanvasPlanets: {fileID: 1939906081}
   TextCoins: {fileID: 1199631246}
   peopleOnNative: {fileID: 0}
   peopleOnNew: {fileID: 0}
@@ -2774,7 +2775,7 @@ MonoBehaviour:
   CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
     type: 3}
   ImageCrawlLine: {fileID: 4608731915455204667}
-  MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
+  MessageBox: {fileID: 3631436175322063141, guid: 642a847be2668ef459881aeeccd29bfb,
     type: 3}
   MainCanvas: {fileID: 1353864826}
   TimerProbe: {fileID: 1347110362}
@@ -3411,7 +3412,7 @@ PrefabInstance:
     - target: {fileID: 1920485170398972748, guid: e97b1b2c56416fe439f81e257a405cbe,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 1920485170398972748, guid: e97b1b2c56416fe439f81e257a405cbe,
         type: 3}
@@ -4776,7 +4777,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +1 / 20 d
+  m_Text: +0
 --- !u!222 &1347110363
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7217,7 +7218,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953849119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1846305636}
@@ -7309,7 +7310,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1967547393}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -160, y: 0, z: 0}
+  m_LocalPosition: {x: -160, y: 0, z: -3}
   m_LocalScale: {x: 41.955425, y: 41.955425, z: 41.955425}
   m_Children: []
   m_Father: {fileID: 1518785210}
@@ -7587,7 +7588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 70.152, y: -0}
+  m_AnchoredPosition: {x: 70.152, y: 0}
   m_SizeDelta: {x: 140.30482, y: 40.255424}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2015263581
@@ -7621,7 +7622,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "+1 / 20 \u0414"
+  m_Text: +0
 --- !u!222 &2015263582
 CanvasRenderer:
   m_ObjectHideFlags: 0

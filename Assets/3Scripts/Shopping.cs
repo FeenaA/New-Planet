@@ -338,6 +338,14 @@ public class Shopping : MonoBehaviour
     {
         if (BlueCoin.sNBlueCoin == 0) { return; }
 
+        // the slot was empty
+        if (numButtonResource > 0 && NRes == 0)
+        {
+            // set number of resource for this slot and amount = 0
+            ItemOnClick.PP.ResAdd[numButtonResource - 1] = numRes;
+            ItemOnClick.PP.ResAddAmount[numButtonResource - 1] = 0;
+        }
+
         // BlueCoin decrement
         BC.SubstractBlueCoins(1);
         settingsResearches.sTextBC.GetComponent<Text>().text = 
@@ -380,6 +388,18 @@ public class Shopping : MonoBehaviour
             numClick++;
         }
         else { numClick = 0;}
+    }
+
+    /// <summary>
+    /// show changes after getting new spacecraft 
+    /// </summary>
+    public void AddSC()
+    {
+        if ((PanelShopping.activeSelf))
+        {
+            ResetButtons();
+            ResetStorageText();
+        }
     }
 
     /// <summary>
@@ -502,7 +522,7 @@ public class Shopping : MonoBehaviour
         // add resource
         if (numButtonResource > 0)
         { ItemOnClick.PP.ResAddAmount[numButtonResource - 1]++; }
-        else
+        else // necessary resource
         { ItemOnClick.PP.ResNess_Amount[numButtonResource + 3]++; }
 
         // show changes on the panelInform
@@ -591,6 +611,9 @@ public class Shopping : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// reset "5 in storage"
+    /// </summary>
     private void ResetStorageText()
     {
         if (NRes == 10) { sTextStorage.GetComponent<Text>().text = strMaximum; }
@@ -600,9 +623,16 @@ public class Shopping : MonoBehaviour
             if (numButtonResource > 0)
             {
                 int amountInStorage = PI.GetAmountInStorage(numRes);
-                sTextStorage.GetComponent<Text>().text = amountInStorage + strAtStorage;
+
+                if (amountInStorage == 0)
+                {
+                    if (settings.gameSettings.NSpasecraft == 0)
+                    { sTextStorage.GetComponent<Text>().text = strNoSC; }
+                    else { sTextStorage.GetComponent<Text>().text = strNoResources; }
+                }
+                else { sTextStorage.GetComponent<Text>().text = amountInStorage + strAtStorage; }
             }
-            // necessary resource
+            // necessary resource -> unlimited
             else { sTextStorage.GetComponent<Text>().text = strUnlimited; }
         }
     }

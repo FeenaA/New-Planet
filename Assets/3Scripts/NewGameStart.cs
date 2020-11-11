@@ -17,9 +17,33 @@ public class NewGameStart : MonoBehaviour
         gameObject.SetActive(false);
 
         // Reset NameNative
-        settings.gameSettings.NameNative = inputField.text;
+        string str = inputField.text;
+
+        // correct register, case RU
+        str = RuDetectAndUpper(str);
+
+        settings.gameSettings.NameNative = str;
 
         // go to the scene "Game"
         SceneManager.LoadScene("Game");
     }
+
+    /// <summary>
+    /// if line includes russian symbols they'll be changed toUpper
+    /// </summary>
+    /// <param name="line"></param>
+    /// <returns></returns>
+    private string RuDetectAndUpper(string line)
+    {
+        string[] str = new[] { line }; 
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            char c = line[i];
+            if ((c >= 'а') && (c <= 'я'))
+            { str[i] = str[i].ToUpper(new System.Globalization.CultureInfo("ru-RU", false)); }
+        }
+        return System.String.Join(" ", str); ;
+    }
+
 }

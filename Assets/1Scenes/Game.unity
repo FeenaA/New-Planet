@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 94654185}
   - component: {fileID: 94654184}
   m_Layer: 5
-  m_Name: "Image\u0432Dark"
+  m_Name: ImageDark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1732,8 +1732,9 @@ MonoBehaviour:
   result: 0
   PauseRectangle: {fileID: 3035294852868131636}
   PopUpLine: {fileID: 1899178717}
+  CanvasPlanets: {fileID: 0}
   TextCoins: {fileID: 4324342279860094757}
-  peopleOnNative: {fileID: 1358044492}
+  peopleOnNative: {fileID: 3895284774664153429}
   peopleOnNew: {fileID: 418639746}
   peopleDied: {fileID: 1377902926}
   ButtonResearchSelect: {fileID: 0}
@@ -1744,7 +1745,7 @@ MonoBehaviour:
   CanvasGameOver: {fileID: 5940785565547719363, guid: 8e954112c66e87345a0d7479e4de373c,
     type: 3}
   ImageCrawlLine: {fileID: 1381755935}
-  MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
+  MessageBox: {fileID: 3631436175322063141, guid: 642a847be2668ef459881aeeccd29bfb,
     type: 3}
   MainCanvas: {fileID: 1353864826}
   TimerProbe: {fileID: 0}
@@ -3099,7 +3100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086620454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.6641138, y: 0, z: 0}
+  m_LocalPosition: {x: -3.86, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2057795015}
@@ -3609,7 +3610,7 @@ MonoBehaviour:
   Canvas: {fileID: 1353864822}
   MessageBoxTrPeople: {fileID: 3238391761287202839, guid: 321543c2689799f43b28e7fceb511906,
     type: 3}
-  MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
+  MessageBox: {fileID: 3631436175322063141, guid: 642a847be2668ef459881aeeccd29bfb,
     type: 3}
   textDays: {fileID: 538435815}
   TextReqs: {fileID: 1682316945}
@@ -3620,40 +3621,6 @@ MonoBehaviour:
   Moon: {fileID: 1822177522}
   PrefabSound: {fileID: 8232704634658115817, guid: f1db487ea7eb4bc41848d1a84330766d,
     type: 3}
-  materials:
-  - {fileID: 2100000, guid: 910356184dd70ce4bab21a86f318cc83, type: 2}
-  - {fileID: 2100000, guid: 289c9aa3e5548e6439474f53e9efe5b0, type: 2}
-  - {fileID: 2100000, guid: 0e03ddf31e03364479ef21efbde8f629, type: 2}
-  - {fileID: 2100000, guid: eeea7ce533fa04f40bcc7ffe55914745, type: 2}
-  - {fileID: 2100000, guid: 3770d9def9570da44a777311cd9250f8, type: 2}
-  - {fileID: 2100000, guid: 92af3532c7f00c542b22d0423e65aac7, type: 2}
-  - {fileID: 2100000, guid: e567a39e3824ed94c9c30e295476032e, type: 2}
-  - {fileID: 2100000, guid: b474a77959862e6468daa4888325ba98, type: 2}
-  - {fileID: 2100000, guid: c88950e89661c8f4493f038bc7f3b9f5, type: 2}
-  - {fileID: 2100000, guid: c93c8a4e48e74604ca1c43b35da67f03, type: 2}
-  - {fileID: 2100000, guid: a7f8671f25f4f5c438f777532f960869, type: 2}
-  - {fileID: 2100000, guid: d1b4f6eccb899bd48b1e9730f3531bd4, type: 2}
-  - {fileID: 2100000, guid: d1b0385bc9aa56341adeabdfbed3099e, type: 2}
-  - {fileID: 2100000, guid: 34ed4fe0d0db6ff48bf242e3b7730ead, type: 2}
-  - {fileID: 2100000, guid: 263bbbb0e4fb5e040b7a0e621baa5be6, type: 2}
-  - {fileID: 2100000, guid: 84e4878bdacf3004fad5ff82949ee990, type: 2}
-  - {fileID: 2100000, guid: 9cadef52f16a89146b9d302e4ec38c35, type: 2}
-  - {fileID: 2100000, guid: 0dc9a2d25fab9b849b2e2b9985fb18d8, type: 2}
-  - {fileID: 2100000, guid: 119bd7a0b33e1e24e949c57ab174c1ea, type: 2}
-  - {fileID: 2100000, guid: 4faa5e17be6544047b9f38731502dff2, type: 2}
-  - {fileID: 2100000, guid: 42e96d726cf5e89439b879d51ff29d0b, type: 2}
-  - {fileID: 2100000, guid: 6265e63451c6b364ebfcba6e2dc6ce91, type: 2}
-  - {fileID: 2100000, guid: 7b99e85dd047d314e93ab30a13b75161, type: 2}
-  - {fileID: 2100000, guid: ac83bdbb9818ed34dbadebe551ec5e99, type: 2}
-  - {fileID: 2100000, guid: 6de49bc089aa38e45bcb276cc5fcf73f, type: 2}
-  - {fileID: 2100000, guid: bae14f97baf897f4288ef648f4c09ae5, type: 2}
-  - {fileID: 2100000, guid: 471206b53dacc88468c19161133ab8b8, type: 2}
-  - {fileID: 2100000, guid: a9a764dee6778fe469e6494b01d1bd79, type: 2}
-  - {fileID: 2100000, guid: 72033cdc7f892374194b984260d7c3b3, type: 2}
-  - {fileID: 2100000, guid: 86bdd3b3eac6ab94b94514b0313c7679, type: 2}
-  - {fileID: 2100000, guid: 92d61abd28c90264fb0832dcb2d372b1, type: 2}
-  - {fileID: 2100000, guid: a97e7d74b4b80094aad5a61ea53e27fd, type: 2}
-  - {fileID: 2100000, guid: fa57b3f974682bd41b84cd31257fd5ed, type: 2}
   ImageCrawlLine: {fileID: 41716145}
 --- !u!114 &1197974367
 MonoBehaviour:
@@ -6939,6 +6906,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3895284774664153427}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3895284774664153429 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3895284773847446556, guid: 2d198dbc15dbd3546bfa3fad092026a8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3895284774664153427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358044492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &4291442837357491480
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9007,7 +8986,7 @@ MonoBehaviour:
   imageCompleted: {fileID: 660315608908843995, guid: 01e96134144662840b12ec2ec3f91c94,
     type: 3}
   ImageCrawlLine: {fileID: 1381755935}
-  MessageBox: {fileID: 1049323575880032348, guid: d85021044d7889244aee83331d862ac7,
+  MessageBox: {fileID: 6388867676493500961, guid: 2e35b5de4b830bf489cf15494b80c6f0,
     type: 3}
   MainCanvas: {fileID: 1353864826}
   TextCoins: {fileID: 4324342279860094757}

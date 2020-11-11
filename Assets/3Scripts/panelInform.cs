@@ -47,6 +47,7 @@ public class panelInform : MonoBehaviour
         // extraordinary resources
         if (PP.flagIsResearched == false)
         {
+            // planet isn't researched
             ButtonResearchSelect.SetActive(true);
             ButtonResearchSelect.GetComponentInChildren<Text>().text = strResearch;
 
@@ -58,7 +59,7 @@ public class panelInform : MonoBehaviour
                 resource.GetComponentInChildren<Text>().text = "-";
             }
         }
-        else
+        else // planet is researched
         {
             // dealing with Research/Select Button
             if (settings.gameSettings.flagSelectedPlanet == false)

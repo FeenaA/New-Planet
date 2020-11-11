@@ -12,7 +12,7 @@
  - Стройте фабрики зондов, чтобы получать зонды для исследования планет.
  - Стройте космопорты, чтобы получать космические корабли для транспортировки ресурсов или людей.</Buildings>
         <Researches name="Исследования"> - В список возможных планет входят планеты с подходящей температурой, размером, гравитацией и свойствами звезды, к системе которой они относятся.
- - На планетах с низким терраиндексом можно найти сокровище (золотую жилу или эфир).
+ - На планетах с низким терраиндексом можно найти сокровище (золотую жилу или эфир), но добраться до них получится, отправив несколько зондов.
  - Эфир - сокровище, которое можно превратить в любой ресурс.
  - На каждой планете есть особые ресурсы, которые можно узнать, изучив планету. Для этого нужен зонд.</Researches>
     	<Resources name="Ресурсы"> - Чтобы транспортировать ресурс, нажмите на него и выберете "Перевезти". Для этого нужен космический корабль.
@@ -35,7 +35,7 @@
  - Build probe factories to get probes for planet researches.
  - Build spaceports to get spacecrafts to transport resources and people.</Buildings>
         <Researches name="Researches"> - The list of planets consists of the planets with an appropriate temperature, size, gravitation and properties of the star, whose system they belong to.
- - One can find a treasure (coins or an ether) on a planet with low terraindex.
+ - One can find a treasure (coins or an ether) on a planet with low terraindex. To rich such planets you need to use several probes.
  - The ether is a treasure that you can turn into any resource.
  - There are specific resources on each planet, which may be discovered by researching the planet. You need a probe do to it.</Researches>
     	<Resources name="Resources"> - To transport resource, tap it and chose "Transport". It requires a spacecraft.

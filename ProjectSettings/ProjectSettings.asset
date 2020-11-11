@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Feena
+  companyName: FeenaGame
   productName: New Planet
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -736,10 +736,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: e10030ab-cdad-45cf-a304-532c255a9f24
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: New Planet
+  organizationId: feenagame
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

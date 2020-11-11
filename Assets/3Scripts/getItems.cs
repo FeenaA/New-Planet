@@ -42,6 +42,8 @@ public class getItems : MonoBehaviour
         public int[] ResNess_Amount = new int[3];
         public int[] ResAdd = new int[3];// numbers of resources
         public int[] ResAddAmount = new int[3];// amount of resources
+        public int amountProbes;
+        public int amountCoins;
         public bool flagIsResearched = false;
         public bool flagIsSelected = false;
         public bool flagEther = false;
@@ -69,6 +71,7 @@ public class getItems : MonoBehaviour
         return res;
     }
 
+    private int[] TI;
     /// <summary>
     /// getting set of planets with information about them
     /// </summary>
@@ -80,9 +83,13 @@ public class getItems : MonoBehaviour
 
         string[] Name = SetNameGenerate(NPlanets);
         Dictionary<int, int[]> resources = new Dictionary<int, int[]>();
-        int[] TI = new int[NPlanets];
+        //int[] TI = new int[NPlanets];
+        TI = new int[NPlanets];
         SetTIndexGenerate(NPlanets, ref TI, ref resources);
-
+        int[] AP = new int[NPlanets]; // amount of probes
+        int[] Coins = new int[NPlanets]; // treasure - amount of coins
+        SetProbesGenerate(NPlanets, ref AP, ref Coins);
+         
         rnd = new System.Random();
         int NMat = sMaterials.Length - 1;
         int NIntro = sIntroduction.Count;
@@ -101,8 +108,6 @@ public class getItems : MonoBehaviour
 
         int minRes = 3, maxRes = 10;
 
-        // trigger to change coins or ether
-        bool trigger = false;
         for (int i = 0; i < NPlanets; i++)
         {
             PlanetProperty PP = new PlanetProperty
@@ -117,15 +122,28 @@ public class getItems : MonoBehaviour
                 ResAdd = resAdd[i],
                 // amounts of extraordinary resources
                 ResAddAmount = new int[] { rnd.Next(minRes, maxRes),
-                rnd.Next(minRes, maxRes), rnd.Next(minRes, maxRes) }
+                rnd.Next(minRes, maxRes), rnd.Next(minRes, maxRes) },
+                amountProbes = AP[i],
+                amountCoins = Coins[i],
+                flagCoins = (Coins[i] > 0)
             };
 
             PP.flagCoins = Treasure(TI[i]);
             PP.flagEther = Treasure(TI[i]);
+            // trigger to change coins or ether
+            bool trigger = false;
             if (PP.flagCoins && PP.flagEther)
             {
-                if (trigger) PP.flagCoins = false;
-                else PP.flagEther = false;
+                if (trigger)
+                { 
+                    PP.flagCoins = false;
+                    PP.amountProbes = 0;
+                    PP.amountCoins = 0; 
+                }
+                else { 
+                    PP.flagEther = false; 
+                    PP.amountCoins = 1000; 
+                }
                 trigger = !trigger;
             }
 
@@ -157,7 +175,7 @@ public class getItems : MonoBehaviour
     /// </summary>
     /// <param name="NPlanets">amount of Names</param>
     /// <returns></returns>
-    private static string[] SetNameGenerate(int NPlanets)
+    private string[] SetNameGenerate(int NPlanets)
     {
         // generate set of unique numbers 
         int minVal = 12, maxVal = 999;
@@ -177,7 +195,7 @@ public class getItems : MonoBehaviour
     /// <param name="len">amount of elements in the set</param>
     /// <param name="setTIndex">the set of TerraIndex</param>
     /// <param name="resources">amount of necessary resources</param>
-    private static void SetTIndexGenerate(int len, ref int[] setTIndex, ref Dictionary<int, int[]> resources)
+    private void SetTIndexGenerate(int len, ref int[] setTIndex, ref Dictionary<int, int[]> resources)
     {
         System.Random rnd = new System.Random();
         int[] tempSetTIndex = new int[len];
@@ -213,6 +231,36 @@ public class getItems : MonoBehaviour
             resources[i] = temp;
             num.Remove(n);
         }
+    }
+
+    /// <summary>
+    /// generator: set of necessary probes and treasure
+    /// </summary>
+    /// <param name="len"></param>
+    /// <param name="setTIndex"></param>
+    /// <param name="ProbesAmount"></param>
+    /// <param name="treasure"></param>
+    private void SetProbesGenerate(int len, ref int[] ProbesAmount, ref int[] treasure)
+    {
+        for (int i = 0; i < len; i++)
+        {
+            int N = 0;
+            int terraIndex = TI[i];
+            if (terraIndex <= 20) { N = 4; }
+            else if ((terraIndex > 20) && (terraIndex <= 40)) { N = 6; }
+            else if ((terraIndex > 40) && (terraIndex <= 60)) { N = 10; }
+            else if ((terraIndex > 60) && (terraIndex <= 80)) { N = 30; }
+            else if (terraIndex > 80) { N = 40; }
+
+            int Rnd = rnd.Next(N - 1);
+            if (Rnd != 0) { ProbesAmount[i] = (terraIndex - N) / 10; 
+                print(terraIndex + " " + ProbesAmount[i]); }
+            else { ProbesAmount[i] = 0; }
+
+            treasure[i] = (100 - TI[i]) * 50; // (100 - 10)*50 = 4500
+        }
+
+
     }
 
     /// <summary>

@@ -33,7 +33,7 @@ public class advert : MonoBehaviour
         // the name of the current scene
         if (SceneManager.GetActiveScene().name == "Research" && 
             Shopping.sPanelShopping.activeSelf &&
-            Shopping.NRes < 10)
+            Shopping.NRes < 10 && Shopping.NRes > 0)
         {
             // make ButtonBuy active
             Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");

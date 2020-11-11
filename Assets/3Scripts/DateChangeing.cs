@@ -18,12 +18,15 @@ public class DateChangeing : MonoBehaviour
     public GameObject PauseRectangle;
     public GameObject PopUpLine;
 
+    // to operate with Shopping
+    public GameObject CanvasPlanets;
+
     private static int nDayPF = 0;
     private static int nDaySC = 0;
     // Coins
     public Text TextCoins; 
     // People
-    public GameObject peopleOnNative;
+    public Text peopleOnNative;
     public GameObject peopleOnNew;
     public GameObject peopleDied;
     // button to be done active or not
@@ -44,6 +47,10 @@ public class DateChangeing : MonoBehaviour
     public static readonly int MaxCoins = 99999;
     public static readonly int MaxN = 99;
 
+    // flag - x% of people are died
+    private static bool flag50 = false;
+    private static bool flag25 = false;
+     
     private string SceneName;
 
     public GameObject CanvasBuildings;
@@ -68,6 +75,8 @@ public class DateChangeing : MonoBehaviour
     private string strDay;
     private string strMoved;
     private string strFirstVictim;
+    private string str50;
+    private string str25;
     private string strFirstOnNew;
     private string strPlusOne = "+1 / ";
     private string strDayShort;
@@ -103,7 +112,7 @@ public class DateChangeing : MonoBehaviour
             // people on the native planet
             if (!String.IsNullOrEmpty(settings.gameSettings.NameNative))
             {
-                peopleOnNative.GetComponent<Text>().text = strOn + settings.gameSettings.NameNative + ": " +
+                peopleOnNative.text = strOn + settings.gameSettings.NameNative + ": " +
                     Convert.ToString(settings.gameSettings.NPeopleOnNative);
             }
             // Does the selected planet exist?
@@ -124,6 +133,8 @@ public class DateChangeing : MonoBehaviour
             strNew = " (НОВАЯ): ";
             strMoved = " ПЕРЕЕХАЛИ";
             strFirstVictim = "ПЕРВАЯ ЖЕРТВА! ВИРУС НАЧАЛ УБИВАТЬ ТВОЙ НАРОД.";
+            str50 = "ПОГИБЛА УЖЕ ПОЛОВИНА ТВОЕГО НАРОДА. КОНЕЦ ПРИБЛИЖАЕТСЯ.";
+            str25 = "ТВОЙ НАРОД ТАЕТ НА ГЛАЗАХ: 75% ЖИТЕЛЕЙ ПОГИБЛИ.";
             strFirstOnNew = "ПЕРВАЯ ГРУППА ЛЮДЕЙ УСПЕШНО ВЫСАДИЛАСЬ НА ПЛАНЕТУ ";
             strDayShort = "Д";
         }
@@ -135,6 +146,8 @@ public class DateChangeing : MonoBehaviour
             strNew = " (new): ";
             strMoved = " shifted";
             strFirstVictim = "The first victim has appeared!\nThe virus has begun to kill your people.";
+            str50 = "A half of your people have already died. The end is coming.";
+            str25 = "Your people is draining away: 75% are died.";
             strFirstOnNew = "The first group of people successfully landed on the planet ";
             strDayShort = " d";
         }
@@ -174,6 +187,34 @@ public class DateChangeing : MonoBehaviour
                     messageBox.transform.SetParent(MainCanvas, false);
                 }
                 #endregion
+
+                #region MessageBox: "50% of people are died"
+                if (!flag50)
+                {
+                    if (settings.gameSettings.NPeopleDied * 2 >= settings.gameSettings.AllPeople)
+                    {
+                        flag50 = true;
+                        // show Message
+                        messageBox = Instantiate(MessageBox);
+                        messageBox.SendMessage("TheStart", str50);
+                        // SetParent to the MessageBox
+                        messageBox.transform.SetParent(MainCanvas, false);
+                    }
+                }
+                else 
+                {
+                    // more then 50% of people are dead 
+                    if (!flag25 && settings.gameSettings.NPeopleDied*3 >= settings.gameSettings.AllPeople*2)
+                    {
+                        flag25 = true;
+                        // show Message
+                        messageBox = Instantiate(MessageBox);
+                        messageBox.SendMessage("TheStart", str25);
+                        // SetParent to the MessageBox
+                        messageBox.transform.SetParent(MainCanvas, false);
+                    }
+                }
+                #endregion
             }
 
             if (SceneName == "Game")
@@ -183,11 +224,8 @@ public class DateChangeing : MonoBehaviour
                 // died people
                 if (settings.gameSettings.NDays > DaysWithoutDeth)
                 {
-                    if (peopleDied.activeSelf == false)
-                    {
-                        // restart timer for crawl line
-                        crawlLine.TimerCrawlLine = 0;
-                    }
+                    // restart timer for crawl line
+                    if (peopleDied.activeSelf == false) { crawlLine.TimerCrawlLine = 0; }
 
                     peopleDied.SetActive(true);
                     peopleDied.GetComponent<Text>().text = strDied + Convert.ToString(settings.gameSettings.NPeopleDied);
@@ -195,7 +233,7 @@ public class DateChangeing : MonoBehaviour
                 // people on the native planet
                 if (!String.IsNullOrEmpty(settings.gameSettings.NameNative))
                 {
-                    peopleOnNative.GetComponent<Text>().text = strOn + settings.gameSettings.NameNative + ": " +
+                    peopleOnNative.text = strOn + settings.gameSettings.NameNative + ": " +
                         Convert.ToString(settings.gameSettings.NPeopleOnNative);
                 }
                 // people on new planet
@@ -216,8 +254,6 @@ public class DateChangeing : MonoBehaviour
             }
 
             #region probes increment
-
-            //print(settings.gameSettings.ProbeFactory.Time + " - " + nDayPF);
 
             if ((settings.gameSettings.ProbeFactory.N > 0) && (settings.gameSettings.NProbe < MaxN))
             {
@@ -254,7 +290,6 @@ public class DateChangeing : MonoBehaviour
             if ((settings.gameSettings.SCfactory.N > 0) && (settings.gameSettings.NSpasecraft < MaxN))
             {
                 nDaySC++;
-                print(nDaySC);
 
                 // Text timer: +1 in 10d
                 if (SceneName == "Research")
@@ -272,8 +307,7 @@ public class DateChangeing : MonoBehaviour
                     {
                         // Send the SC with people to the new planet
                         SendPeople(settings.gameSettings.NSpasecraft);
-                        peopleOnNative.GetComponent<Text>().text = strOn + 
-                            settings.gameSettings.NameNative + ": " + 
+                        peopleOnNative.text = strOn + settings.gameSettings.NameNative + ": " + 
                             System.Convert.ToString(settings.gameSettings.NPeopleOnNative);
                         peopleOnNew.GetComponent<Text>().text = strOn +
                             settings.gameSettings.NameNew + strNew +
@@ -283,37 +317,10 @@ public class DateChangeing : MonoBehaviour
                     if (SceneName == "Research")
                     { 
                         StartCoroutine(AddShow(NSpaceCraft, Convert.ToString(settings.gameSettings.NSpasecraft)));
-                        // operate with Shopping
-                        /*int CurrentAmount = Shopping.NRes;
-                        if ((Shopping.sPanelShopping.activeSelf) && 
-                            (CurrentAmount < 10) && (CurrentAmount > 0)
-                            //settings.gameSettings.Storage.ContainsKey(numRes)
-                            )
-                        {
-                            // make buttonTransport active
-                            Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
-                            Transform ButtonTransport = PanelButtons.Find("ButtonTransport");
-                            ButtonTransport.GetComponent<Button>().interactable = true;
-                        }*/
 
-
-                        
-                        // operate with Shopping
-                        int CurrentAmount = Shopping.NRes;
-                        if ((Shopping.sPanelShopping.activeSelf) && (CurrentAmount < 10))
-                        {
-                            int numButton = Shopping.numButtonResource;
-                            if ((numButton < 0) || // necessary resource
-                                // extra, not empty, exists in storage
-                                (numButton > 0 && CurrentAmount > 0 &&
-                                settings.gameSettings.Storage.ContainsKey(ItemOnClick.PP.ResAdd[numButton - 1]))) 
-                            {
-                                // make buttonTransport active
-                                Transform PanelButtons = Shopping.sPanelShopping.transform.Find("Buttons");
-                                Transform ButtonTransport = PanelButtons.Find("ButtonTransport");
-                                ButtonTransport.GetComponent<Button>().interactable = true;
-                            }
-                        }
+                        // reset ability or disability of buttons
+                        Shopping SH = CanvasPlanets.GetComponent<Shopping>();
+                        SH.AddSC();
                     } 
                     else if (SceneName == "Game")
                     {
@@ -324,7 +331,7 @@ public class DateChangeing : MonoBehaviour
                     }
                     nDaySC = 0;
                 }
-                // to cope with changed ProbeFactory.Time
+                // to note changed ProbeFactory.Time
                 else if (nDaySC > settings.gameSettings.SCfactory.Time) { nDaySC = 0; }
             }
             // if the selected planet exists and there is al list one SpaceCraft
