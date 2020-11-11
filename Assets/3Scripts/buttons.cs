@@ -59,7 +59,7 @@ public class buttons : MonoBehaviour
     public void PauseOn() 
     {
         flagPause = true;
-        settings.sTextDays.GetComponent<Text>().color = sColorPause;
+        settings.sTextDays.color = sColorPause;
         //settings.sTextCoins.GetComponent<Text>().color = sColorPause; 
         TextCoins.GetComponent<Text>().color = sColorPause;
         settings.sPauseRectangle.SetActive(true);
@@ -71,7 +71,7 @@ public class buttons : MonoBehaviour
     {
         flagPause = false;
         TextCoins.GetComponent<Text>().color = sColorProcess;//white
-        settings.sTextDays.GetComponent<Text>().color = sColorProcess;
+        settings.sTextDays.color = sColorProcess;
         settings.sPauseRectangle.SetActive(false);
         DateChangeing.pause = false;
         sColorCurrent = sColorProcess;

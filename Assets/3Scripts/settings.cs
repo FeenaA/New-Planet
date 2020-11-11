@@ -22,8 +22,8 @@ public class settings : MonoBehaviour
     public GameObject MessageBox;
 
     // text - amount of intervened days
-    public GameObject textDays;
-    public static GameObject sTextDays;
+    public Text textDays;
+    public static Text sTextDays;
     public static string sStringTextDays;
 
     // requested resources
@@ -106,7 +106,11 @@ public class settings : MonoBehaviour
         public int CurrentNResUnits;
     } 
     public static GameSettings gameSettings;
-    //private getItems GI;
+
+    public GameObject ButtonSendPeople;
+    public GameObject ButtonCycle;
+    public Sprite CycleImage;
+    public Sprite NotCycleImage;
 
     private string StrWelcome;
     private string StrAuto;
@@ -117,7 +121,7 @@ public class settings : MonoBehaviour
     {
         // general objects which are valid whether it's the new session or not 
         sTextDays = textDays;
-        sStringTextDays = sTextDays.GetComponent<Text>().text;
+        sStringTextDays = sTextDays.text;
         sPauseImage = pauseImage;
         sContinueImage = continueImage;
         sButtonPause = buttonPause;
@@ -132,6 +136,23 @@ public class settings : MonoBehaviour
         { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().PlayMusic(); }
         else
         { GameObject.FindGameObjectWithTag("Music").GetComponent<SoundClass>().StopMusic(); }
+        #endregion
+
+        #region buttons to transport people
+        if (settings.gameSettings.flagPeopleTransport)
+        {
+            ButtonSendPeople.GetComponent<Button>().interactable = false;
+            if (!settings.flagCycledSent)
+            {
+                ButtonCycle.GetComponent<Image>().sprite = CycleImage;
+                if (settings.gameSettings.NSpasecraft > 0)
+                { ButtonSendPeople.GetComponent<Button>().interactable = true; }
+            }
+            else { ButtonCycle.GetComponent<Image>().sprite = NotCycleImage; }
+
+            ButtonSendPeople.SetActive(true);
+            ButtonCycle.SetActive(true);
+        }
         #endregion
 
         // rewrite all strings
@@ -197,9 +218,7 @@ public class settings : MonoBehaviour
             crawlLine.RestartTimer();
             if (DateChangeing.pause) { BUT.PauseOn(); }
         }
-
-        print("NEarthMaterial: " + gameSettings.NEarthMaterial);
-
+        
         EarthOnClick.flagBuildings = false;
         Earth.GetComponent<Renderer>().material = getItems.sMaterials[gameSettings.NEarthMaterial];
         Moon.GetComponent<Renderer>().material = getItems.sMaterials[gameSettings.NMoonMaterial];

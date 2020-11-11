@@ -4799,6 +4799,7 @@ GameObject:
   - component: {fileID: 1353864824}
   - component: {fileID: 1353864823}
   - component: {fileID: 1353864827}
+  - component: {fileID: 1353864828}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4910,6 +4911,27 @@ MonoBehaviour:
   questionBox: {fileID: 8596701435470649397, guid: d86c48baccd1aa64490e7d84038dcf76,
     type: 3}
   BlueCoin: {fileID: 785837960}
+--- !u!114 &1353864828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353864822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5db0a2a22101342b5dd9d817024396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSendPeople: {fileID: 0}
+  ButtonCycle: {fileID: 0}
+  Date: {fileID: 538435815}
+  PopUpLine: {fileID: 0}
+  peopleOnNative: {fileID: 0}
+  peopleOnNew: {fileID: 0}
+  CycleImage: {fileID: 0}
+  NotCycleImage: {fileID: 0}
+  TextDate: {fileID: 538435815}
 --- !u!43 &1356815113
 Mesh:
   m_ObjectHideFlags: 0
