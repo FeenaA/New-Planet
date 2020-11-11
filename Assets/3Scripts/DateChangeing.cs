@@ -42,6 +42,9 @@ public class DateChangeing : MonoBehaviour
     private readonly int DaysWithoutDeth = 20;
     public static int DayDeth = 0; 
     public readonly static float koefPeopleStart = 0.1f;
+    // additive to koefPeopleStart 
+    public readonly static float[] DeathRate = { 0.116f, 0.113f, 0.108f, 0.104f, 0.102f, 0.100f };
+     
     private static int DiedToday = 1;
 
     public static readonly int MaxCoins = 99999;
@@ -83,6 +86,9 @@ public class DateChangeing : MonoBehaviour
     
     void Start()
     {
+        flag50 = (settings.gameSettings.NPeopleDied * 2 > settings.gameSettings.AllPeople);
+        flag25 = (settings.gameSettings.NPeopleDied * 3 > settings.gameSettings.AllPeople * 2);
+
         if (pause)
         {
             gameObject.GetComponent<Text>().color = buttons.sColorPause;
@@ -188,7 +194,7 @@ public class DateChangeing : MonoBehaviour
                 }
                 #endregion
 
-                #region MessageBox: "50% of people are died"
+                #region MessageBox: "% of people are died"
                 if (!flag50)
                 {
                     if (settings.gameSettings.NPeopleDied * 2 >= settings.gameSettings.AllPeople)
@@ -204,7 +210,8 @@ public class DateChangeing : MonoBehaviour
                 else 
                 {
                     // more then 50% of people are dead 
-                    if (!flag25 && settings.gameSettings.NPeopleDied*3 >= settings.gameSettings.AllPeople*2)
+                    if (!flag25 && 
+                        settings.gameSettings.NPeopleDied*3 >= settings.gameSettings.AllPeople*2)
                     {
                         flag25 = true;
                         // show Message
@@ -450,7 +457,7 @@ public class DateChangeing : MonoBehaviour
     private void GetPeopleAmount()
     {
         DayDeth++;
-        settings.gameSettings.koefToday += 0.112f;
+        settings.gameSettings.koefToday += DeathRate[settings.gameSettings.Hospital.N];
         DiedToday = DayDeth * System.Convert.ToInt32(settings.gameSettings.koefToday);
 
         // to prevent negative amount of people

@@ -18,7 +18,6 @@
   <Mine Cost="200" N="0" stepCoins="5"></Mine>
   <SCfactory Cost="350" N="0" Time="170"></SCfactory>
   <koefToday>0,100</koefToday>
-  <koefAfterUpdate>0,200</koefAfterUpdate>
   <NEther>0</NEther>
   <NProbe>0</NProbe>
   <Storage></Storage>
