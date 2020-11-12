@@ -5,16 +5,25 @@ using UnityEngine.UI;
 
 public class panelInform : MonoBehaviour
 {
-    public GameObject TextProbes;
+    // amount of units
+    public Text TextProbes;
+    public Text TextEth;
+
     public GameObject TextDate;
     private readonly int presentedCoins = 1000;
+    // MB to show congratulations
     public GameObject MessageBox;
-    public Canvas MainCanvas;
+    // MB to note that a probe was crushed
+    public GameObject GeneralMessageBox;
+    
+    public Transform MainCanvas;
     public Text TextCoins;
+    public Transform[] ResAdd; 
     // button 
     public GameObject ButtonResearchSelect;
     public string strResearch = "Research";
     public string strSelect = "Select";
+    // planet information
     public Renderer Sphere;
     public Text NamePlanet;
     public Text TextIntro;
@@ -54,7 +63,8 @@ public class panelInform : MonoBehaviour
             if (settings.gameSettings.NProbe == 0)
             { ButtonResearchSelect.GetComponent<Button>().interactable = false; }
 
-            foreach (var resource in settingsResearches.r)
+            //foreach (var resource in settingsResearches.r)
+            foreach (var resource in ResAdd)
             {
                 resource.GetComponentInChildren<Text>().text = "-";
             }
@@ -75,12 +85,16 @@ public class panelInform : MonoBehaviour
                 int amount = PP.ResAddAmount[i];
                 if (amount > 0)
                 {
-                    settingsResearches.r[i].GetComponentInChildren<Text>().text =
+                    // not empty slot
+                    ResAdd[i].GetComponentInChildren<Text>().text =
+                    //settingsResearches.r[i].GetComponentInChildren<Text>().text =
                         getItems.ResourceAdd[PP.ResAdd[i]].name + " = " + PP.ResAddAmount[i];
                 }
                 else
                 {
-                    settingsResearches.r[i].GetComponentInChildren<Text>().text = "-";
+                    // empty slot
+                    ResAdd[i].GetComponentInChildren<Text>().text = "-";
+                    //settingsResearches.r[i].GetComponentInChildren<Text>().text = "-";
                     // let free current resource slot 
                     PP.ResAdd[i] = 0;
                 }
@@ -94,71 +108,87 @@ public class panelInform : MonoBehaviour
         // if researching is avaliable
         if (!ItemOnClick.PP.flagIsResearched)
         {
+            // there is a probe to be sent to the current new planet
             if (settings.gameSettings.NProbe > 0)
             {
                 // Probe decrement
                 settings.gameSettings.NProbe--;
-                TextProbes.GetComponent<Text>().text = 
-                    System.Convert.ToString(settings.gameSettings.NProbe);
+                TextProbes.text = System.Convert.ToString(settings.gameSettings.NProbe);
 
-                if (settings.gameSettings.flagSelectedPlanet == false)
-                { ButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect; }
-                else
-                { ButtonResearchSelect.SetActive(false); }
-
-                ItemOnClick.PP.flagIsResearched = true;
-
-                // show resources
-                for (int i = 0; i < 3; i++)
+                // successful researches
+                if (ItemOnClick.PP.amountProbes == 0)
                 {
-                    settingsResearches.r[i].GetComponentInChildren<Text>().text =
-                        getItems.ResourceAdd[ItemOnClick.PP.ResAdd[i]].name + " = " + ItemOnClick.PP.ResAddAmount[i];
-                }
+                    if (settings.gameSettings.flagSelectedPlanet == false)
+                    { ButtonResearchSelect.GetComponentInChildren<Text>().text = strSelect; }
+                    else
+                    { ButtonResearchSelect.SetActive(false); }
 
-                // deal with Ether
-                if (ItemOnClick.PP.flagEther)
-                {
-                    if (settings.gameSettings.NEther + 1 <= DateChangeing.MaxN)
+                    ItemOnClick.PP.flagIsResearched = true;
+
+                    // show resources
+                    for (int i = 0; i < 3; i++)
                     {
-                        settings.gameSettings.NEther++;
+                        //settingsResearches.r[i].GetComponentInChildren<Text>().text =
+                        ResAdd[i].GetComponentInChildren<Text>().text =
+                            getItems.ResourceAdd[ItemOnClick.PP.ResAdd[i]].name + " = " + ItemOnClick.PP.ResAddAmount[i];
+                    }
+
+                    // deal with Ether
+                    if (ItemOnClick.PP.flagEther)
+                    {
+                        if (settings.gameSettings.NEther + 1 <= DateChangeing.MaxN)
+                        {
+                            settings.gameSettings.NEther++;
+                            // show changes
+                            TextEth.text = System.Convert.ToString(settings.gameSettings.NEther);
+
+                            // show Congratulations
+                            var instance = Instantiate(MessageBox);
+                            instance.SendMessage("TheStart", false);
+                            instance.transform.SetParent(MainCanvas, false);
+
+                            bool LoadStorage = false;
+                            LoadGame.SetEther(LoadStorage);
+                        }
+                    }
+
+                    // deal with Coins
+                    if (ItemOnClick.PP.flagCoins)
+                    {
+                        DateChangeing DC = TextDate.GetComponent<DateChangeing>();
+                        settings.gameSettings.NCoins = DC.AddCoins(presentedCoins);
                         // show changes
-                        settingsResearches.sTextEth.GetComponent<Text>().text =
-                            System.Convert.ToString(settings.gameSettings.NEther);
+                        TextCoins.text = System.Convert.ToString(settings.gameSettings.NCoins);
 
                         // show Congratulations
                         var instance = Instantiate(MessageBox);
-                        instance.SendMessage("TheStart", false);
-                        instance.transform.SetParent(MainCanvas.transform, false);
-
-                        bool LoadStorage = false;
-                        LoadGame.SetEther(LoadStorage);
+                        instance.SendMessage("TheStart", true);
+                        instance.transform.SetParent(MainCanvas, false);
                     }
 
+                    // update resources at storage
+                    AddToStorage();
+                    // set flagResearched=true, --probes, resources at storage
+                    LoadGame.SetResearched(ItemOnClick.PP.textName);
                 }
-
-                // deal with Coins
-                if (ItemOnClick.PP.flagCoins)
+                else // the probe has failed researches
                 {
-                    DateChangeing DC = TextDate.GetComponent<DateChangeing>();
-                    settings.gameSettings.NCoins = DC.AddCoins(presentedCoins);
-                    // show changes
-                    TextCoins.text = System.Convert.ToString(settings.gameSettings.NCoins);
+                    if ( ItemOnClick.PP.amountProbes > 0 ) { ItemOnClick.PP.amountProbes--; }
+                    else { ItemOnClick.PP.amountProbes = 0; }
 
-                    // show Congratulations
-                    var instance = Instantiate(MessageBox);
-                    instance.SendMessage("TheStart", true);
-                    instance.transform.SetParent(MainCanvas.transform, false);
+                    #region MessageBox: your probe crushed
+                    var messageBox = Instantiate(GeneralMessageBox);
+                    string strProbeCrush;
+                    if (PersonalSettings.language == LanguageSettings.Language.Russian)
+                    { strProbeCrush = "ПЛАНЕТУ ИЗУЧИТЬ НЕ УДАЛОСЬ. ЗОНД ПОТЕРПЕЛ КРУШЕНИЕ, НЕ ЗАВЕРШИВ ИССЛЕДОВАНИЕ."; }
+                    else { strProbeCrush = "The planet research failed. The probe crashed without completing the study."; }
+                    messageBox.SendMessage("TheStart", strProbeCrush);
+                    // SetParent to the MessageBox
+                    messageBox.transform.SetParent(MainCanvas, false);
+                    #endregion
+
+                    LoadGame.SetResearchIsFailed(ItemOnClick.PP.textName);
                 }
-
-                // update resources at storage
-                AddToStorage();
-                // set flagResearched=true, --probes, resources at storage
-                LoadGame.SetResearched(ItemOnClick.PP.textName);
-            }
-            else
-            {
-                // ask to make order to a probe factory OR to get a probe free by BlueCoin
-
             }
         }
         else
@@ -293,7 +323,6 @@ public class panelInform : MonoBehaviour
     }
 
     // use 1 resource from the storage and remove empty resource
-    //public void TakeAwayResourceFromStorage(int numRes)
     public string TakeAwayResourceFromStorage(int numRes)
     {
         // change amount of resource at the storage

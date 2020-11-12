@@ -99,6 +99,7 @@ public class LoadGame : MonoBehaviour
                     PP.flagIsSelected = System.Convert.ToBoolean(xPlanet.Attributes.GetNamedItem("flagIsSelected").Value);
                     PP.flagCoins = System.Convert.ToBoolean(xPlanet.Attributes.GetNamedItem("flagCoins").Value);
                     PP.flagEther = System.Convert.ToBoolean(xPlanet.Attributes.GetNamedItem("flagEther").Value);
+                    PP.amountProbes = System.Convert.ToInt32(xPlanet.Attributes.GetNamedItem("amountProbes").Value);
 
                     int i = 0;
                     foreach (XmlElement xResources in xPlanet.ChildNodes)
@@ -295,6 +296,10 @@ public class LoadGame : MonoBehaviour
                     attr.AppendChild(xDoc.CreateTextNode(System.Convert.ToString(planet.Value.flagEther)));
                     xPlanet.Attributes.Append(attr);
 
+                    attr = xDoc.CreateAttribute("amountProbes");
+                    attr.AppendChild(xDoc.CreateTextNode(System.Convert.ToString(planet.Value.amountProbes)));
+                    xPlanet.Attributes.Append(attr);
+
                     XmlElement nameArray = xDoc.CreateElement("ResNessAmount");
                     xPlanet.AppendChild(nameArray);
                     for (int i = 0; i < 3; i++)
@@ -388,73 +393,7 @@ public class LoadGame : MonoBehaviour
             }
             else if (xelem.Name == "Storage")
             {
-                /*XmlAttribute attr;
-                
-                foreach (var resource in settings.gameSettings.Storage)
-                {
-                    // check 
-                    foreach (XmlElement xResource in xelem.ChildNodes)
-                    {
-                        // if the resource is already presented at the storage
-                        if (System.Convert.ToInt32(xResource.Attributes.GetNamedItem("number").Value) == resource.Key)
-                        { xelem.RemoveChild(xResource); }
-                    }
-
-                    // create a new section of resource
-                    XmlElement resourceItem = xDoc.CreateElement("resource");
-                    xelem.AppendChild(resourceItem);
-
-                    attr = xDoc.CreateAttribute("number");
-                    attr.AppendChild(xDoc.CreateTextNode( System.Convert.ToString( resource.Key )));
-                    resourceItem.Attributes.Append(attr);
-                    
-                    foreach (var planet in resource.Value)
-                    {
-                        XmlElement planetItem = xDoc.CreateElement("planet");
-                        resourceItem.AppendChild(planetItem);
-
-                        attr = xDoc.CreateAttribute("NamePlanet");
-                        attr.AppendChild(xDoc.CreateTextNode(planet.NamePlanet));
-                        planetItem.Attributes.Append(attr);
-
-                        attr = xDoc.CreateAttribute("amount");
-                        attr.AppendChild(xDoc.CreateTextNode(System.Convert.ToString(planet.amount)));
-                        planetItem.Attributes.Append(attr);
-                    }
-                }*/
-
                 ResetStorage(xelem);
-
-                /*
-                // remove all resources
-                while (xelem.HasChildNodes) { xelem.RemoveChild(xelem.FirstChild); }
-
-                XmlAttribute attr;
-                // create all new sections for resources
-                foreach (var resource in settings.gameSettings.Storage)
-                {
-                    
-                    XmlElement resourceItem = xDoc.CreateElement("resource");
-                    xelem.AppendChild(resourceItem);
-
-                    attr = xDoc.CreateAttribute("number");
-                    attr.AppendChild(xDoc.CreateTextNode(System.Convert.ToString(resource.Key)));
-                    resourceItem.Attributes.Append(attr);
-
-                    foreach (var planet in resource.Value)
-                    {
-                        XmlElement planetItem = xDoc.CreateElement("planet");
-                        resourceItem.AppendChild(planetItem);
-
-                        attr = xDoc.CreateAttribute("NamePlanet");
-                        attr.AppendChild(xDoc.CreateTextNode(planet.NamePlanet));
-                        planetItem.Attributes.Append(attr);
-
-                        attr = xDoc.CreateAttribute("amount");
-                        attr.AppendChild(xDoc.CreateTextNode(System.Convert.ToString(planet.amount)));
-                        planetItem.Attributes.Append(attr);
-                    }
-                }*/
             }
             else if (xelem.Name == "NProbe")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NProbe); }
@@ -467,6 +406,41 @@ public class LoadGame : MonoBehaviour
         fullPath = Application.persistentDataPath + "/ContinueGame.xml";
         File.WriteAllText(fullPath, sw.ToString());
     }
+
+    /// <summary>
+    /// Save researched status of the planet, probes decrement, reload Storage
+    /// </summary>
+    /// <param name="namePlanet"></param>
+    public static void SetResearchIsFailed(string namePlanet)
+    {  
+        XmlElement xRoot = xDoc.DocumentElement;
+        foreach (XmlElement xelem in xRoot)
+        {
+            if (xelem.Name == "SetPlanets")
+            {
+                int i = 0;
+                foreach (XmlElement xPlanet in xelem.ChildNodes)
+                {
+                    if (xPlanet.Attributes.GetNamedItem("textName").Value == namePlanet)
+                    {
+                        print(namePlanet + " " + settings.gameSettings.SetPlanets[i].amountProbes);
+                        xPlanet.Attributes.GetNamedItem("amountProbes").Value = 
+                            System.Convert.ToString( settings.gameSettings.SetPlanets[i].amountProbes ); }
+                    i++;
+                }
+            }
+            else if (xelem.Name == "NProbe")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NProbe); }
+        }
+
+        StringWriter sw = new StringWriter();
+        XmlTextWriter xw = new XmlTextWriter(sw);
+        xDoc.WriteTo(xw);
+
+        fullPath = Application.persistentDataPath + "/ContinueGame.xml";
+        File.WriteAllText(fullPath, sw.ToString());
+    }
+
 
     /// <summary>
     /// Save flagSelectedPlanet, NameNew, information in SetPlanets and RequestedResources

@@ -318,8 +318,6 @@ public class DateChangeing : MonoBehaviour
                         People PEP = MainCanvas.GetComponent<People>();
                         int NTransportedPeople = PEP.SendPeople(settings.gameSettings.NSpasecraft);
 
-                        print(NTransportedPeople + " " + settings.gameSettings.NSpasecraft);
-
                         // the first group of people was sent
                         if (!flag && NTransportedPeople > 0)
                         {

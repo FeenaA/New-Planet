@@ -25,21 +25,21 @@ public class settingsResearches: MonoBehaviour
     public Transform ResWater, ResAir, ResSoil;
     public static Transform rWater, rAir, rSoil;
 
-    // extraordinary resources
-    public Transform ResAdd1, ResAdd2, ResAdd3;
-    public static Transform[] r;
-
     // amount of probes
-    public GameObject textProbes;
+    //public GameObject TextProbes;
+    public Text TextProbes;
     // amount of spacecrafts
-    public GameObject textSC;
-    public static GameObject sTextSC;
+    //public GameObject textSC;
+    //public static GameObject sTextSC;
+    public Text TextSC;
     // amount of Ether
-    public GameObject textEth;
-    public static GameObject sTextEth;
+    //public GameObject textEth;
+    //public static GameObject sTextEth;
+    public Text TextEth;
     // amount of Ether
-    public GameObject textBC;
-    public static GameObject sTextBC;
+    //public GameObject textBC;
+    //public static GameObject sTextBC;
+    public Text TextBC;
 
     // text for requested resources
     public Text TextRequestedResources;
@@ -61,7 +61,8 @@ public class settingsResearches: MonoBehaviour
     private static bool flagFirstInResearch = true;
 
     // all strings
-    private string strWelcome = "";
+    private string strWelcome;
+    private string strPlanet;
 
 
     void Start()
@@ -95,20 +96,14 @@ public class settingsResearches: MonoBehaviour
         rAir = ResAir;
         rSoil = ResSoil;
 
-        if ((PersonalSettings.language == LanguageSettings.Language.Russian))
-        { TextPlanet.text = "ПЛАНЕТА"; }
-        else { TextPlanet.text = "Planet"; }
-
-        r = new Transform[3] { ResAdd1, ResAdd2, ResAdd3};
+        // title of the planetPanel
+        TextPlanet.text = strPlanet;
 
         // panel for different items
-        sTextSC = textSC;
-        sTextEth = textEth;
-        sTextBC = textBC;
-        textProbes.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NProbe);
-        sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NSpasecraft);
-        sTextEth.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NEther);
-        sTextBC.GetComponent<Text>().text = System.Convert.ToString(BlueCoin.sNBlueCoin);
+        TextProbes.text = System.Convert.ToString(settings.gameSettings.NProbe);
+        TextSC.text = System.Convert.ToString(settings.gameSettings.NSpasecraft);
+        TextEth.text = System.Convert.ToString(settings.gameSettings.NEther);
+        TextBC.text = System.Convert.ToString(BlueCoin.sNBlueCoin);
 
         // fill information about planets
         OnReceivedModels();
@@ -122,10 +117,12 @@ public class settingsResearches: MonoBehaviour
         if ((PersonalSettings.language == LanguageSettings.Language.Russian))
         {
             strWelcome = "УЧЕНЫЕ ПОДОБРАЛИ ПЛАНЕТЫ С ПОДХОДЯЩИМИ ТЕМПЕРАТУРОЙ, РАЗМЕРОМ И ГРАВИТАЦИЕЙ";
+            strPlanet = "ПЛАНЕТА";
         }
         else
         {
             strWelcome = "Scientists've compiled a list of planets with suitable temperature, size and gravity";
+            strPlanet = "Planet";
         }
     }
 

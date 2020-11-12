@@ -124,20 +124,17 @@ public class Preprocessing : MonoBehaviour
     private void CorrectTextOnScene()
     {
         // correct text on the ButtonLanguage
-        if (PersonalSettings.language == LanguageSettings.Language.English)
+        if (PersonalSettings.language == LanguageSettings.Language.Russian)
+        {
+            ButtonLanguage.GetComponentInChildren<Text>().text = "RU";
+            ButtonNewGame.GetComponentInChildren<Text>().text = "НОВАЯ ИГРА";
+            ButtonContinue.GetComponentInChildren<Text>().text = "ПРОДОЛЖИТЬ";
+        }
+        else
         {
             ButtonLanguage.GetComponentInChildren<Text>().text = "EN";
             ButtonNewGame.GetComponentInChildren<Text>().text = "New game";
             ButtonContinue.GetComponentInChildren<Text>().text = "Continue";
-        }
-        else
-        {
-            if (PersonalSettings.language == LanguageSettings.Language.Russian)
-            {
-                ButtonLanguage.GetComponentInChildren<Text>().text = "RU";
-                ButtonNewGame.GetComponentInChildren<Text>().text = "НОВАЯ ИГРА";
-                ButtonContinue.GetComponentInChildren<Text>().text = "ПРОДОЛЖИТЬ";
-            }
         }
     }
 

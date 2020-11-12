@@ -83,7 +83,6 @@ public class getItems : MonoBehaviour
 
         string[] Name = SetNameGenerate(NPlanets);
         Dictionary<int, int[]> resources = new Dictionary<int, int[]>();
-        //int[] TI = new int[NPlanets];
         TI = new int[NPlanets];
         SetTIndexGenerate(NPlanets, ref TI, ref resources);
         int[] AP = new int[NPlanets]; // amount of probes
@@ -253,11 +252,12 @@ public class getItems : MonoBehaviour
             else if (terraIndex > 80) { N = 40; }
 
             int Rnd = rnd.Next(N - 1);
-            if (Rnd != 0) { ProbesAmount[i] = (terraIndex - N) / 10; 
-                print(terraIndex + " " + ProbesAmount[i]); }
-            else { ProbesAmount[i] = 0; }
+            if (Rnd != 0) {  ProbesAmount[i] = 0; }
+            else { ProbesAmount[i] = (terraIndex - N) / 10;}
 
             treasure[i] = (100 - TI[i]) * 50; // (100 - 10)*50 = 4500
+
+            print(terraIndex + " " + ProbesAmount[i] + " " + treasure[i]);
         }
 
 

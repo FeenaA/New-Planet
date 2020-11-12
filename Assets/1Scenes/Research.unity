@@ -1296,12 +1296,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3be730d1b8bd84caad38140c24bf2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextProbes: {fileID: 2063788488}
+  TextProbes: {fileID: 2063788490}
+  TextEth: {fileID: 1725025585}
   TextDate: {fileID: 538435815}
   MessageBox: {fileID: 3581867336716266080, guid: ccd348f140290404cbcc8f99e2f11ae9,
     type: 3}
-  MainCanvas: {fileID: 1353864825}
+  GeneralMessageBox: {fileID: 3631436175322063141, guid: 642a847be2668ef459881aeeccd29bfb,
+    type: 3}
+  MainCanvas: {fileID: 1353864826}
   TextCoins: {fileID: 1199631246}
+  ResAdd:
+  - {fileID: 1723069049}
+  - {fileID: 467187405}
+  - {fileID: 61373096}
   ButtonResearchSelect: {fileID: 2381355919237487141}
   strResearch: Research
   strSelect: Select
@@ -1623,13 +1630,10 @@ MonoBehaviour:
   ResWater: {fileID: 1385123179}
   ResAir: {fileID: 102161790}
   ResSoil: {fileID: 481815452}
-  ResAdd1: {fileID: 1723069049}
-  ResAdd2: {fileID: 467187405}
-  ResAdd3: {fileID: 61373096}
-  textProbes: {fileID: 2063788488}
-  textSC: {fileID: 1126424097}
-  textEth: {fileID: 1725025583}
-  textBC: {fileID: 1422019993}
+  TextProbes: {fileID: 2063788490}
+  TextSC: {fileID: 1126424099}
+  TextEth: {fileID: 1725025585}
+  TextBC: {fileID: 5214554691765799781}
   TextRequestedResources: {fileID: 1566076261}
   TextPlanet: {fileID: 683792778529862879}
   ImageCrawlLine: {fileID: 1586287987}
@@ -4931,7 +4935,6 @@ MonoBehaviour:
   peopleOnNew: {fileID: 0}
   CycleImage: {fileID: 0}
   NotCycleImage: {fileID: 0}
-  TextDate: {fileID: 538435815}
 --- !u!43 &1356815113
 Mesh:
   m_ObjectHideFlags: 0
@@ -7080,6 +7083,9 @@ MonoBehaviour:
   TextDate: {fileID: 538435815}
   TextCoins: {fileID: 1199631245}
   BlueCoins: {fileID: 5214554691765799780}
+  TextSC: {fileID: 1126424099}
+  TextBC: {fileID: 5214554691765799781}
+  TextEth: {fileID: 1725025585}
   MainCanvas: {fileID: 1353864825}
   MessageBox: {fileID: 3238391761287202839, guid: 321543c2689799f43b28e7fceb511906,
     type: 3}
@@ -9045,6 +9051,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5214554691765799779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5214554691765799781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5214554691023554296, guid: 97de18acebda8ac4b9a51577c2d746d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 5214554691765799779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422019993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5326662479799569916
 GameObject:
   m_ObjectHideFlags: 0

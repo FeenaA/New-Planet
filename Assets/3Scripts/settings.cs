@@ -199,8 +199,6 @@ public class settings : MonoBehaviour
 
             // save all new params
             LoadGame.SetAll();
-
-            print("NEarthMaterial: " + gameSettings.NEarthMaterial);
         }
         else
         {

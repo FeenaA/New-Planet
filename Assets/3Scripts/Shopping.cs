@@ -40,15 +40,19 @@ public class Shopping : MonoBehaviour
     // blueCoins 
     public GameObject BlueCoins;
 
+    // amount of units
+    public Text TextSC;
+    public Text TextBC;
+    public Text TextEth;
 
     private static int numRes;
     public static int numButtonResource;
     private static int cost;
 
     // objects of another classes
-    private static panelInform PI;
-    private static ShowProgress SP; 
-    private static BlueCoin BC;
+    private panelInform PI;
+    private ShowProgress SP; 
+    private BlueCoin BC;
 
     public Canvas MainCanvas;
     public GameObject MessageBox;
@@ -157,7 +161,7 @@ public class Shopping : MonoBehaviour
 
         SP = PanelInformation.GetComponent<ShowProgress>();
         PI = PanelInformation.GetComponent<panelInform>();
-        BC = settingsResearches.sTextBC.GetComponent<BlueCoin>();
+        BC = TextBC.GetComponent<BlueCoin>();
 
         // get amount of the resource on the selected planet
         numButtonResource = n;
@@ -253,7 +257,7 @@ public class Shopping : MonoBehaviour
 
             // show amount of spacecrafts
             settings.gameSettings.NSpasecraft--;
-            settingsResearches.sTextSC.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NSpasecraft);
+            TextSC.text = System.Convert.ToString(settings.gameSettings.NSpasecraft);
             if (settings.gameSettings.NSpasecraft == 0) { sTextStorage.GetComponent<Text>().text = strNoSC; }
 
             if (numButtonResource > 0)
@@ -296,7 +300,7 @@ public class Shopping : MonoBehaviour
             sTextStorage.GetComponent<Text>().text = PI.GetAmountInStorage(numRes) + strAtStorage;
 
             // amount of Ether
-            settingsResearches.sTextEth.GetComponent<Text>().text = System.Convert.ToString(--settings.gameSettings.NEther);
+            TextEth.text = System.Convert.ToString(--settings.gameSettings.NEther);
             if (settings.gameSettings.NEther == 0)  { EtherButton.SetActive(false); }
 
             // after Ether using resource became transportable
@@ -348,7 +352,7 @@ public class Shopping : MonoBehaviour
 
         // BlueCoin decrement
         BC.SubstractBlueCoins(1);
-        settingsResearches.sTextBC.GetComponent<Text>().text = 
+        TextBC.text = 
         System.Convert.ToString(BlueCoin.sNBlueCoin);
 
         // increase amount of the Resource at the selected planet
