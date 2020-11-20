@@ -10,6 +10,7 @@ public class EarthOnClick : MonoBehaviour
 {
     // CanvasBuildings to be shown on the scene
     public GameObject CanvasBuildings;
+    public static GameObject sCanvasBuildings;
     // panels to be unactive when CanvasBuildings is on the scene
     public GameObject PanelPeople;
     public GameObject PanelResources;
@@ -18,6 +19,12 @@ public class EarthOnClick : MonoBehaviour
     public static bool flagBuildings = false;
     // Earth is clicked the first time
     private static bool flagFirstTime = false;
+
+    private void Start()
+    {
+        sCanvasBuildings = CanvasBuildings;
+    }
+
     void OnMouseDown()
     {
         // to prevent multi showing of the BuildingPanel

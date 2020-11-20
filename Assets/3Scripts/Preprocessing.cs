@@ -18,6 +18,7 @@ public class Preprocessing : MonoBehaviour
     public GameObject PrefabStatistics;
     public GameObject SetNameNew;
     public InputField inputField;
+    public Text InputNewName;
 
     // materials for planets
     public Material[] materials;
@@ -129,12 +130,14 @@ public class Preprocessing : MonoBehaviour
             ButtonLanguage.GetComponentInChildren<Text>().text = "RU";
             ButtonNewGame.GetComponentInChildren<Text>().text = "НОВАЯ ИГРА";
             ButtonContinue.GetComponentInChildren<Text>().text = "ПРОДОЛЖИТЬ";
+            InputNewName.text = "ДАЙ НАЗВАНИЕ СВОЕЙ РОДНОЙ ПЛАНЕТЕ";
         }
         else
         {
             ButtonLanguage.GetComponentInChildren<Text>().text = "EN";
             ButtonNewGame.GetComponentInChildren<Text>().text = "New game";
             ButtonContinue.GetComponentInChildren<Text>().text = "Continue";
+            InputNewName.text = "Give your native planet name";
         }
     }
 

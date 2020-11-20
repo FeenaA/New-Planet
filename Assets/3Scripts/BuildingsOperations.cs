@@ -37,7 +37,8 @@ public class BuildingsOperations : MonoBehaviour
     public GameObject textProfitTitlePF;
     public Text textProfitPF;
     public GameObject panelPF;
-     
+    public GameObject imageCoinPF;
+
     // GOs for Hospital
     public GameObject buttonHospital;
     public Text textTitleHospital;
@@ -46,7 +47,8 @@ public class BuildingsOperations : MonoBehaviour
     public Text textCostHSP;
     public GameObject panelHSP;
     public Text textMortality;
-
+    public GameObject imageCoinHSP;
+     
     // GOs for Mine
     public GameObject buttonMine;
     public Text textTitleMine;
@@ -55,6 +57,7 @@ public class BuildingsOperations : MonoBehaviour
     public GameObject textProfitTitleMN;
     public Text textProfitMN;
     public GameObject panelMN;
+    public GameObject imageCoinMN;
 
     // GOs for spaceport
     public GameObject buttonSC;
@@ -64,13 +67,15 @@ public class BuildingsOperations : MonoBehaviour
     public GameObject textProfitTitleSC;
     public Text textProfitSC;
     public GameObject panelSC;
-
+    public GameObject imageCoinSC;
+     
     // general gameobjects
     private Text textX;
-    private Text textCost;
+    private Text textCost; 
     public Text textProfit;
     private GameObject buttonBuild;
     private GameObject panel;
+    private GameObject ImageCoin;
 
     public class Building
     {
@@ -95,30 +100,30 @@ public class BuildingsOperations : MonoBehaviour
     private BuildingMine Mine = new BuildingMine();
     private BuildingTime SCfactory = new BuildingTime();
 
-    private string Cost = ""; 
-    private string Per = "";
-    private string Days = "";
-    private string Day = "";
-    private string Now = "";
-    private string Maximum = "";
-    private string Treatment = "";
+    private string Cost;
+    private string Per;
+    private string Days;
+    private string Day;
+    private string Now;
+    private string Maximum;
+    private string Treatment;
 
-    private string FirstPF = ""; 
-    private string FirstHospital = "";
-    private string FirstMine = "";
-    private string FirstSC = "";
+    private string FirstPF;
+    private string FirstHospital;
+    private string FirstMine;
+    private string FirstSC;
 
-    private string NewPF = "";
-    private string NewHospital = "";
-    private string NewMine = "";
-    private string NewSC = "";
+    private string NewPF;
+    private string NewHospital;
+    private string NewMine;
+    private string NewSC;
 
-    private string MaxPF = "";
-    private string MaxHospital = "";
-    private string MaxMine = "";
-    private string MaxSC = "";
+    private string MaxPF;
+    private string MaxHospital;
+    private string MaxMine;
+    private string MaxSC;
 
-    private string strStartResearch = "";
+    private string strStartResearch;
 
     void Start()
     {
@@ -149,7 +154,7 @@ public class BuildingsOperations : MonoBehaviour
         textCostSC.GetComponent<Text>().text = Cost + SCfactory.Cost;
         textProfitSC.GetComponent<Text>().text = ProfitSC;
 
-        // to prevent building too expensove buildings
+        // to prevent building too expensive buildings
         ReloadButtons();
         // to prevent building extra buildings
         CheckMax();
@@ -171,7 +176,8 @@ public class BuildingsOperations : MonoBehaviour
                 textCost = textCostPF;
                 buttonBuild = buttonPF;
                 textProfit = textProfitPF;
-                panel = panelPF; 
+                panel = panelPF;
+                ImageCoin = imageCoinPF;
                 flagBuild = BuildBuilding(ProbeFactory);
                 settings.gameSettings.NProbe++;
 
@@ -190,6 +196,7 @@ public class BuildingsOperations : MonoBehaviour
                 textCost = textCostHSP;
                 buttonBuild = buttonHospital;
                 panel = panelHSP;
+                ImageCoin = imageCoinHSP;
                 flagBuild = BuildBuilding(Hospital);
 
                 // deal with crawl line
@@ -207,6 +214,7 @@ public class BuildingsOperations : MonoBehaviour
                 buttonBuild = buttonMine;
                 textProfit = textProfitMN;
                 panel = panelMN;
+                ImageCoin = imageCoinMN;
                 flagBuild = BuildBuilding(Mine);
 
                 // deal with crawl line
@@ -225,6 +233,7 @@ public class BuildingsOperations : MonoBehaviour
                 buttonBuild = buttonSC;
                 textProfit = textProfitSC;
                 panel = panelSC;
+                ImageCoin = imageCoinSC;
                 flagBuild = BuildBuilding(SCfactory);
 
                 // deal with crawl line
@@ -276,6 +285,7 @@ public class BuildingsOperations : MonoBehaviour
         if ( building.N == NMaxBuildings)
         {
             Destroy(buttonBuild);
+            Destroy(ImageCoin);
             GameObject instance = Instantiate(imageCompleted);
             instance.GetComponentInChildren<Text>().text = Maximum;
             instance.transform.SetParent(panel.transform, false);
@@ -292,6 +302,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostPF);
             Destroy(buttonPF);
+            Destroy(imageCoinPF);
             GameObject instance = Instantiate(imageCompleted);
             instance.GetComponentInChildren<Text>().text = Maximum;
             instance.transform.SetParent(panelPF.transform, false);
@@ -301,6 +312,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostHSP);
             Destroy(buttonHospital);
+            Destroy(imageCoinHSP);
             GameObject instance = Instantiate(imageCompleted);
             textMortality.text = Treatment;
             instance.GetComponentInChildren<Text>().text = Maximum;
@@ -311,6 +323,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostMN);
             Destroy(buttonMine);
+            Destroy(imageCoinMN);
             GameObject instance = Instantiate(imageCompleted);
             instance.GetComponentInChildren<Text>().text = Maximum;
             instance.transform.SetParent(panelMN.transform, false);
@@ -320,6 +333,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostSC);
             Destroy(buttonSC);
+            Destroy(imageCoinSC);
             GameObject instance = Instantiate(imageCompleted);
             instance.GetComponentInChildren<Text>().text = Maximum;
             instance.transform.SetParent(panelSC.transform, false);
@@ -335,6 +349,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostPF);
             Destroy(buttonPF);
+            Destroy(imageCoinPF);
         }
         else
         {
@@ -348,6 +363,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostHSP);
             Destroy(buttonHospital);
+            Destroy(imageCoinHSP);
             textMortality.text = Treatment;
         }
         else
@@ -362,6 +378,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostMN);
             Destroy(buttonMine);
+            Destroy(imageCoinMN);
         }
         else
         {
@@ -375,6 +392,7 @@ public class BuildingsOperations : MonoBehaviour
         {
             Destroy(textCostSC);
             Destroy(buttonSC);
+            Destroy(imageCoinSC);
         }
         else
         {
@@ -446,6 +464,7 @@ public class BuildingsOperations : MonoBehaviour
         if (building.N == NMaxBuildings)
         {
             Destroy(textCost);
+            Destroy(imageCoinHSP);
         }
     }
 
@@ -454,7 +473,7 @@ public class BuildingsOperations : MonoBehaviour
         if (PersonalSettings.language == LanguageSettings.Language.Russian)
         {
             textTitle.GetComponent<Text>().text = "ЗДАНИЯ НА " + settings.gameSettings.NameNative;
-            Cost = "ЦЕНА:            ";
+            Cost = "ЦЕНА:        ";
             Per = " ЗА ";
             Days = " ДНЕЙ\n";
             Day = "ДЕНЬ\n";
@@ -500,7 +519,7 @@ public class BuildingsOperations : MonoBehaviour
         else
         {
             textTitle.GetComponent<Text>().text = settings.gameSettings.NameNative + "'s buildings";
-            Cost = "Cost:             ";
+            Cost = "Cost:        ";
             Per = " per ";
             Days = " days\n";
             Day = "day\n";

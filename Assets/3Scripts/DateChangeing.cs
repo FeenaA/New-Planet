@@ -382,53 +382,6 @@ public class DateChangeing : MonoBehaviour
         System.Convert.ToString(settings.gameSettings.NPeopleOnNew);
     }
 
-    /*
-
-    /// <summary>
-    /// Send NSpacecraft SC
-    /// </summary>
-    /// <param name="NSpacecraft"></param>
-    /// <returns>amount of sent people</returns>
-    public int SendPeople(int NSpacecraft)
-    {
-        // if (SceneName == "Game")
-        if (settings.gameSettings.NPeopleOnNative == 0) return 0;
-
-        // NSpacecraft - amount of avaliable SCs
-        if (settings.gameSettings.NSpasecraft < NSpacecraft)
-        { NSpacecraft = settings.gameSettings.NSpasecraft; }
-        if (NSpacecraft == 0) return 0;
-
-        // the first group of people was sent
-        if (!settings.gameSettings.flagPeopleVeBeenSent)
-        {
-            settings.gameSettings.flagPeopleVeBeenSent = true;
-            LoadGame.SetPeopleVeBeenSent();
-
-            // to operate with CrawlLine
-            crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
-            CL.ShowNext(strFirstOnNew + settings.gameSettings.NameNew);
-        }
-
-        // NTransportedPeople - amount of avaliable people
-        int NTransportedPeople = People.NPeopleInSC * NSpacecraft;
-        if (settings.gameSettings.NPeopleOnNative < NTransportedPeople)
-        { NTransportedPeople = settings.gameSettings.NPeopleOnNative; }
-        NSpacecraft = NTransportedPeople / People.NPeopleInSC;
-        if (NSpacecraft * People.NPeopleInSC < NTransportedPeople) NSpacecraft++;
-
-        // change amount of people on new and native planets
-        settings.gameSettings.NSpasecraft -= NSpacecraft;
-        settings.gameSettings.NPeopleOnNative -= NTransportedPeople;
-        settings.gameSettings.NPeopleOnNew += NTransportedPeople;
-        settings.gameSettings.CurrentPerSent = settings.gameSettings.NPeopleOnNew * 100 / settings.gameSettings.AllPeople;
-
-        // Save NSpasecraft, amount of people on new and native planets
-        LoadGame.SetPeopleTransport();
-
-        return NTransportedPeople;
-    }*/
-
     /// <summary>
     /// Show pop-up line
     /// </summary>
@@ -503,7 +456,9 @@ public class DateChangeing : MonoBehaviour
             { settings.flagIsWin = false; }
             else // winning
             { settings.flagIsWin = true; }
-            Instantiate(CanvasGameOver);
+            var instance = Instantiate(CanvasGameOver);
+            instance.GetComponent<Canvas>().worldCamera = Camera.main;
+            //instance.transform.SetParent(MainCanvas, false);
         }
         #endregion
     }

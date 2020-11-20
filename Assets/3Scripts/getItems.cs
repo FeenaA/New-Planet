@@ -42,6 +42,7 @@ public class getItems : MonoBehaviour
         public int[] ResNess_Amount = new int[3];
         public int[] ResAdd = new int[3];// numbers of resources
         public int[] ResAddAmount = new int[3];// amount of resources
+        // amount of probes to be crashed to research planet
         public int amountProbes;
         public int amountCoins;
         public bool flagIsResearched = false;
@@ -123,28 +124,33 @@ public class getItems : MonoBehaviour
                 ResAddAmount = new int[] { rnd.Next(minRes, maxRes),
                 rnd.Next(minRes, maxRes), rnd.Next(minRes, maxRes) },
                 amountProbes = AP[i],
-                amountCoins = Coins[i],
-                flagCoins = (Coins[i] > 0)
+                amountCoins = Coins[i]
             };
 
-            PP.flagCoins = Treasure(TI[i]);
-            PP.flagEther = Treasure(TI[i]);
-            // trigger to change coins or ether
-            bool trigger = false;
-            if (PP.flagCoins && PP.flagEther)
+            // problems with probes and garanted treasure
+            if ( PP.amountCoins > 0 )
             {
-                if (trigger)
-                { 
-                    PP.flagCoins = false;
-                    PP.amountProbes = 0;
-                    PP.amountCoins = 0; 
-                }
-                else { 
-                    PP.flagEther = false; 
-                    PP.amountCoins = 1000; 
-                }
-                trigger = !trigger;
+                PP.flagCoins = true;
             }
+            else
+            {
+                PP.flagCoins = Treasure(TI[i]);
+                PP.flagEther = Treasure(TI[i]);
+                if ( PP.flagCoins )
+                {
+                    PP.flagEther = false;
+                    PP.amountCoins = 1000;
+                }
+                else
+                {
+                    if ( PP.flagEther )
+                    {
+                        PP.flagCoins = false;
+                        PP.amountProbes = 0;
+                        PP.amountCoins = 0;
+                    }
+                }
+            } 
 
             result.Add((i + 1), PP);
         }
@@ -159,9 +165,9 @@ public class getItems : MonoBehaviour
     private bool Treasure(int terraIndex)
     {
         int N = 0;
-             if (terraIndex <= 20) { N = 4; }
-        else if ((terraIndex > 20) && (terraIndex <= 40)) { N = 6; }
-        else if ((terraIndex > 40) && (terraIndex <= 60)) { N = 10; }
+             if (terraIndex <= 20) { N = 5; }
+        else if ((terraIndex > 20) && (terraIndex <= 40)) { N = 10; }
+        else if ((terraIndex > 40) && (terraIndex <= 60)) { N = 20; }
         else if ((terraIndex > 60) && (terraIndex <= 80)) { N = 30; }
         else if (terraIndex > 80) { N = 40; }
 
@@ -241,26 +247,30 @@ public class getItems : MonoBehaviour
     /// <param name="treasure"></param>
     private void SetProbesGenerate(int len, ref int[] ProbesAmount, ref int[] treasure)
     {
+        int[] a_0_10 =  { 0, 0, 1, 1, 1, 2, 2, 3 };
+        int[] a_10_30 = { 0, 0, 0, 0, 1, 1, 2, 2 };
+        int[] a_30_60 = { 0, 0, 0, 0, 0, 0, 1, 1 };
+        int[] a_60_99 = { 0, 0, 0, 0, 0, 0, 0, 1 };
+        int N = a_0_10.Length;
+
         for (int i = 0; i < len; i++)
         {
-            int N = 0;
             int terraIndex = TI[i];
-            if (terraIndex <= 20) { N = 4; }
-            else if ((terraIndex > 20) && (terraIndex <= 40)) { N = 6; }
-            else if ((terraIndex > 40) && (terraIndex <= 60)) { N = 10; }
-            else if ((terraIndex > 60) && (terraIndex <= 80)) { N = 30; }
-            else if (terraIndex > 80) { N = 40; }
+            // reference
+            ref int[] aRef = ref a_0_10;
 
-            int Rnd = rnd.Next(N - 1);
-            if (Rnd != 0) {  ProbesAmount[i] = 0; }
-            else { ProbesAmount[i] = (terraIndex - N) / 10;}
+            if (terraIndex <= 10) { aRef = ref a_0_10; }
+            else if ((terraIndex > 10) && (terraIndex <= 30)) { aRef = ref a_10_30; }
+            else if ((terraIndex > 30) && (terraIndex <= 60)) { aRef = ref a_30_60; }
+            else if (terraIndex > 60) { aRef = ref a_60_99; }
 
-            treasure[i] = (100 - TI[i]) * 50; // (100 - 10)*50 = 4500
+            ProbesAmount[i] = aRef[rnd.Next(N - 1)];
+
+            // treasure
+            treasure[i] = ProbesAmount[i] * (100 - TI[i]) * 100;
 
             print(terraIndex + " " + ProbesAmount[i] + " " + treasure[i]);
         }
-
-
     }
 
     /// <summary>

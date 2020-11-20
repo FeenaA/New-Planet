@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // text
 using UnityEngine.SceneManagement; // name of the current scene
+using UnityEngine.Advertisements;
 
 public class advert : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class advert : MonoBehaviour
     void Start()
     {
         CorrectLanguages();
+
+        // initialize advertisement
+        Advertisement.Initialize("3906441", false);
     }
 
     /// <summary>
@@ -23,7 +27,8 @@ public class advert : MonoBehaviour
     {
         Destroy(gameObject);
 
-        // advertisement
+        // show advertisement
+        Advertisement.Show("video");
 
         BlueCoin BC = BlueCoin.sTextBC.GetComponent<BlueCoin>();
         BC.AddBlueCoins(1);

@@ -12,8 +12,12 @@ public class MessageBox : MonoBehaviour
     /// <summary>
     /// GO to have an access to crawl line
     /// </summary> 
-    public GameObject GO_CL; 
-     
+    public GameObject GO_CL;
+    /// <summary>
+    /// to check if buildings are switched on
+    /// </summary>
+    public GameObject CanvasBuilding;
+
     /// <summary>
     /// to fill TextMessage by the message
     /// </summary>
@@ -22,6 +26,7 @@ public class MessageBox : MonoBehaviour
     {
         //to block showing any new messages while the messagebox exists
         crawlLine.BlockCrawlLine = true;
+        EarthOnClick.flagBuildings = true;
         TextMessage.text = Message;
     }
 
@@ -32,6 +37,9 @@ public class MessageBox : MonoBehaviour
     {
         // to operate with CrawlLine
         crawlLine.BlockCrawlLine = false;
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Game")
+        { EarthOnClick.flagBuildings = EarthOnClick.sCanvasBuildings.activeSelf; }
 
         if (!crawlLine.flagShowNow) 
         {

@@ -10,7 +10,6 @@ public class panelInform : MonoBehaviour
     public Text TextEth;
 
     public GameObject TextDate;
-    private readonly int presentedCoins = 1000;
     // MB to show congratulations
     public GameObject MessageBox;
     // MB to note that a probe was crushed
@@ -21,8 +20,8 @@ public class panelInform : MonoBehaviour
     public Transform[] ResAdd; 
     // button 
     public GameObject ButtonResearchSelect;
-    public string strResearch = "Research";
-    public string strSelect = "Select";
+    private string strResearch;
+    private string strSelect;
     // planet information
     public Renderer Sphere;
     public Text NamePlanet;
@@ -30,6 +29,9 @@ public class panelInform : MonoBehaviour
     // text for requested resources
     public Text TextRequestedResources;
 
+    // buttons for necessary resources
+    public Transform[] resNecess;
+     
     void Start()
     {
         CorrectLanguage();
@@ -45,13 +47,12 @@ public class panelInform : MonoBehaviour
         NamePlanet.text = PP.textName;
         TextIntro.text = getItems.sIntroduction[PP.numIntro];
 
-        //show nesessary resources
-        settingsResearches.rAir.GetComponentInChildren<Text>().text =
-            getItems.ResNess[-3].name + " = " + PP.ResNess_Amount[0];
-        settingsResearches.rWater.GetComponentInChildren<Text>().text =
-            getItems.ResNess[-2].name + " = " + PP.ResNess_Amount[1];
-        settingsResearches.rSoil.GetComponentInChildren<Text>().text =
-            getItems.ResNess[-1].name + " = " + PP.ResNess_Amount[2];
+        //show necessary resources
+        for (int i = 0; i < 3; i++)
+        {
+            resNecess[i].GetComponentInChildren<Text>().text =
+                getItems.ResNess[i-3].name + " = " + PP.ResNess_Amount[i];
+        }
 
         // extraordinary resources
         if (PP.flagIsResearched == false)
@@ -61,7 +62,14 @@ public class panelInform : MonoBehaviour
             ButtonResearchSelect.GetComponentInChildren<Text>().text = strResearch;
 
             if (settings.gameSettings.NProbe == 0)
-            { ButtonResearchSelect.GetComponent<Button>().interactable = false; }
+            {
+                print("Probe: " + settings.gameSettings.NProbe); 
+                ButtonResearchSelect.GetComponent<Button>().interactable = false; 
+            }
+            else
+            {
+                ButtonResearchSelect.GetComponent<Button>().interactable = true;
+            }
 
             //foreach (var resource in settingsResearches.r)
             foreach (var resource in ResAdd)
@@ -87,14 +95,12 @@ public class panelInform : MonoBehaviour
                 {
                     // not empty slot
                     ResAdd[i].GetComponentInChildren<Text>().text =
-                    //settingsResearches.r[i].GetComponentInChildren<Text>().text =
                         getItems.ResourceAdd[PP.ResAdd[i]].name + " = " + PP.ResAddAmount[i];
                 }
                 else
                 {
                     // empty slot
                     ResAdd[i].GetComponentInChildren<Text>().text = "-";
-                    //settingsResearches.r[i].GetComponentInChildren<Text>().text = "-";
                     // let free current resource slot 
                     PP.ResAdd[i] = 0;
                 }
@@ -102,7 +108,9 @@ public class panelInform : MonoBehaviour
         }
     }
 
-    // learn more about this planet
+    /// <summary>
+    /// learn more about this planet
+    /// </summary>
     public void ResearchPressed()
     {
         // if researching is avaliable
@@ -128,7 +136,6 @@ public class panelInform : MonoBehaviour
                     // show resources
                     for (int i = 0; i < 3; i++)
                     {
-                        //settingsResearches.r[i].GetComponentInChildren<Text>().text =
                         ResAdd[i].GetComponentInChildren<Text>().text =
                             getItems.ResourceAdd[ItemOnClick.PP.ResAdd[i]].name + " = " + ItemOnClick.PP.ResAddAmount[i];
                     }
@@ -156,7 +163,7 @@ public class panelInform : MonoBehaviour
                     if (ItemOnClick.PP.flagCoins)
                     {
                         DateChangeing DC = TextDate.GetComponent<DateChangeing>();
-                        settings.gameSettings.NCoins = DC.AddCoins(presentedCoins);
+                        settings.gameSettings.NCoins = DC.AddCoins(ItemOnClick.PP.amountCoins);
                         // show changes
                         TextCoins.text = System.Convert.ToString(settings.gameSettings.NCoins);
 

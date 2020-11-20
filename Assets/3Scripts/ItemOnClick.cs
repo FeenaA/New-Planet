@@ -80,6 +80,7 @@ public class ItemOnClick : MonoBehaviour
             settingsResearches.rSoil.gameObject.GetComponent<Outline>().enabled = false;
         }
 
+        // dealing with panel information
         panelInform PI = settingsResearches.sPanelInformation.GetComponent<panelInform>();
         PI.ResetPlanet(PP);
 

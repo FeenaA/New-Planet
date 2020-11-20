@@ -10,9 +10,7 @@ public class Shopping : MonoBehaviour
     public GameObject PanelShopping; 
     public static GameObject sPanelShopping;
     public GameObject PanelPlanets;
-    private static GameObject sPanelPlanets;
     public GameObject TextTitle;
-    private static GameObject sTextTitle;
 
     // name of the resource
     public GameObject textResource;
@@ -54,9 +52,11 @@ public class Shopping : MonoBehaviour
     private ShowProgress SP; 
     private BlueCoin BC;
 
-    public Canvas MainCanvas;
+    public Transform MainCanvas;
     public GameObject MessageBox;
     public GameObject ImageCrawlLine;
+
+    public GameObject MessageBoxAllRes;
 
     /// <summary>
     /// amount of the current resource on the selected planet
@@ -76,6 +76,7 @@ public class Shopping : MonoBehaviour
     private string CrawlLineResource;
     private string CrawlLineSell;
     private string CrawlLineProfit;
+    private string strAllResOnNew;
 
     /// <summary>
     /// copy GOs to their static analoges and correct language
@@ -83,9 +84,6 @@ public class Shopping : MonoBehaviour
     void Start()
     {
         sPanelShopping = PanelShopping;
-        sPanelPlanets = PanelPlanets;
-        sTextTitle = TextTitle;
-
         sTextStorage = TextStorage;
         sTextCostResource = textCostResource;
         sTextResource = textResource;
@@ -107,6 +105,7 @@ public class Shopping : MonoBehaviour
             strNoResources = "НЕТ РЕСУРСОВ";
             strResource = "РЕСУРС";
             strPress = "НАЖМИ НА ЗАГОЛОВОК, ЧТОБЫ ИЗМЕНИТЬ РЕСУРС";
+            strAllResOnNew = "ПРЕВОСХОДНО! ТЫ СОБРАЛ ВСЕ РЕСУРСЫ НА НОВОЙ ПЛАНЕТЕ! ОСТАЛОСЬ ПЕРЕВЕЗТИ ЛЮДЕЙ.";
 
             // buttons on the Shopping panel
             TransportButton.GetComponentInChildren<Text>().text = "ПЕРЕВЕЗТИ";
@@ -128,6 +127,7 @@ public class Shopping : MonoBehaviour
             strNoResources = "No resources";
             strResource = "Resource";
             strPress = "Press on the title to choose resource";
+            strAllResOnNew = "Congratulations! You've collected all resources! Focus on the transportation of people.";
 
             // buttons on the Shopping panel
             TransportButton.GetComponentInChildren<Text>().text = "Transport";
@@ -180,8 +180,8 @@ public class Shopping : MonoBehaviour
                 ResetShoppingPanel();
                 // show PanelShopping and disable PanelPlanets
                 sPanelShopping.SetActive(true);
-                sPanelPlanets.SetActive(false);
-                sTextTitle.SetActive(false);
+                PanelPlanets.SetActive(false);
+                TextTitle.SetActive(false);
                 return;
             }
             // not empty slot
@@ -206,8 +206,8 @@ public class Shopping : MonoBehaviour
 
         // show PanelShopping and disable PanelPlanets
         sPanelShopping.SetActive(true);
-        sPanelPlanets.SetActive(false);
-        sTextTitle.SetActive(false);
+        PanelPlanets.SetActive(false);
+        TextTitle.SetActive(false);
 
         // settings: may be buttons clicked or not 
         ResetButtons();
@@ -239,7 +239,7 @@ public class Shopping : MonoBehaviour
             // increase amount of the Resource at the selected planet
             AddResourceToPanet(++NRes);
 
-            // crawl line 
+            #region crawl line 
             crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
             if (numButtonResource > 0) // extraordinary resource
             {
@@ -254,6 +254,7 @@ public class Shopping : MonoBehaviour
                 CL.ShowWithoutPause(CrawlLineResource + 
                     getItems.ResNess[numButtonResource].name + CrawlLineTransport + settings.gameSettings.NameNative);
             }
+            #endregion
 
             // show amount of spacecrafts
             settings.gameSettings.NSpasecraft--;
@@ -274,6 +275,9 @@ public class Shopping : MonoBehaviour
 
             // checking: if people may be transported
             if (numButtonResource < 0) { Check30(); }
+
+            // checking: if all resources are on the new planet
+            CheckRequestRes();
 
             // save the new data
             LoadGame.SetTransport();
@@ -325,9 +329,16 @@ public class Shopping : MonoBehaviour
         // show an amount of coins
         TextCoins.GetComponent<Text>().text = System.Convert.ToString(settings.gameSettings.NCoins);
 
-        // crawl line 
+        #region crawl line 
         crawlLine CL = ImageCrawlLine.GetComponent<crawlLine>();
-        CL.ShowWithoutPause(CrawlLineSell + getItems.ResourceAdd[numRes].name + CrawlLineProfit);
+
+        // extraordinary resource
+        if (numButtonResource > 0) 
+        { CL.ShowWithoutPause(CrawlLineSell + getItems.ResourceAdd[numRes].name + CrawlLineProfit); }
+        else 
+        // necessary resource
+        { CL.ShowWithoutPause(CrawlLineSell + getItems.ResNess[numButtonResource].name + CrawlLineProfit); }
+        #endregion
 
         // take away the sold resource
         TakeAwayResource();
@@ -360,6 +371,9 @@ public class Shopping : MonoBehaviour
 
         // checking: if people may be transported
         if (numButtonResource < 0) { Check30(); }
+
+        // checking: if all resources are on the new planet
+        CheckRequestRes();
 
         // show information
         ShowShopping();
@@ -395,6 +409,25 @@ public class Shopping : MonoBehaviour
     }
 
     /// <summary>
+    /// checking - if all requested resources are on the new planet
+    /// </summary>
+    /// <returns></returns>
+    private void CheckRequestRes()
+    {
+        int sum = 0;
+        foreach (var reqRes in settings.gameSettings.RequestedResources)
+        { sum += reqRes.Value; }
+        if (sum == settings.gameSettings.RequestedResources.Count * 10)
+        {
+            // show Message
+            var messageBox = Instantiate(MessageBoxAllRes);
+            messageBox.SendMessage("TheStart", strAllResOnNew);
+            // SetParent to the MessageBox
+            messageBox.transform.SetParent(MainCanvas, false);
+        }
+    }
+
+    /// <summary>
     /// show changes after getting new spacecraft 
     /// </summary>
     public void AddSC()
@@ -426,7 +459,7 @@ public class Shopping : MonoBehaviour
 
             // show MessageBox: people may be transported
             var instance = Instantiate(MessageBox);
-            instance.transform.SetParent(MainCanvas.transform, false);
+            instance.transform.SetParent(MainCanvas, false);
         }
     }
 
@@ -689,10 +722,10 @@ public class Shopping : MonoBehaviour
         return res;
     }
 
-/// <summary>
-/// amount of the Resource at the selected planet
-/// </summary>
-private int GetNRes()
+    /// <summary>
+    /// amount of the Resource at the selected planet
+    /// </summary>
+    private int GetNRes()
     {
         // nesessary resource
         if (numButtonResource < 0)
@@ -705,8 +738,8 @@ private int GetNRes()
     // close the PanelShopping 
     public void CloseShopPressed()
     {
-        sPanelPlanets.SetActive(true);
-        sTextTitle.SetActive(true);
+        PanelPlanets.SetActive(true);
+        TextTitle.SetActive(true);
         sPanelShopping.SetActive(false);
     }
 

@@ -22,7 +22,7 @@ public class PersonalSettings : MonoBehaviour
         PathPersonalSettings = Application.persistentDataPath + "/PersonalSettings.xml";
         //"C:/Users/Feena/AppData/LocalLow/Feena/New Planet/test.txt"
         string stringPersonalSettings =
-        "<?xml version=\"1.0\"?><PersonalSettings><firstGame>true</firstGame><language>Russian</language><savedGame>False</savedGame><music>True</music><NBlue>45</NBlue><BestPerSent>0</BestPerSent><BestNResUnits>0</BestNResUnits><Wins>0</Wins><Loses>0</Loses></PersonalSettings>";
+        "<?xml version=\"1.0\"?><PersonalSettings><firstGame>true</firstGame><language>Russian</language><savedGame>False</savedGame><music>True</music><NBlue>3</NBlue><BestPerSent>0</BestPerSent><BestNResUnits>0</BestNResUnits><Wins>0</Wins><Loses>0</Loses></PersonalSettings>";
 
         // if file doesn't exist, create it and fill 
         if (!File.Exists(PathPersonalSettings))

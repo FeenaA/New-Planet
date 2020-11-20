@@ -6074,7 +6074,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Cost:        200'
+  m_Text: 'Cost:        24000'
 --- !u!222 &1900327993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9005,6 +9005,7 @@ MonoBehaviour:
   textProfitTitlePF: {fileID: 2041600337}
   textProfitPF: {fileID: 1078937125}
   panelPF: {fileID: 7274764276633916048}
+  imageCoinPF: {fileID: 366682411}
   buttonHospital: {fileID: 7274764275677376558}
   textTitleHospital: {fileID: 1835433175}
   textXHSP: {fileID: 1728554603}
@@ -9012,6 +9013,7 @@ MonoBehaviour:
   textCostHSP: {fileID: 457013829}
   panelHSP: {fileID: 7274764275694099267}
   textMortality: {fileID: 1192782756}
+  imageCoinHSP: {fileID: 1822300271}
   buttonMine: {fileID: 7274764275510066223}
   textTitleMine: {fileID: 7274764275866135891}
   textXMN: {fileID: 1324098479}
@@ -9019,6 +9021,7 @@ MonoBehaviour:
   textProfitTitleMN: {fileID: 1692498877}
   textProfitMN: {fileID: 1760307842}
   panelMN: {fileID: 7274764275422165268}
+  imageCoinMN: {fileID: 548484538}
   buttonSC: {fileID: 7274764276451525802}
   textTitleSC: {fileID: 7274764274865701130}
   textXSC: {fileID: 816712773}
@@ -9026,6 +9029,7 @@ MonoBehaviour:
   textProfitTitleSC: {fileID: 1082914316}
   textProfitSC: {fileID: 310615850}
   panelSC: {fileID: 7274764275839906766}
+  imageCoinSC: {fileID: 253386757}
   textProfit: {fileID: 0}
 --- !u!224 &7274764275769379445
 RectTransform:

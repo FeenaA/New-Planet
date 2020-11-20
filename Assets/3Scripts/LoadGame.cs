@@ -423,7 +423,9 @@ public class LoadGame : MonoBehaviour
                 {
                     if (xPlanet.Attributes.GetNamedItem("textName").Value == namePlanet)
                     {
-                        print(namePlanet + " " + settings.gameSettings.SetPlanets[i].amountProbes);
+                        print("1: " + xPlanet.Attributes.GetNamedItem("amountProbes").Value);
+                        print("2: " + settings.gameSettings.SetPlanets[i].amountProbes);
+
                         xPlanet.Attributes.GetNamedItem("amountProbes").Value = 
                             System.Convert.ToString( settings.gameSettings.SetPlanets[i].amountProbes ); }
                     i++;
@@ -440,7 +442,6 @@ public class LoadGame : MonoBehaviour
         fullPath = Application.persistentDataPath + "/ContinueGame.xml";
         File.WriteAllText(fullPath, sw.ToString());
     }
-
 
     /// <summary>
     /// Save flagSelectedPlanet, NameNew, information in SetPlanets and RequestedResources
@@ -524,6 +525,9 @@ public class LoadGame : MonoBehaviour
         File.WriteAllText(fullPath, sw.ToString());
     }
 
+    /// <summary>
+    /// the first group of people was sent
+    /// </summary>
     public static void SetPeopleVeBeenSent()
     {
         XmlElement xRoot = xDoc.DocumentElement;
