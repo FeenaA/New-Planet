@@ -20,7 +20,6 @@ public class settingsResearches: MonoBehaviour
     // to have possibility to operate with the panel from ItemOnClick
     public GameObject PanelInformation; 
     public static GameObject sPanelInformation;
-
     // nesessary resources
     public Transform ResWater, ResAir, ResSoil;
     public static Transform rWater, rAir, rSoil;
@@ -29,16 +28,10 @@ public class settingsResearches: MonoBehaviour
     //public GameObject TextProbes;
     public Text TextProbes;
     // amount of spacecrafts
-    //public GameObject textSC;
-    //public static GameObject sTextSC;
     public Text TextSC;
     // amount of Ether
-    //public GameObject textEth;
-    //public static GameObject sTextEth;
     public Text TextEth;
-    // amount of Ether
-    //public GameObject textBC;
-    //public static GameObject sTextBC;
+    // amount of blue coins
     public Text TextBC;
 
     // text for requested resources

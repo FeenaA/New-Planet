@@ -19,6 +19,13 @@ public class Preprocessing : MonoBehaviour
     public GameObject SetNameNew;
     public InputField inputField;
     public Text InputNewName;
+    public Text Level;
+    public Text Carrier;
+    public Text Chief;
+    public Text Legend;
+    public Text PerSentPeople;
+    public Text Cansel;
+    public Text StartSession; 
 
     // materials for planets
     public Material[] materials;
@@ -26,7 +33,7 @@ public class Preprocessing : MonoBehaviour
     public static GameObject sGObjectPreproc;
     public static GameObject sCanvasMain;
 
-    private static bool FlagStartGame = true;
+    public static bool FlagStartGame = true; //---
     public static bool FlagStartSession = true; //---
 
     public static string[] strHelp; 
@@ -131,6 +138,13 @@ public class Preprocessing : MonoBehaviour
             ButtonNewGame.GetComponentInChildren<Text>().text = "НОВАЯ ИГРА";
             ButtonContinue.GetComponentInChildren<Text>().text = "ПРОДОЛЖИТЬ";
             InputNewName.text = "ДАЙ НАЗВАНИЕ СВОЕЙ РОДНОЙ ПЛАНЕТЕ";
+            Level.text = "ВЫБЕРИ УРОВЕНЬ СЛОЖНОСТИ";
+            Carrier.text = " КУРЬЕР";
+            Chief.text = " ВОЖДЬ";
+            Legend.text = " ЛЕГЕНДА";
+            PerSentPeople.text = "ЧЕМ ВЫШЕ УРОВЕНЬ, ТЕМ БОЛЬШЕ ЛЮДЕЙ НУЖНО СПАСТИ ДЛЯ ПОБЕДЫ";
+            Cansel.text = "ОТМЕНА";
+            StartSession.text = "СТАРТ";
         }
         else
         {
@@ -138,6 +152,13 @@ public class Preprocessing : MonoBehaviour
             ButtonNewGame.GetComponentInChildren<Text>().text = "New game";
             ButtonContinue.GetComponentInChildren<Text>().text = "Continue";
             InputNewName.text = "Give your native planet name";
+            Level.text = "Choose difficulty level";
+            Carrier.text = " Carrier";
+            Chief.text = " Chief";
+            Legend.text = " Legend";
+            PerSentPeople.text = "The more level is, the more people must be saved to win.";
+            Cansel.text = "Cansel";
+            StartSession.text = "Start";
         }
     }
 
@@ -187,7 +208,7 @@ public class Preprocessing : MonoBehaviour
 
     public void NewGamePressed()
     {
-        // gameSettings and Continue.xml (for future) have their initial values 
+ /*       // gameSettings and Continue.xml (for future) have their initial values 
         LG.StartNew();
         // flag - the application is working on the session
         FlagStartGame = false;
@@ -203,11 +224,12 @@ public class Preprocessing : MonoBehaviour
         // set of all planets with their properties
         settings.gameSettings.SetPlanets = GI.GetItems();
         // set of requested resources
-        settings.gameSettings.RequestedResources = GI.SetReqs();
+        settings.gameSettings.RequestedResources = GI.SetReqs();*/
 
 
         // open a form to input NameNative
-        inputField.text = settings.gameSettings.NameNative;
+        //inputField.text = settings.gameSettings.NameNative;
+        inputField.text = GI.NameGenerate();
 
         SetNameNew.SetActive(true);
     }

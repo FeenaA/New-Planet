@@ -104,6 +104,7 @@ public class settings : MonoBehaviour
         public int NEther;
         public int CurrentPerSent; 
         public int CurrentNResUnits;
+        public int level;
     } 
     public static GameSettings gameSettings;
 

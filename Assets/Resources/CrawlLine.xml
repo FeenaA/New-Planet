@@ -1,10 +1,11 @@
 <CrawlLine>
     <CL language="Russian">
-        <symbol>ПРАВИТЕЛЬСТВО ОПРОВЕРГАЕТ СЛУХИ О СМЕРТЕЛЬНОЙ ОПАСНОСТИ ВИРУСА</symbol>
         <symbol>МЕДИЦИНА: ВИРУС СЛОЖНО ДИАГНОСТИРОВАТЬ НА РАННИХ СТАДИЯХ</symbol>
         <symbol>МЕДИЦИНА: ВИРУС ВЕДЁТ СЕБЯ ПО-РАЗНОМУ У РАЗНЫХ ОРГАНИЗМОВ</symbol>
         <symbol>НАРОД БОИТСЯ, ЧТО МЕДИЦИНА НЕ СПРАВИТСЯ С ЭПИДЕМИЕЙ</symbol>
         <symbol>ПРАВИТЕЛЬСТВО РЕКОМЕНДУЕТ ВОЗДЕРЖАТЬСЯ ОТ КОНТАКТОВ ДО ПОЯВЛЕНИЯ ВАКЦИНЫ</symbol>
+        <symbol>В НАИБОЛЕЕ РАЗВИТЫХ СТРАНАХ ВВЕДЕНО ЧРЕЗВЫЧАЙНОЕ ПОЛОЖЕНИЕ</symbol>
+        <symbol>ЭПИДЕМИОЛОГИЧЕСКАЯ СИТУАЦИЯ УГРОЖАЕТ ЖИЗНИ НА РОДНОЙ ПЛАНЕТЕ</symbol>
         <symbol>А МОЖЕТ, ВСЁ ЭТО - ПРОИСКИ ВРАЖДЕБНЫХ ИНОПЛАНЕТЯН?</symbol>
         <symbol>НАСТРОЕНИЕ НАРОДА ОЦЕНИВАЕТСЯ КАК УПАДНИЧЕСКОЕ</symbol>
         <symbol>ПО ЛЕГЕНДЕ, ВСЁ ЭТО УЖЕ БЫЛО В ЖИЗНИ НАШИХ ПРЕДКОВ С ПЛАНЕТЫ ЗЕМЛЯ</symbol>
@@ -15,12 +16,28 @@
         <symbol>КРУПНЕЙШИЕ ГОСУДАРСТВА ОБЪЕДИНИЛИ УСИЛИЯ ПО БОРЬБЕ С БОЛЕЗНЬЮ</symbol>
         <symbol>НА УЛИЦАХ ВСЁ МЕНЬШЕ ПРОХОЖИХ И МАШИН. КАК ПРЕКРАСНА ЭТА ТИШИНА</symbol>
         <symbol>ДЛЯ ПРОФИЛАКТИКИ ВИРУСА РЕКОМЕНДУЕТСЯ РЕГУЛЯРНО ЗАНИМАТЬСЯ ЙОГОЙ</symbol>
+        <symbol>СРЕДИ ЗАБОЛЕВШИХ ПРАКТИЧЕСКИ НЕТ ЛЮБИТЕЛЕЙ ПРАВИЛЬНОГО ПИТАНИЯ.</symbol>
         <symbol>ВЫЯСНИЛОСЬ, ЧТО НА ЖИВОТНЫХ ВИРУС НЕ ДЕЙСТВУЕТ. ПОЙДУ ОБНИМУ КОТА.</symbol>
         <symbol>КОЛИЧЕСТВО ЗАРАЖЕННЫХ УГРОЖАЕТ ВЫМИРАНИЕМ ВСЕМ ЖИТЕЛЯМ ПЛАНЕТЫ</symbol>
     </CL>
     <CL language="English">
-        <symbol> Medicine: "The virus is difficult to be diagnosed in the early stages, as it behaves differently in different organisms
-        </symbol>
-        <symbol> People are worried that medicine will not cope with the current epidemiological situation on the planet</symbol>
+        <symbol>Medicine: "The virus is difficult to be diagnosed in the early stages</symbol>
+        <symbol>The virus behaves differently in different organisms</symbol>
+        <symbol>Good new: animals cannot infect and be infected.</symbol>
+        <symbol>A state of emergency is declared in the most developed countries</symbol>
+        <symbol>People are worried that medicine will not cope with this trouble</symbol>
+        <symbol>Life on the native planet is menaced by the epidemiological situation</symbol>
+        <symbol>There are far less people and cars in the streets. Ominous silence</symbol>
+        <symbol>Could this virus come from hostile aliens? Maybe.</symbol>
+        <symbol>People's spirits is estimated as depressed</symbol>
+        <symbol>By legend, all this happened with our ancestors from the planet Earth</symbol>
+        <symbol>The people don't believe the promises and wants to move to another planet</symbol>
+        <symbol>The people has an assumption, that the vaccine development is wrong</symbol>
+        <symbol>Attempt to invent vaccines was failed</symbol>
+        <symbol>Major Countries joined efforts to cope with the disease</symbol>
+        <symbol>It is recommended to do yoga regularly to prevent the virus</symbol>
+        <symbol>Among infected people, there are very few healthy food lovers.</symbol>
+        <symbol>Amount of infected people threats all residents with extinction</symbol>
+        <symbol>Government recommends to avoid contacts before the vaccine is appeared</symbol>
     </CL>
 </CrawlLine>

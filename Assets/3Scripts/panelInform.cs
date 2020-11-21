@@ -47,6 +47,9 @@ public class panelInform : MonoBehaviour
         NamePlanet.text = PP.textName;
         TextIntro.text = getItems.sIntroduction[PP.numIntro];
 
+        for (int i = 0; i < 3; i++)
+        { ResAdd[i].GetComponent<Outline>().enabled = false; }
+
         //show necessary resources
         for (int i = 0; i < 3; i++)
         {
@@ -71,7 +74,6 @@ public class panelInform : MonoBehaviour
                 ButtonResearchSelect.GetComponent<Button>().interactable = true;
             }
 
-            //foreach (var resource in settingsResearches.r)
             foreach (var resource in ResAdd)
             {
                 resource.GetComponentInChildren<Text>().text = "-";
@@ -96,6 +98,11 @@ public class panelInform : MonoBehaviour
                     // not empty slot
                     ResAdd[i].GetComponentInChildren<Text>().text =
                         getItems.ResourceAdd[PP.ResAdd[i]].name + " = " + PP.ResAddAmount[i];
+
+                    if (PP.ResAddAmount[i] == 10)
+                    { ResAdd[i].GetComponent<Outline>().enabled = true; }
+                    else
+                    { ResAdd[i].GetComponent<Outline>().enabled = false; }
                 }
                 else
                 {

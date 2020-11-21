@@ -8,24 +8,106 @@ public class NewGameStart : MonoBehaviour
 {
     // the field containing NameNative
     public InputField inputField;
+    // 
+    public GameObject PreprocGO;
+    private PersonalSettings PS;
+    private LoadGame LG;
+    private getItems GI;
+
+    public GameObject ButtonLevel1;
+    public GameObject ButtonLevel2;
+    public GameObject ButtonLevel3;
+
+    public Sprite ImageEmpty;
+    public Sprite ImageChosen;
+
+    public Text TextPerSentPeople;
+
+    public static readonly int[] PerSentAlivePeople = { 10, 20, 30 };
+    private string ToWin; 
+    private string PerSent; 
+
+    void Start()
+    {
+        CorrectLanguage();/*
+        settings.gameSettings.level = 1;
+        ChooseLevelPressed(settings.gameSettings.level);*/
+    }
+
+    public void ChooseLevelPressed(int Level)
+    {
+        // change pictures
+        switch (Level)
+        {
+            case 1:
+                ButtonLevel1.GetComponent<Image>().sprite = ImageEmpty;
+                ButtonLevel2.GetComponent<Image>().sprite = ImageChosen;
+                ButtonLevel3.GetComponent<Image>().sprite = ImageEmpty;
+                break;
+
+            case 2:
+                ButtonLevel1.GetComponent<Image>().sprite = ImageEmpty;
+                ButtonLevel2.GetComponent<Image>().sprite = ImageEmpty;
+                ButtonLevel3.GetComponent<Image>().sprite = ImageChosen;
+                break;
+
+            default:
+                ButtonLevel1.GetComponent<Image>().sprite = ImageChosen;
+                ButtonLevel2.GetComponent<Image>().sprite = ImageEmpty;
+                ButtonLevel3.GetComponent<Image>().sprite = ImageEmpty;
+                break;
+        }
+
+        
+
+        // change necessary persent of people
+        //settings.gameSettings.level = Level;
+
+        //---проценты отлавливать в DateChange
+        //---загружать и читать level в LoadGame
+
+        // change text 
+        TextPerSentPeople.text = ToWin + System.Convert.ToString(PerSentAlivePeople[Level]) + PerSent;
+    }
 
     /// <summary>
-    /// Close the MessageBox
+    /// Close the MessageBox and start new sessoin
     /// </summary>
-    public void ClosePressed()
+    public void StartNewPressed()
     {
+        PS = PreprocGO.GetComponent<PersonalSettings>();
+        LG = PreprocGO.GetComponent<LoadGame>();
+        GI = PreprocGO.GetComponent<getItems>();
+
+        // gameSettings and Continue.xml (for future) have their initial values 
+        LG.StartNew();
+        // flag - the application is working on the session
+        Preprocessing.FlagStartGame = false;
+        // flag - to generate new materials in settings
+        Preprocessing.FlagStartSession = true;
+
+        // flag - the saved game exists
+        PS.SetFlagSavedGame(true);
+
+        // set of all planets with their properties
+        settings.gameSettings.SetPlanets = GI.GetItems();
+        // set of requested resources
+        settings.gameSettings.RequestedResources = GI.SetReqs();
+
         gameObject.SetActive(false);
 
         // Reset NameNative
         string str = inputField.text;
-
-        // correct register, case RU
-        str = RuDetectAndUpper(str);
-
+        str = RuDetectAndUpper(str); // correct register, case RU
         settings.gameSettings.NameNative = str;
 
         // go to the scene "Game"
         SceneManager.LoadScene("Game");
+    }
+
+    public void CancelPressed()
+    { 
+        gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -46,4 +128,17 @@ public class NewGameStart : MonoBehaviour
         return System.String.Join(" ", str); ;
     }
 
+    private void CorrectLanguage()
+    {
+        if (PersonalSettings.language == LanguageSettings.Language.Russian)
+        {
+            ToWin = "ДЛЯ ПОБЕДЫ НЕОБХОДИМО СПАСТИ МИНИМУМ ";
+            PerSent = "% НАСЕЛЕНИЯ";
+        }
+        else
+        {
+            ToWin = "You have to rescue at list ";
+            PerSent = "% of people to win";
+        }
+    }
 }
