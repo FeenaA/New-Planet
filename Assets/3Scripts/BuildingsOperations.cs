@@ -473,7 +473,7 @@ public class BuildingsOperations : MonoBehaviour
         if (PersonalSettings.language == LanguageSettings.Language.Russian)
         {
             textTitle.GetComponent<Text>().text = "ЗДАНИЯ НА " + settings.gameSettings.NameNative;
-            Cost = "ЦЕНА:        ";
+            Cost = "ЦЕНА:          ";
             Per = " ЗА ";
             Days = " ДНЕЙ\n";
             Day = "ДЕНЬ\n";
@@ -519,12 +519,12 @@ public class BuildingsOperations : MonoBehaviour
         else
         {
             textTitle.GetComponent<Text>().text = settings.gameSettings.NameNative + "'s buildings";
-            Cost = "Cost:        ";
+            Cost = "Cost:          ";
             Per = " per ";
             Days = " days\n";
             Day = "day\n";
             Now = "  (now ";
-            Maximum = "Max!";
+            Maximum = "Maximum!";
             Treatment = "Under treatment";
 
             FirstPF = "Planets researching is easy! The first probe factory ready to operate";
@@ -538,7 +538,7 @@ public class BuildingsOperations : MonoBehaviour
             NewSC = "New spaceport allows to transport resources and people more often";
 
             MaxPF = "Probe factory construction reaches maximum level";
-            MaxHospital = "МЕДИЦИНА ДОСТИГЛА ПРЕДЕЛА СВОИХ ВОЗМОЖНОСТЕЙ";
+            MaxHospital = "MEDICINE HAS REACHED THE LIMIT OF ITS POSSIBILITIES";
             MaxMine = "Existing mines took all known deposits";
             MaxSC = "Spacecraft production reaches maximum level";
 

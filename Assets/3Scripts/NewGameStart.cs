@@ -23,21 +23,23 @@ public class NewGameStart : MonoBehaviour
 
     public Text TextPerSentPeople;
 
-    public static readonly int[] PerSentAlivePeople = { 10, 20, 30 };
+    public static readonly int[] PerSentAlivePeople = { 15, 30, 50 };
     private string ToWin; 
-    private string PerSent; 
+    private string PerSent;
 
-    void Start()
+    public static int sLevel = 0;
+
+    void OnEnable()
     {
-        CorrectLanguage();/*
-        settings.gameSettings.level = 1;
-        ChooseLevelPressed(settings.gameSettings.level);*/
+        CorrectLanguage();
+        ChooseLevelPressed(sLevel);
     }
 
     public void ChooseLevelPressed(int Level)
     {
+        sLevel = Level;
         // change pictures
-        switch (Level)
+        switch (sLevel)
         {
             case 1:
                 ButtonLevel1.GetComponent<Image>().sprite = ImageEmpty;
@@ -58,16 +60,8 @@ public class NewGameStart : MonoBehaviour
                 break;
         }
 
-        
-
-        // change necessary persent of people
-        //settings.gameSettings.level = Level;
-
-        //---проценты отлавливать в DateChange
-        //---загружать и читать level в LoadGame
-
         // change text 
-        TextPerSentPeople.text = ToWin + System.Convert.ToString(PerSentAlivePeople[Level]) + PerSent;
+        TextPerSentPeople.text = ToWin + System.Convert.ToString(PerSentAlivePeople[sLevel]) + PerSent;
     }
 
     /// <summary>

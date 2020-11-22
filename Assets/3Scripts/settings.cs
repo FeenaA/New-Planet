@@ -104,7 +104,7 @@ public class settings : MonoBehaviour
         public int NEther;
         public int CurrentPerSent; 
         public int CurrentNResUnits;
-        public int level;
+        public int Level;
     } 
     public static GameSettings gameSettings;
 
@@ -167,7 +167,10 @@ public class settings : MonoBehaviour
             Preprocessing.FlagStartSession = false;
 
             DateChangeing.pause = false;
-            BUT.PauseOff(); 
+            BUT.PauseOff();
+
+            // level of the current session
+            gameSettings.Level = NewGameStart.sLevel;
 
             // primary amount of people
             gameSettings.NPeopleOnNative = gameSettings.AllPeople;

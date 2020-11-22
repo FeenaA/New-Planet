@@ -208,27 +208,7 @@ public class Preprocessing : MonoBehaviour
 
     public void NewGamePressed()
     {
- /*       // gameSettings and Continue.xml (for future) have their initial values 
-        LG.StartNew();
-        // flag - the application is working on the session
-        FlagStartGame = false;
-        // flag - to generate new materials in settings
-        FlagStartSession = true;
-
-        // flag - the saved game exists
-        PS.SetFlagSavedGame(true);
-
-
-        // generate the name of native planet
-        settings.gameSettings.NameNative = GI.NameGenerate();
-        // set of all planets with their properties
-        settings.gameSettings.SetPlanets = GI.GetItems();
-        // set of requested resources
-        settings.gameSettings.RequestedResources = GI.SetReqs();*/
-
-
         // open a form to input NameNative
-        //inputField.text = settings.gameSettings.NameNative;
         inputField.text = GI.NameGenerate();
 
         SetNameNew.SetActive(true);

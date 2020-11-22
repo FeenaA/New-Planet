@@ -449,16 +449,19 @@ public class DateChangeing : MonoBehaviour
         {
             // stop date increment
             pause = true;
+
             // flag - session is finished
             settings.flagIsFinished = true;
-            // failure
-            if (settings.gameSettings.NPeopleOnNew <= 0)
+
+            int requiredAmountOnNew = settings.gameSettings.AllPeople*NewGameStart.PerSentAlivePeople[NewGameStart.sLevel] / 100;
+            // flagIsWin - winning or failure
+            if (settings.gameSettings.NPeopleOnNew < requiredAmountOnNew)
             { settings.flagIsWin = false; }
             else // winning
             { settings.flagIsWin = true; }
+
             var instance = Instantiate(CanvasGameOver);
             instance.GetComponent<Canvas>().worldCamera = Camera.main;
-            //instance.transform.SetParent(MainCanvas, false);
         }
         #endregion
     }

@@ -21,7 +21,8 @@ public class GameOver : MonoBehaviour
     private string StrTitleFail;
     private string StrMessageWin;
     private string StrMessageFail;
-                                  
+    private string StrMessageTry;
+
     private string StrMM;
     private string StrPriseWin;
     private string StrPriseFail;
@@ -36,17 +37,22 @@ public class GameOver : MonoBehaviour
         settings.flagIsFinished = true;
         if (settings.flagIsWin)
         {
-            TextMessage.transform.GetComponent<Text>().text = StrMessageWin;
-            TextTitle.transform.GetComponent<Text>().text = StrTitleWin;
-            TextPrise.transform.GetComponent<Text>().text = StrPriseWin;
+            TextMessage.text = StrMessageWin;
+            TextTitle.text = StrTitleWin;
+            TextPrise.text = StrPriseWin;
         }
         else
         {
-            TextMessage.transform.GetComponent<Text>().text = StrMessageFail;
-            TextTitle.transform.GetComponent<Text>().text = StrTitleFail;
-            TextPrise.transform.GetComponent<Text>().text = StrPriseFail;
+            TextTitle.text = StrTitleFail;
+            TextPrise.text = StrPriseFail;
+
+            if (settings.gameSettings.NPeopleOnNew > 0) // you tried
+            { TextMessage.text = StrMessageTry; } 
+            else { TextMessage.text = StrMessageFail; } // nobody is on new planet
         }
-        TextMainMenu.transform.GetComponent<Text>().text = StrMM;
+        TextMainMenu.text = StrMM;
+
+        print("PS=" + settings.gameSettings.CurrentPerSent);
     }
 
     /// <summary>
@@ -80,6 +86,7 @@ public class GameOver : MonoBehaviour
             StrPriseWin = "НАГРАДА: " + Prise + " СИНИХ ЖЕТОНОВ";
             StrTitleFail = "ПОРАЖЕНИЕ";
             StrMessageFail = "ВИРУС ПОГЛОТИЛ ВЕСЬ ТВОЙ НАРОД. ПОПРОБУЙ ДРУГУЮ СТРАТЕГИЮ.";
+            StrMessageTry = "ТЫ СПАС " + settings.gameSettings.CurrentPerSent + "% ЖИТЕЛЕЙ, НО ИХ НЕДОСТАТОЧНО, ЧТОБЫ ВЫЖИТЬ НА НОВОЙ ПЛАНЕТЕ";
             StrPriseFail = "УТЕШИТЕЛЬНЫЙ ПРИЗ: " + Prise + " СИНИЙ ЖЕТОН";
             StrMM = "ГЛАВНОЕ МЕНЮ";
         }
@@ -93,6 +100,7 @@ public class GameOver : MonoBehaviour
             StrTitleFail = "Failure";
             StrMessageFail = "You've lost all people of the native planet. " +
                     "Try another strategy to rich success.";
+            StrMessageTry = "YOU SAVED " + settings.gameSettings.CurrentPerSent + "% OF PEOPLE, BUT THEY ARE NOT ENOUGH TO SURVIVE ON A NEW PLANET.";
             StrPriseFail = "Сonsolation prize: " + Prise + " blue token";
             StrMM = "Main menu";
         }

@@ -1517,11 +1517,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 6388867677120065786}
   PreprocGO: {fileID: 0}
-  ButtonLevel1: {fileID: 0}
-  ButtonLevel2: {fileID: 0}
-  ButtonLevel3: {fileID: 0}
-  ImageEmpty: {fileID: 0}
-  ImageChosen: {fileID: 0}
+  ButtonLevel1: {fileID: 5991503177777228346}
+  ButtonLevel2: {fileID: 4936997918941784296}
+  ButtonLevel3: {fileID: 450871891083651795}
+  ImageEmpty: {fileID: 21300000, guid: 9a773b1811f245d4c81ab8d07d75ab02, type: 3}
+  ImageChosen: {fileID: 21300000, guid: c1db66544c4dc8643b7d1be44ae5b4bc, type: 3}
+  TextPerSentPeople: {fileID: 6790887109742942569}
 --- !u!1 &6388867676624159222
 GameObject:
   m_ObjectHideFlags: 0

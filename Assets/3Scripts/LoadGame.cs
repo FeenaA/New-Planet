@@ -216,6 +216,7 @@ public class LoadGame : MonoBehaviour
             else if (xnode.Name == "NPeopleDied") { res.NPeopleDied = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "CurrentPerSent") { res.CurrentPerSent = System.Convert.ToInt32(xnode.InnerText); }
             else if (xnode.Name == "CurrentNResUnits") { res.CurrentNResUnits = System.Convert.ToInt32(xnode.InnerText); }
+            else if (xnode.Name == "Level") { res.Level = System.Convert.ToInt32(xnode.InnerText); }
         }
 
         return res;
@@ -234,6 +235,8 @@ public class LoadGame : MonoBehaviour
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NEarthMaterial); }
             else if (xelem.Name == "NMoonMaterial")
             { xelem.InnerText = System.Convert.ToString(settings.gameSettings.NMoonMaterial); }
+            else if (xelem.Name == "Level")
+            { xelem.InnerText = System.Convert.ToString(settings.gameSettings.Level); }
             else if (xelem.Name == "RequestedResources")
             {
                 foreach (var item in settings.gameSettings.RequestedResources)
