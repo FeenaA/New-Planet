@@ -7,8 +7,8 @@
   <SetPlanets></SetPlanets>
   <NDays>0</NDays>
   <NCoins>10000</NCoins>
-  <NPeopleOnNative>10000</NPeopleOnNative>
-  <AllPeople>10000</AllPeople>
+  <NPeopleOnNative>1000</NPeopleOnNative>
+  <AllPeople>1000</AllPeople>
   <NPeopleDied>0</NPeopleDied>
   <stepCoins>5</stepCoins>
   <flagSelectedPlanet>false</flagSelectedPlanet>

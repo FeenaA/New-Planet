@@ -89,6 +89,7 @@ public class Preprocessing : MonoBehaviour
             {
                 // show Statistics
                 var instance = Instantiate(PrefabStatistics);
+                instance.GetComponent<Canvas>().worldCamera = Camera.main;
                 instance.SendMessage("TheStart", true);
 
                 // set all flags
@@ -179,6 +180,7 @@ public class Preprocessing : MonoBehaviour
     {
         // show Statistics
         var instance = Instantiate(PrefabStatistics);
+        instance.GetComponent<Canvas>().worldCamera = Camera.main;
         instance.SendMessage("TheStart", false);
     }
 
