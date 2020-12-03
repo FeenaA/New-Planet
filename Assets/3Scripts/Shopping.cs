@@ -180,8 +180,8 @@ public class Shopping : MonoBehaviour
                 ResetShoppingPanel();
                 // show PanelShopping and disable PanelPlanets
                 sPanelShopping.SetActive(true);
-                PanelPlanets.SetActive(false);
-                TextTitle.SetActive(false);
+                //PanelPlanets.SetActive(false);
+                //TextTitle.SetActive(false);
                 return;
             }
             // not empty slot
@@ -206,8 +206,8 @@ public class Shopping : MonoBehaviour
 
         // show PanelShopping and disable PanelPlanets
         sPanelShopping.SetActive(true);
-        PanelPlanets.SetActive(false);
-        TextTitle.SetActive(false);
+        //PanelPlanets.SetActive(false);
+        //TextTitle.SetActive(false);
 
         // settings: may be buttons clicked or not 
         ResetButtons();
@@ -456,6 +456,8 @@ public class Shopping : MonoBehaviour
              
             // flag to show message on the scene "Game"
             settings.flagShowMessageTransport = true;
+
+            CloseShopPressed();
 
             // show MessageBox: people may be transported
             var instance = Instantiate(MessageBox);
@@ -738,8 +740,8 @@ public class Shopping : MonoBehaviour
     // close the PanelShopping 
     public void CloseShopPressed()
     {
-        PanelPlanets.SetActive(true);
-        TextTitle.SetActive(true);
+        //PanelPlanets.SetActive(true);
+        //TextTitle.SetActive(true);
         sPanelShopping.SetActive(false);
     }
 

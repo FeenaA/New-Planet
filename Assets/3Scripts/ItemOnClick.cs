@@ -23,6 +23,11 @@ public class ItemOnClick : MonoBehaviour
     // Method to be called from the inspector
     public void OnMouseDown()
     {
+        if( Shopping.sPanelShopping.activeSelf)
+        {
+            Shopping.sPanelShopping.SetActive(false);
+        }
+
         sPlanet = Planet;
         sButtonName = buttonName;
 
