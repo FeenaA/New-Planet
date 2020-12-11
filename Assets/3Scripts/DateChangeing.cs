@@ -43,7 +43,8 @@ public class DateChangeing : MonoBehaviour
     public static int DayDeth = 0;
     public readonly static float koefPeopleStart = 0.1f;
     // additive to koefPeopleStart 
-    public readonly static float[] DeathRate = { 0.116f, 0.113f, 0.108f, 0.104f, 0.102f, 0.100f };
+    //public readonly static float[] DeathRate = { 0.116f, 0.113f, 0.108f, 0.104f, 0.102f, 0.100f };
+    public readonly static float[] DeathRate = { 0.07f, 0.06f, 0.05f, 0.04f, 0.03f, 0.01f };
 
     private static int DiedToday = 1;
 
