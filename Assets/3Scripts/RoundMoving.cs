@@ -23,7 +23,6 @@ public class RoundMoving : MonoBehaviour
 
     private static System.Random rnd = new System.Random();
 
-    // Start is called before the first frame update
     void Start()
     {
         y_rotate = 0.25f;

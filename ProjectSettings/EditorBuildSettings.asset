@@ -14,7 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1Scenes/Research.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/1Scenes/Menu.unity
-    guid: 729dfcd2888b99b44a264b864193b731
   m_configObjects: {}

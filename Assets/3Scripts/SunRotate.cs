@@ -8,13 +8,6 @@ public class SunRotate : MonoBehaviour
     public float y_rotate = 0.15f;
     public float z_rotate = 0;
 
-    // Start is called before the first frame update
-    /*void Start()
-    {
-        y_rotate = 0.15f;
-    }*/
-
-    // Update is called once per frame
     void Update()
     {
         // вращение вокруг своей оси
